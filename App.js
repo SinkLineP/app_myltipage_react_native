@@ -4,6 +4,7 @@ import { prepareFonts } from "./LoadingFonts";
 import AnimatedLoading from "./components/AnimatedLoading/AnimatedLoading";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ReviewDetails from "./screens/reviewDetails";
 
 
 const AppStack = createNativeStackNavigator();
@@ -19,8 +20,9 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <NavigationContainer>
-        <AppStack.Navigator>
+        <AppStack.Navigator initialRouteName="Home">
           <AppStack.Screen name="Home" component={Home} />
+          <AppStack.Screen name="Details" component={ReviewDetails} />
         </AppStack.Navigator>
       </NavigationContainer>
     )
