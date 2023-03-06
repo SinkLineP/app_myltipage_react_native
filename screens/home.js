@@ -29,7 +29,7 @@ export default function Home({ navigation }) {
                   {
                     title: item.title,
                     rating: item.rating,
-                    releaseData: item.releaseData
+                    releaseDate: item.releaseDate
                   }
                 )
             }>
