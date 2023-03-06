@@ -1,11 +1,12 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Home from "./screens/home";
-import { StatusBar } from 'expo-status-bar';
-import {Text, View} from "react-native";
 import { prepareFonts } from "./LoadingFonts";
 import AnimatedLoading from "./components/AnimatedLoading/AnimatedLoading";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
+const AppStack = createNativeStackNavigator();
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false)
 
@@ -17,11 +18,11 @@ export default function App() {
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {
     return (
-      <View>
-        <Home />
-        <StatusBar style="auto" />
-      </View>
-
+      <NavigationContainer>
+        <AppStack.Navigator>
+          <AppStack.Screen name="Home" component={Home} />
+        </AppStack.Navigator>
+      </NavigationContainer>
     )
   } else { //если не загружены шрифты не отображать
     return (
