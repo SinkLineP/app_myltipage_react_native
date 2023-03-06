@@ -22,7 +22,7 @@ export default function App() {
       <NavigationContainer>
         <AppStack.Navigator initialRouteName="Home">
           <AppStack.Screen name="Home" component={Home} />
-          <AppStack.Screen name="Details" component={ReviewDetails} />
+          <AppStack.Screen name="ReviewDetails" component={ReviewDetails} />
         </AppStack.Navigator>
       </NavigationContainer>
     )

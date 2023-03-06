@@ -19,7 +19,7 @@ export default function Home({ navigation }) {
         <Text style={globalStyles.titleText}>Home Screen</Text>
         <Button
           title={"show details"}
-          onPress={() => pressHandler("Details")}
+          onPress={() => pressHandler("ReviewDetails")}
         />
         <StatusBar style="auto" />
       </View>
