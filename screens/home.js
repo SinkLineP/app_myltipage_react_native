@@ -8,6 +8,7 @@ import {
   fantasticAnimalsPoster2,
   fantasticAnimalsPoster3
 } from "./postersLinks/postersURL";
+import Rating from "../components/Rating/Rating";
 
 
 const HomeStack = createNativeStackNavigator();
@@ -47,6 +48,19 @@ export default function Home({ navigation }) {
               <View style={homeStyles.content}>
                 <Text style={homeStyles.title}>{ item.title }</Text>
                 <Text style={homeStyles.releaseDate}>Дата выхода: { item.releaseDate }</Text>
+              </View>
+              <View>
+                <Rating
+                  currentRating={item.rating}
+                  addNumberRating={true}
+                  addStarsRating={false}
+                  colorStarRating={"orange"}
+                  colorRange={{
+                    medium: 4.0,
+                    height: 7.0
+                  }}
+                  isBorder={false}
+                />
               </View>
             </TouchableOpacity>
           )}

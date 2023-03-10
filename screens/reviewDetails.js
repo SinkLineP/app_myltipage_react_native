@@ -5,9 +5,6 @@ import Rating from "../components/Rating/Rating";
 
 export default function ReviewDetails({ navigation, route }) {
   const { rating, releaseDate, title, image } = route.params;
-  const pressHandler = () => {
-    navigation.goBack();
-  }
 
   return (
     <View style={globalStyles.containerNoFlex}>
@@ -35,6 +32,7 @@ export default function ReviewDetails({ navigation, route }) {
             medium: 4.0,
             height: 7.0
           }}
+          isBorder={true}
         />
       </View>
     </View>
