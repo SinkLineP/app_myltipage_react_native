@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {View, StyleSheet, Text} from "react-native";
 import {arrayToString, isFloat, replaceStringToImage} from "./Mathes";
 
-export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating, colorStarRating}) {
+export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating, colorStarRating, colorRange}) {
   const curRating = Math.floor(currentRating);
   const [star, setStar] = useState([]);
   const remainStars = [];
@@ -40,9 +40,9 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
   }
 
   const colorRatingShow = (rating) => {
-    if (rating >= 7.0) {
+    if (rating >= colorRange.height) {
       return "green";
-    } else if (rating >= 4.0) {
+    } else if (rating >= colorRange.medium) {
       return "orange";
     } else {
       return "red";
