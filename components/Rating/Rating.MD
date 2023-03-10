@@ -12,6 +12,8 @@ medium: 4.0,               - минимальное число среднего 
 height: 7.0                - минимальное число высокого рейтинга
 }}
 isBorder                   - отображение границ
+backgroundColor={""}       - задний фон item по умолчанию белый
+colorTitle={""}            - цвет title по умолчанию черный
 
 //Типы данных и структура
 
@@ -27,3 +29,5 @@ medium: 4.0,               - число дробное (0.0)
 height: 7.0                - число дробное (0.0)
 }}
 isBorder                   - boolean
+backgroundColor={""}       - string
+colorTitle={""}            - string

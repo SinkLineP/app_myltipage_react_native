@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {View, StyleSheet, Text} from "react-native";
 import {arrayToString, isFloat, replaceStringToImage} from "./Mathes";
 
-export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating, colorStarRating, colorRange, addStarsRating, isBorder}) {
+export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating, colorStarRating, colorRange, addStarsRating, isBorder, backgroundColor, colorTitle}) {
   const curRating = Math.floor(currentRating);
   const [star, setStar] = useState([]);
   const remainStars = [];
@@ -65,10 +65,12 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
       borderWidth: isBorder ? 1 : 0,
       padding: 5,
       borderColor: "#d2d2d2",
-      backgroundColor: "#ffffff",
+      backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
       minHeight: 33,
     }}>
-      <Text>Рейтинг: {showNumberRating(addNumberRating, currentRating)}</Text>
+      <Text style={{
+        color: colorTitle !== "" ? colorTitle : "black"
+      }}>Рейтинг: {showNumberRating(addNumberRating, currentRating)}</Text>
       <View>
         {addStarsRating ? (
           <Text style={ratingStyles.stars}>
