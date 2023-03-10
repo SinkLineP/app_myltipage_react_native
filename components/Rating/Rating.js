@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import {View, StyleSheet, Text} from "react-native";
 import {arrayToString, isFloat, replaceStringToImage} from "./Mathes";
 
-export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating}) {
+export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating, colorStarRating}) {
   const curRating = Math.floor(currentRating);
   const [star, setStar] = useState([]);
   const remainStars = [];
-  const [colorRating, setColorRating] = useState("red");
 
 
   const showRating = (star, curRating, setStar) => {
@@ -31,12 +30,12 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
       const rating = arrayToString(star) + "/" + arrayToString(remainStars);
 
       if (numberAfterComa > 0 && numberAfterComa !== 0) {
-        return replaceStringToImage([], rating, ImageW, ImageH);
+        return replaceStringToImage([], rating, ImageW, ImageH, colorStarRating);
       }
     } else {
       const rating = arrayToString(star) + arrayToString(remainStars);
 
-      return replaceStringToImage([], rating, ImageW, ImageH);// выводит оценку целым числом
+      return replaceStringToImage([], rating, ImageW, ImageH, colorStarRating);// выводит оценку целым числом
     }
   }
 

@@ -15,16 +15,16 @@ export function arrayToString(array) {
   return array.toString().split(",").join("");
 }
 
-export function replaceStringToImage(components, string, imageWidth, imageHeight) {
+export function replaceStringToImage(components, string, imageWidth, imageHeight, colorStars) {
   const fillStars = string.split("");
   return <View style={styles.container}>
     {fillStars.map((item, key) => {
       if (item === "*") {
-        return <FillStar key={key} style={styles.item} widthImage={imageWidth} heightImage={imageHeight} />
+        return <FillStar key={key} style={styles.item} widthImage={imageWidth} heightImage={imageHeight} color={colorStars} />
       } else if (item === "/") {
-        return <HalfFilledStar key={key} style={styles.item} widthImage={imageWidth} heightImage={imageHeight} />
+        return <HalfFilledStar key={key} style={styles.item} widthImage={imageWidth} heightImage={imageHeight} color={colorStars} />
       } else if (item === "0") {
-        return <UnFilledStar key={key} style={styles.item} widthImage={imageWidth} heightImage={imageHeight} />
+        return <UnFilledStar key={key} style={styles.item} widthImage={imageWidth} heightImage={imageHeight} color={colorStars} />
       }
     })}
 
