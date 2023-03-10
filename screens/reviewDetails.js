@@ -29,6 +29,7 @@ export default function ReviewDetails({ navigation, route }) {
           ImageW={30}
           ImageH={30}
           addNumberRating={true}
+          addStarsRating={true}
           colorStarRating={"orange"}
           colorRange={{
             medium: 4.0,
