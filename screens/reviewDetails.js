@@ -23,7 +23,7 @@ export default function ReviewDetails({ navigation, route }) {
       </View>
 
       <View>
-        <Rating currentRating={rating} maxRating={10} ImageW={30} ImageH={30} />
+        <Rating currentRating={rating} maxRating={10} ImageW={30} ImageH={30} addNumberRating={true} />
       </View>
     </View>
   )
