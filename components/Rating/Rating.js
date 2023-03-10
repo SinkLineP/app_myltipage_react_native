@@ -1,15 +1,12 @@
 import React, {useState} from "react";
 import {View, StyleSheet, Text} from "react-native";
-import {arrayToString, isFloat} from "../../options/Mathes";
-import fillStarIcon from "./Icons/fillStar.svg";
-import unfilledStarIcon from "./Icons/unfilledStar.svg";
-import halfFilledStarIcon from "./Icons/halfFilledStar.svg";
+import {arrayToString, isFloat, replaceStringToImage} from "./Mathes";
 
-
-export default function Rating({currentRating, maxRating}) {
+export default function Rating({currentRating, maxRating, ImageW, ImageH}) {
   const curRating = Math.floor(currentRating);
   const [star, setStar] = useState([]);
   const remainStars = [];
+
 
   const showRating = (star, curRating, setStar) => {
     const remainingStars = Math.floor(maxRating - currentRating);
@@ -19,7 +16,6 @@ export default function Rating({currentRating, maxRating}) {
       for (let i = 0; i < curRating; i++) {
         setStar([...star, "*"])
       }
-
     }
 
     if (remainingStars.length !== 0) {
@@ -31,13 +27,15 @@ export default function Rating({currentRating, maxRating}) {
 
     if (isFloat(currentRating)) {
       const numberAfterComa = Number(currentRating.toString().split(".")[1]);
-
+      const rating = arrayToString(star) + "/" + arrayToString(remainStars);
 
       if (numberAfterComa > 0 && numberAfterComa !== 0) {
-        return <Text>{arrayToString(star) + "/" + arrayToString(remainStars)}</Text>;// выводит оценку с плавающей запятой
+        return replaceStringToImage([], rating, ImageW, ImageH);
       }
     } else {
-      return <Text>{arrayToString(star) + arrayToString(remainStars)}</Text>;// выводит оценку целым числом
+      const rating = arrayToString(star) + arrayToString(remainStars);
+
+      return replaceStringToImage([], rating, ImageW, ImageH);// выводит оценку целым числом
     }
   }
 
@@ -46,7 +44,9 @@ export default function Rating({currentRating, maxRating}) {
   return (
     <View style={ratingStyles.item}>
       <Text>Рейтинг: </Text>
-      {showRating(star, curRating, setStar)}
+      <Text style={ratingStyles.stars}>
+        {showRating(star, curRating, setStar)}
+      </Text>
     </View>
   )
 }
@@ -60,5 +60,8 @@ const ratingStyles = StyleSheet.create({
     borderColor: "#d2d2d2",
     backgroundColor: "#ffffff",
     minHeight: 50
+  },
+  stars: {
+    padding: 0
   }
 })
