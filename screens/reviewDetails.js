@@ -33,8 +33,6 @@ export default function ReviewDetails({ navigation, route }) {
             height: 7.0
           }}
           isBorder={true}
-          backgroundColor={""}
-          colorTitle={""}
         />
       </View>
     </View>

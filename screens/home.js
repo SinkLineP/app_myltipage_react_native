@@ -9,9 +9,10 @@ import {
   fantasticAnimalsPoster3
 } from "./postersLinks/postersURL";
 import Rating from "../components/Rating/Rating";
+import {createDrawerNavigator} from "@react-navigation/drawer";
 
 
-const HomeStack = createNativeStackNavigator();
+const HomeStack = createDrawerNavigator();
 
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([

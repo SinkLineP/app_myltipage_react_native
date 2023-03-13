@@ -2,7 +2,19 @@ import React, {useState} from "react";
 import {View, StyleSheet, Text} from "react-native";
 import {arrayToString, isFloat, replaceStringToImage} from "./Mathes";
 
-export default function Rating({currentRating, maxRating, ImageW, ImageH, addNumberRating, colorStarRating, colorRange, addStarsRating, isBorder, backgroundColor, colorTitle}) {
+export default function Rating({
+ currentRating,
+ maxRating,
+ ImageW,
+ ImageH,
+ addNumberRating,
+ colorStarRating,
+ colorRange,
+ addStarsRating,
+ isBorder,
+ backgroundColor,
+ colorTitle
+}) {
   const curRating = Math.floor(currentRating);
   const [star, setStar] = useState([]);
   const remainStars = [];
@@ -10,7 +22,6 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
 
   const showRating = (star, curRating, setStar) => {
     const remainingStars = Math.floor(maxRating - currentRating);
-
 
     if (star.length !== curRating) {
       for (let i = 0; i < curRating; i++) {
@@ -24,7 +35,6 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
       }
     }
 
-
     if (isFloat(currentRating)) {
       const numberAfterComa = Number(currentRating.toString().split(".")[1]);
       const rating = arrayToString(star) + "/" + arrayToString(remainStars);
@@ -34,7 +44,6 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
       }
     } else {
       const rating = arrayToString(star) + arrayToString(remainStars);
-
       return replaceStringToImage([], rating, ImageW, ImageH, colorStarRating);// выводит оценку целым числом
     }
   }
@@ -58,14 +67,12 @@ export default function Rating({currentRating, maxRating, ImageW, ImageH, addNum
     }
   }
 
-
-
   return (
     <View style={{
       borderWidth: isBorder ? 1 : 0,
       padding: 5,
       borderColor: "#d2d2d2",
-      backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
+      backgroundColor: backgroundColor === "" || backgroundColor === undefined ? "#ffffff" : backgroundColor,
       minHeight: 33,
     }}>
       <Text style={{

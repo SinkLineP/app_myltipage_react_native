@@ -1,12 +1,14 @@
-export const setOptions = (titleText, backgroundColor, titleColor, titleStyle) => {
+import Header from "../shared/header";
+
+export const setOptions = (titleText, backgroundColor, titleColor, isNested) => {
   return {
-    title: titleText ? titleText : "Empty",
+    headerTitle: (props) => <Header title={titleText} isNested={isNested} {...props} />,
     headerStyle: {
       backgroundColor: backgroundColor ? backgroundColor : "coral",
     },
     headerTintColor: titleColor ? titleColor : "#fff",
     headerTitleStyle: {
-      fontWeight: titleStyle ? titleStyle : "bold",
+      fontWeight: "bold",
     }
   };
 }
