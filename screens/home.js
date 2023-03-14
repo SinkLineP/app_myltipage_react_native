@@ -9,10 +9,13 @@ import {
   fantasticAnimalsPoster3
 } from "./postersLinks/postersURL";
 import Rating from "../components/Rating/Rating";
-import {createDrawerNavigator} from "@react-navigation/drawer";
+import {setOptions} from "../options/routerHeaderOptions";
+import ReviewDetails from "./reviewDetails";
+import About from "./about";
+import {NavigationContainer} from "@react-navigation/native";
 
 
-const HomeStack = createDrawerNavigator();
+const HomeStack = createNativeStackNavigator();
 
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([
@@ -32,7 +35,7 @@ export default function Home({ navigation }) {
             <TouchableOpacity
               style={homeStyles.item}
               onPress={() =>
-                navigation.navigate(
+                navigation.push(
                   "ReviewDetails",
                   {
                     title: item.title,
@@ -73,6 +76,7 @@ export default function Home({ navigation }) {
         name="Home"
         component={Home}
       />
+
     </>
   )
 }

@@ -32,6 +32,7 @@ export default function App() {
         {/*    <Drawer.Screen name="Home" component={Home} options={{ drawerLabel: 'Домашняя страница' }} />*/}
         {/*    <Drawer.Screen name="About" component={About} options={{ drawerLabel: 'О нас' }}/>*/}
         {/*    <Drawer.Screen name="Settings" component={Settings} options={{ drawerLabel: 'Настройки приложения' }}/>*/}
+        {/*    <Drawer.Screen name="ReviewDetails" component={ReviewDetails} options={{ drawerLabel: 'Обзор' }} />*/}
         {/*  </Drawer.Navigator>*/}
         {/*</NavigationContainer>*/}
         <NavigationContainer>

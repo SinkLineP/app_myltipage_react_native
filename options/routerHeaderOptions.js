@@ -9,6 +9,7 @@ export const setOptions = (titleText, backgroundColor, titleColor, isNested) => 
     headerTintColor: titleColor ? titleColor : "#fff",
     headerTitleStyle: {
       fontWeight: "bold",
-    }
+    },
+    drawerLabel: titleText
   };
 }
