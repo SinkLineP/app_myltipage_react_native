@@ -1,17 +1,10 @@
 import React from "react";
 import {StyleSheet, Text, Touchable, View} from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Header({ title, isNested, navigation }) {
-
-  const openMenu = () => {
-    navigation.openDrawer()
-  }
-
   return (
     <>
       <View style={{
-        width: isNested ? "74%" : "95.5%",
         height: "100%",
         flexDirection: "row",
         alignItems: "center",
@@ -32,10 +25,6 @@ const stylesHeader = StyleSheet.create({
     fontSize: 20,
     color: "#fff",
     letterSpacing: 1,
-  },
-  icon: {
-    position: "absolute",
-    left: -7,
-    color: "white"
+    margin: 0
   }
 })
