@@ -28,14 +28,15 @@ const Home = ({ navigation }) => {
               style={homeStyles.item}
               onPress={() =>
                 navigation.navigate(
-                  "Contacts"
-                  // ,
-                  // {
-                  //   title: item.title,
-                  //   rating: item.rating,
-                  //   releaseDate: item.releaseDate,
-                  //   image: item.img
-                  // }
+                  "ReviewDetails"
+                  ,
+                  {
+                    title: item.title,
+                    rating: item.rating,
+                    releaseDate: item.releaseDate,
+                    image: item.img,
+                    isNested: true,
+                  }
                 )
               }>
               <Image style={homeStyles.image} source={{

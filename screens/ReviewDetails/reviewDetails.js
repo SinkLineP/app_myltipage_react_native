@@ -4,7 +4,7 @@ import { globalStyles } from "../../styles/global";
 import Rating from "../../components/Rating/Rating";
 
 export default function ReviewDetails({ navigation, route }) {
-  const { rating, releaseDate, title, image } = route.params;
+  const { rating, releaseDate, title, image, isNested } = route.params;
 
   return (
     <View style={globalStyles.containerNoFlex}>
