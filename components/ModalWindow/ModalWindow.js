@@ -3,7 +3,7 @@ import {Modal, StyleSheet, Text, View} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 
 
-const ModalWindow = ({showModal, funcShowModal}) => {
+const ModalWindow = ({showModal, funcShowModal, children}) => {
 
 
   return (
@@ -14,9 +14,7 @@ const ModalWindow = ({showModal, funcShowModal}) => {
 
           <MaterialIcons name="close" size={36} color={"red"} style={{ textAlign: "right" }} onPress={() => funcShowModal(false)} />
 
-          <Text>
-            Hello :)
-          </Text>
+          {children}
 
         </View>
       </View>

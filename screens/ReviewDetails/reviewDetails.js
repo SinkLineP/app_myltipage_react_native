@@ -4,7 +4,7 @@ import { globalStyles } from "../../styles/global";
 import Rating from "../../components/Rating/Rating";
 
 export default function ReviewDetails({ navigation, route }) {
-  const { rating, releaseDate, title, image } = route.params;
+  const { rating, releaseDate, title, image, body } = route.params;
 
   return (
     <View style={globalStyles.containerNoFlex}>
@@ -15,6 +15,7 @@ export default function ReviewDetails({ navigation, route }) {
         }} />
         <View style={reviewStyles.content}>
           <Text style={reviewStyles.title}>{title}</Text>
+          <Text style={reviewStyles.desc}>{body}</Text>
           <Text style={reviewStyles.releaseDate}>{releaseDate}</Text>
         </View>
       </View>
@@ -54,6 +55,10 @@ const reviewStyles = StyleSheet.create({
     fontFamily: "shell-sans-bold",
     fontSize: 24,
     lineHeight: 26
+  },
+  desc: {
+    marginTop: 15,
+    marginBottom: 15
   },
   releaseDate: {
     fontFamily: "shell-sans-lightItalic",

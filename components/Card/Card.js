@@ -13,6 +13,7 @@ function Card({item, navigation}) {
           ,
           {
             title: item.title,
+            body: item.body,
             rating: item.rating,
             releaseDate: item.releaseDate,
             image: item.img,
