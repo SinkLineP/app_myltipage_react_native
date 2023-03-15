@@ -13,7 +13,7 @@ const ReviewsForm = () => {
       <Formik
         initialValues={{
           title: "",
-          desc: "",
+          body: "",
           rating: 0.0,
           releaseDate: "",
           img: ""
@@ -32,10 +32,11 @@ const ReviewsForm = () => {
             />
 
             <TextInput
+              multiline
               style={stylesReviewsForm.input}
-              placeholder={"Введите рейтинг.."}
-              onChangeText={props.handleChange("desc")}
-              value={props.value.desc}
+              placeholder={"Введите рейтинг (0.0 - 10.0).."}
+              onChangeText={props.handleChange("body")}
+              value={props.value.body}
             />
 
             <TextInput

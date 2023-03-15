@@ -18,9 +18,25 @@ export default function Rating({
   const curRating = Math.floor(currentRating);
   const [star, setStar] = useState([]);
   const remainStars = [];
+  const messages = {
+    ERROR: {
+      big_rating: "Error, is rating big! Please editing this rating on correct.",
+      low_rating: "Error, is rating low! Please editing this rating on correct."
+    },
+    INFO: {},
+    CORRECT: {}
+  }
 
 
   const showRating = (star, curRating, setStar) => {
+    if (curRating > 10) {
+      return <Text style={ratingStyles.errorMessage}>{messages.ERROR.big_rating}</Text>
+    }
+
+    if (curRating < 0) {
+      return <Text style={ratingStyles.errorMessage}>{messages.ERROR.low_rating}</Text>
+    }
+
     const remainingStars = Math.floor(maxRating - currentRating);
 
     if (star.length !== curRating) {
@@ -59,6 +75,14 @@ export default function Rating({
   }
 
   const showNumberRating = (isCreatedRating, currRating) => {
+    if (curRating > 10) {
+      return <Text style={ratingStyles.errorMessage}>{messages.ERROR.big_rating}</Text>
+    }
+
+    if (curRating < 0) {
+      return <Text style={ratingStyles.errorMessage}>{messages.ERROR.low_rating}</Text>
+    }
+
     if (isCreatedRating) {
       return <Text style={{
         color: colorRatingShow(currRating),
@@ -94,4 +118,7 @@ const ratingStyles = StyleSheet.create({
   stars: {
     padding: 0
   },
+  errorMessage: {
+    color: "#ff3939"
+  }
 })

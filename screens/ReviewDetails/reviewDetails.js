@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, Button, Image, StyleSheet} from "react-native";
+import {View, Text, Button, Image, StyleSheet, ScrollView} from "react-native";
 import { globalStyles } from "../../styles/global";
 import Rating from "../../components/Rating/Rating";
 
@@ -7,7 +7,7 @@ export default function ReviewDetails({ navigation, route }) {
   const { rating, releaseDate, title, image, body } = route.params;
 
   return (
-    <View style={globalStyles.containerNoFlex}>
+    <ScrollView style={globalStyles.containerNoFlex}>
       <View style={reviewStyles.item}>
         <Image source={{
           height: 200,
@@ -38,7 +38,7 @@ export default function ReviewDetails({ navigation, route }) {
           isBorder={true}
         />
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
