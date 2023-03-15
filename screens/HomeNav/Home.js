@@ -24,7 +24,7 @@ const HomePage = ({ navigation }) => {
 
   return (
     <>
-      <ImageBackground source={require("../../assets/backgroundImage/background_01.png")} style={globalStyles.containerNoFlex}>
+      <ImageBackground source={require("../../assets/backgroundImage/background_01.png")}>
 
         <ModalWindow showModal={showModal} funcShowModal={(value) => setShowModal(value)} />
 
