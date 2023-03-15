@@ -4,6 +4,7 @@ import { prepareFonts } from "./LoadingFonts";
 import AnimatedLoading from "./components/AnimatedLoading/AnimatedLoading";
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./navigation/DrawerNavigation";
+import {ImageBackground} from "react-native";
 
 
 export default function App() {
@@ -18,11 +19,9 @@ export default function App() {
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {
     return (
-      <>
-        <NavigationContainer>
-          <DrawerNavigator />
-        </NavigationContainer>
-      </>
+      <NavigationContainer>
+        <DrawerNavigator />
+      </NavigationContainer>
     )
   } else { //если не загружены шрифты не отображать
     return (

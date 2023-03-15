@@ -4,7 +4,7 @@ import { globalStyles } from "../../styles/global";
 import Rating from "../../components/Rating/Rating";
 
 export default function ReviewDetails({ navigation, route }) {
-  const { rating, releaseDate, title, image, isNested } = route.params;
+  const { rating, releaseDate, title, image } = route.params;
 
   return (
     <View style={globalStyles.containerNoFlex}>
@@ -19,7 +19,9 @@ export default function ReviewDetails({ navigation, route }) {
         </View>
       </View>
 
-      <View>
+      <View style={{
+        margin: 20
+      }}>
         <Rating
           currentRating={rating}
           maxRating={10}
@@ -41,9 +43,10 @@ export default function ReviewDetails({ navigation, route }) {
 
 const reviewStyles = StyleSheet.create({
   item: {
-    marginBottom: 20,
+    marginBottom: 0,
     borderWidth: 1,
     padding: 0,
+    margin: 20,
     borderColor: "#d2d2d2",
     backgroundColor: "#ffffff"
   },

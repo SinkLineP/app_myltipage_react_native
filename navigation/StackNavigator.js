@@ -1,5 +1,5 @@
 import HomePage from "../screens/HomeNav/Home";
-import Contacts from "../screens/ContactsNav/Contacts.js";
+import ContactsPage from "../screens/ContactsNav/Contacts.js";
 import {createStackNavigator} from "@react-navigation/stack";
 import ReviewDetails from "../screens/ReviewDetails/reviewDetails";
 import {setOptions} from "../options/routerHeaderOptions";
@@ -22,7 +22,7 @@ const MainStackNavigator = () => {
 const ContactStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Contacts" component={Contacts} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
+      <Stack.Screen name="ContactsPage" component={ContactsPage} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
     </Stack.Navigator>
   );
 }

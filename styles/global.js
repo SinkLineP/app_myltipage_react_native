@@ -6,7 +6,7 @@ export const globalStyles = StyleSheet.create({
     padding: 20,
   },
   containerNoFlex: {
-    padding: 20,
+
   },
   titleText: {
     fontFamily: "shell-sans-light",

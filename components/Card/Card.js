@@ -52,7 +52,7 @@ const stylesCard = StyleSheet.create({
   item: {
     marginBottom: 20,
     borderWidth: 1,
-    padding: 0,
+    margin: 20,
     borderColor: "#d2d2d2",
     backgroundColor: "#ffffff"
   },

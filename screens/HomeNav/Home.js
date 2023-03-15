@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, FlatList} from "react-native";
+import {View, FlatList, ImageBackground} from "react-native";
 import {
   fantasticAnimalsPoster1,
   fantasticAnimalsPoster2,
@@ -20,13 +20,13 @@ const HomePage = ({ navigation }) => {
 
   return (
     <>
-      <View style={globalStyles.containerNoFlex}>
+      <ImageBackground source={require("../../assets/backgroundImage/background_01.png")} style={globalStyles.containerNoFlex}>
         <FlatList
           data={reviews}
           renderItem={({ item }) => <Card item={item} navigation={navigation}/>}
         />
         <StatusBar style="auto" />
-      </View>
+      </ImageBackground>
     </>
   )
 };
