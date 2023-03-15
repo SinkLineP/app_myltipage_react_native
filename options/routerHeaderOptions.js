@@ -1,8 +1,8 @@
 import Header from "../shared/header";
 
-export const setOptions = (titleText, backgroundColor, titleColor, isNested) => {
+export const setOptions = (titleText, backgroundColor, titleColor, showBar) => {
   return {
-    headerTitle: (props) => <Header title={titleText} isNested={isNested} {...props} />,
+    headerTitle: (props) => <Header titleColor={titleColor} showBar={showBar} title={titleText} {...props} />,
     headerStyle: {
       backgroundColor: backgroundColor ? backgroundColor : "coral",
     },
@@ -13,4 +13,10 @@ export const setOptions = (titleText, backgroundColor, titleColor, isNested) => 
     },
     drawerLabel: titleText,
   };
+}
+
+export const drawerNavigatorOptions = (isShown) => {
+  return {
+    headerShown: isShown,
+  }
 }
