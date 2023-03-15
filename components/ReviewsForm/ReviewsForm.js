@@ -1,13 +1,9 @@
 import React from "react";
-import {StyleSheet, TextInput, View} from "react-native";
+import {Button, StyleSheet, TextInput, View} from "react-native";
 import Formik from "formik";
-import {fantasticAnimalsPoster1} from "../../screens/postersLinks/postersURL";
 
 
 const ReviewsForm = () => {
-
-
-
   return (
     <View style={stylesReviewsForm.container}>
       <Formik
@@ -19,7 +15,7 @@ const ReviewsForm = () => {
           img: ""
         }}
         onSubmit={(values) => {
-
+          console.log(values);
         }}
       >
         {(props) => (
@@ -59,6 +55,8 @@ const ReviewsForm = () => {
               onChangeText={props.handleChange("img")}
               value={props.value.img}
             />
+            
+            <Button title="Отправить" color="coral" onPress={() => props.handleSubmit}/>
           </View>
         )}
       </Formik>

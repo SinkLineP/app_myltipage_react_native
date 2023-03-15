@@ -1,6 +1,7 @@
 import React from "react";
 import {Modal, StyleSheet, Text, View} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
+import ReviewsForm from "../ReviewsForm/ReviewsForm";
 
 
 const ModalWindow = ({showModal, funcShowModal, children}) => {
@@ -11,11 +12,9 @@ const ModalWindow = ({showModal, funcShowModal, children}) => {
     <Modal visible={showModal} animationType={"slide"} transparent>
       <View style={modalStyles.position}>
         <View style={modalStyles.modalWindow}>
-
           <MaterialIcons name="close" size={36} color={"red"} style={{ textAlign: "right" }} onPress={() => funcShowModal(false)} />
 
-          {children}
-
+          <ReviewsForm />
         </View>
       </View>
     </Modal>

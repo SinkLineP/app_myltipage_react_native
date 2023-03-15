@@ -1,14 +1,12 @@
 import React, {useState} from "react";
-import {View, FlatList, ImageBackground, Modal, StyleSheet, Text, Button} from "react-native";
+import {View, FlatList, ImageBackground, StyleSheet, Text} from "react-native";
 import {
   fantasticAnimalsPoster1,
   fantasticAnimalsPoster2,
   fantasticAnimalsPoster3
 } from "../postersLinks/postersURL";
-import {globalStyles} from "../../styles/global";
 import {StatusBar} from "expo-status-bar";
 import Card from "../../components/Card/Card";
-import {MaterialIcons} from "@expo/vector-icons";
 import ModalWindow from "../../components/ModalWindow/ModalWindow";
 
 
