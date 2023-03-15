@@ -1,9 +1,7 @@
-import Home from "../screens/HomeNav/Home";
-import About from "../screens/AboutNav/About";
+import HomePage from "../screens/HomeNav/Home";
 import Contacts from "../screens/ContactsNav/Contacts.js";
 import {createStackNavigator} from "@react-navigation/stack";
 import ReviewDetails from "../screens/ReviewDetails/reviewDetails";
-import Header from "../shared/header";
 import {setOptions} from "../options/routerHeaderOptions";
 
 const Stack = createStackNavigator();
@@ -15,7 +13,7 @@ const screenOptionStyle = {
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} options={setOptions("Домашняя страница", "coral", "#fff", true)} />
+      <Stack.Screen name="HomePage" component={HomePage} options={setOptions("Домашняя страница", "coral", "#fff", true)} />
       <Stack.Screen name="ReviewDetails" component={ReviewDetails} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
     </Stack.Navigator>
   );
