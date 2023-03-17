@@ -1,12 +1,21 @@
 import React, {useEffect, useState} from "react";
 import 'react-native-gesture-handler';
 import { prepareFonts } from "./LoadingFonts";
-import AnimatedLoading from "./components/AnimatedLoading/AnimatedLoading";
+import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import { NavigationContainer } from '@react-navigation/native';
-import DrawerNavigator from "./navigation/DrawerNavigation";
+import DrawerNavigator from "./src/navigation/DrawerNavigation";
 import {ImageBackground} from "react-native";
+import {createStore} from "redux";
+import {Provider} from "react-redux";
 
 
+const initialState = {
+  counter: 0
+}
+const reducer = (state=initialState) => {
+  return state
+}
+const store = createStore(reducer);
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false)
 
@@ -19,9 +28,11 @@ export default function App() {
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {
     return (
-      <NavigationContainer>
-        <DrawerNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </Provider>
     )
   } else { //если не загружены шрифты не отображать
     return (

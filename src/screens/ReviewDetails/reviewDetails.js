@@ -1,22 +1,32 @@
 import React from "react";
-import {View, Text, Button, Image, StyleSheet, ScrollView} from "react-native";
-import { globalStyles } from "../../styles/global";
+import {View, Text, Image, StyleSheet, ScrollView} from "react-native";
 import Rating from "../../components/Rating/Rating";
 
 export default function ReviewDetails({ navigation, route }) {
   const { rating, releaseDate, title, image, body } = route.params;
 
   return (
-    <ScrollView style={globalStyles.containerNoFlex}>
+    <ScrollView>
       <View style={reviewStyles.item}>
-        <Image source={{
-          height: 200,
-          uri: image
-        }} />
+
+        {image === "" ? (
+          <Image
+            style={reviewStyles.image}
+            source={require("../../assets/defaultImages/move_default.jpg")}
+          />
+        ) : (
+          <Image
+            source={{
+              height: 200,
+              uri: image
+            }}
+          />
+        )}
+
         <View style={reviewStyles.content}>
           <Text style={reviewStyles.title}>{title}</Text>
           <Text style={reviewStyles.desc}>{body}</Text>
-          <Text style={reviewStyles.releaseDate}>{releaseDate}</Text>
+          <Text style={reviewStyles.releaseDate}>Дата выхода: {releaseDate} год(а).</Text>
         </View>
       </View>
 
@@ -66,5 +76,9 @@ const reviewStyles = StyleSheet.create({
   },
   content: {
     padding: 5,
-  }
+  },
+  image: {
+    height: 200,
+    width: "auto"
+  },
 })

@@ -4,6 +4,9 @@ import Rating from "../Rating/Rating";
 
 
 function Card({item, navigation}) {
+  const {title, body, rating, releaseDate, img} = item;
+
+
   return (
     <TouchableOpacity
       style={stylesCard.item}
@@ -12,22 +15,21 @@ function Card({item, navigation}) {
           "ReviewDetails"
           ,
           {
-            title: item.title,
-            body: item.body,
-            rating: item.rating,
-            releaseDate: item.releaseDate,
-            image: item.img,
-            isNested: true,
+            title: title,
+            body: body,
+            rating: rating,
+            releaseDate: releaseDate,
+            image: img
           }
         )
-      }>
+    }>
       <Image style={stylesCard.image} source={{
         height: 200,
         uri: item.img
       }} />
       <View style={stylesCard.content}>
         <Text style={stylesCard.title}>{ item.title }</Text>
-        <Text style={stylesCard.releaseDate}>Дата выхода: { item.releaseDate }</Text>
+        <Text style={stylesCard.releaseDate}>Дата выхода: { item.releaseDate } год(а).</Text>
       </View>
       <View>
         <Rating
