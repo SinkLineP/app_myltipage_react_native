@@ -7,6 +7,7 @@ import DrawerNavigator from "./src/navigation/DrawerNavigation";
 import {ImageBackground} from "react-native";
 import {createStore} from "redux";
 import {Provider} from "react-redux";
+import getData from "./src/db/getData";
 
 
 const initialState = {
@@ -22,11 +23,14 @@ export default function App() {
   //асинхронная функция загрузки шрифтов
   useEffect(() => {
     prepareFonts(setFontsLoaded).then(r => r);
+    getData()
   }, []);
 
 
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {
+
+
     return (
       <Provider store={store}>
         <NavigationContainer>

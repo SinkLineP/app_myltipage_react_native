@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {FlatList, Text, StyleSheet, TouchableOpacity, View} from "react-native";
-import CardCategoriesReviews from "../../../components/CardCategoriesReviews/CardCategoriesReviews";
+import CardCategoriesReviews from "../../../../components/CardCategoriesReviews/CardCategoriesReviews";
 
 
 

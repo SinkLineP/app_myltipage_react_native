@@ -1,12 +1,12 @@
-import ContactsPage from "../screens/ContactsNav/Contacts.js";
+import ContactsPage from "./screens/ContactsNav/Contacts.js";
 import {createStackNavigator} from "@react-navigation/stack";
-import ReviewDetails from "../screens/ReviewDetails/reviewDetails";
+import ReviewDetails from "./screens/ReviewDetails/reviewDetails";
 import {setOptions} from "../options/routerHeaderOptions";
-import MoveReviews from "../screens/Reviews/Move/MoveReviews";
-import CartoonReviews from "../screens/Reviews/Cartoon/CartoonReviews";
-import SerialsReviews from "../screens/Reviews/Serials/SerialsReviews";
-import AnimeReviews from "../screens/Reviews/Anime/AnimeReviews";
-import MainReviews from "../screens/Reviews/MainReviews/MainReviews";
+// import MoveReviews from "./screens/Reviews/Move/MoveReviews";
+// import CartoonReviews from "./screens/Reviews/Cartoon/CartoonReviews";
+// import SerialsReviews from "./screens/Reviews/Serials/SerialsReviews";
+// import AnimeReviews from "./screens/Reviews/Anime/AnimeReviews";
+import MainReviews from "./screens/Reviews/MainReviews/MainReviews";
 
 const Stack = createStackNavigator();
 

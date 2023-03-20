@@ -1,6 +1,6 @@
 import React from "react";
 import {View, Text, Image, StyleSheet, ScrollView} from "react-native";
-import Rating from "../../components/Rating/Rating";
+import Rating from "../../../components/Rating/Rating";
 
 export default function ReviewDetails({ navigation, route }) {
   const { rating, releaseDate, title, image, body } = route.params;
@@ -12,7 +12,7 @@ export default function ReviewDetails({ navigation, route }) {
         {image === "" ? (
           <Image
             style={reviewStyles.image}
-            source={require("../../assets/defaultImages/move_default.jpg")}
+            source={require("../../../../assets/defaultImages/move_default.jpg")}
           />
         ) : (
           <Image
