@@ -1,15 +1,13 @@
 import axios from "axios";
-import {HOST} from "../../Variables";
+import {DOMAIN_SERVER, HTTP} from "../Variables/ServerConfig";
 
 export default function getData() {
-  axios.get(HOST)
+  return axios.get(`${HTTP}://${DOMAIN_SERVER}`)
     .then((response) => {
-      response.data.categories.map((item, index, key) => {
-        console.log(item)
+      const array = [];
+      response.data.categories.map((item) => {
+        array.push(item);
       })
-      // JSON.parse(response.data.categories)
+      return array;
     }).catch(error => console.log(error));
-
-
-
 }
