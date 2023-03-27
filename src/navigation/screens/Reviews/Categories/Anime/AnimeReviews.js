@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {StyleSheet} from "react-native";
-import ShowReviewContent from "../../../components/showReviewContent/showReviewContent";
+import ShowReviewContent from "../../../../../components/showReviewContent/showReviewContent";
+
 
 
 

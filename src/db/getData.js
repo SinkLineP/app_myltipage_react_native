@@ -1,13 +1,5 @@
-import axios from "axios";
 import {DOMAIN_SERVER, HTTP} from "../Variables/ServerConfig";
+import {setArrayCategoriesReviews} from "../store/Slices/categoryReviewsSlice";
+import {useDispatch} from "react-redux";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query";
 
-export default function getData() {
-  return axios.get(`${HTTP}://${DOMAIN_SERVER}`)
-    .then((response) => {
-      const array = [];
-      response.data.categories.map((item) => {
-        array.push(item);
-      })
-      return array;
-    }).catch(error => console.log(error));
-}

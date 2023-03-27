@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
-import {Provider, useDispatch} from "react-redux";
+import {Provider} from "react-redux";
 import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import DrawerNavigator from "./src/navigation/DrawerNavigation";
 import store from "./src/store/index";
+
 
 export default function App () {
   return (
@@ -22,6 +23,8 @@ function AppWrapper() {
   useEffect(() => {
     prepareFonts(setFontsLoaded).then(r => r);
   }, []);
+
+
 
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {

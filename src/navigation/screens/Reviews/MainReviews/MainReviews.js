@@ -1,44 +1,46 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, StyleSheet, TouchableOpacity, View, Button} from "react-native";
+import {FlatList, StyleSheet} from "react-native";
 import CardCategoriesReviews from "../../../../components/CardCategoriesReviews/CardCategoriesReviews";
+import {BASE_URL} from "../../../../Variables/ServerConfig";
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentUser} from "../../../../store/Slices/currentUserSlice";
+import {removeCategoryReviews, setCategoryReviews} from "../../../../store/Slices/categoryReviewsSlice";
 
 
 const MainReviews = ({navigation}) => {
   const dispatch = useDispatch();
-  const current_user = useSelector(state => state.currentUser);
+  const categoryReviews = useSelector(state => state.categoryReviews.reviews);
+
+  const res = async () => {
+    const response = await fetch(`${BASE_URL}/api/category`);
+    if (!response.ok) {
+      throw new Error("Server Error!");
+    }
+    return await response.json();
+  }
+
+  useEffect(() => {
+    res().then(r => {
+        dispatch(removeCategoryReviews())
+        r.categories.map(({id, image_url, title, transfer}) => {
+          dispatch(setCategoryReviews({
+            id: id,
+            image_url: image_url,
+            title: title,
+            transfer: transfer
+          }))
+        })
+    });
+  }, [])
+
+  console.log(categoryReviews);
 
   return (
-    <View>
-      <Text>{current_user.name}</Text>
-
-      <Button title={"create user"} onPress={() => dispatch(setCurrentUser({
-        id: 1,
-        email: "fdsdfsdf@mail.ru",
-        password: "11111111",
-        token: "csdfsddsfsdf:111111:1",
-        phone: "+8(999)-888-77-66",
-        name: "Misha",
-        surname: "GuestSdsadsurname",
-        lastname: "GuestdsadLastname",
-        permission: {
-          isAdmin: false,
-          isManager: false,
-          isUser: false,
-          isGuest: true
-        },
-      }))} />
-    </View>
+    <FlatList
+      style={mainReviewsStyles.list}
+      data={categoryReviews}
+      renderItem={({item}) => <CardCategoriesReviews item={item} navigation={navigation} imageDefault={require("./images/move_default.jpg")} />}
+    />
   )
-
-  // return (
-  //   <FlatList
-  //     style={mainReviewsStyles.list}
-  //     data={[]}
-  //     renderItem={({item}) => <CardCategoriesReviews item={item} navigation={navigation} imageDefault={require("./images/move_default.jpg")} />}
-  //   />
-  // )
 
 
 }

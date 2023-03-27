@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {StyleSheet} from "react-native";
-import ShowReviewContent from "../../../components/showReviewContent/showReviewContent";
+import ShowReviewContent from "../../../../../components/showReviewContent/showReviewContent";
+import {fantasticAnimalsPoster1, fantasticAnimalsPoster2, fantasticAnimalsPoster3} from "./postersLinks/postersURL";
 
 
 

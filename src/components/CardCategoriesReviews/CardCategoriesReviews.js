@@ -3,7 +3,8 @@ import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
 
 
 const CardCategoriesReviews = ({item, navigation, imageDefault}) => {
-  const {title, image, transfer} = item;
+  const {title, image_url, transfer} = item;
+  console.log(image_url);
 
 
   return (
@@ -14,11 +15,11 @@ const CardCategoriesReviews = ({item, navigation, imageDefault}) => {
           transfer,
           {
             title: title,
-            image: image
+            image: image_url
           }
         )
       }>
-      {/*<Image style={stylesCardReviews.image} source={image === "" ? imageDefault : require(image)} />*/}
+      <Image style={stylesCardReviews.image} source={{uri: image_url}} />
       <Text style={stylesCardReviews.title}>{ title }</Text>
     </TouchableOpacity>
   )
