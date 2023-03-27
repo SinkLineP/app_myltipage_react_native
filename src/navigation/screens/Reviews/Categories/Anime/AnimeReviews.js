@@ -8,7 +8,6 @@ import ShowReviewContent from "../../../../../components/showReviewContent/showR
 function AnimeReviews({navigation}) {
   const [reviews, setReviews] = useState([]);
 
-
   return (
     <>
       <ShowReviewContent navigation={navigation} reviews={reviews} titleBtnAddedContent={"Добавить аниме для обзора"} setReviews={setReviews} imageBackground={""} />

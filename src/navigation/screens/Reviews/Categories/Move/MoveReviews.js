@@ -14,7 +14,7 @@ function MoveReviews({navigation}) {
 
   return (
     <>
-      <ShowReviewContent navigation={navigation} reviews={reviews} titleBtnAddedContent={"Добавить фильм для обзора"} setReviews={setReviews} imageBackground={""} />
+      <ShowReviewContent navigation={navigation} reviews={reviews} titleBtnAddedContent={"Добавить фильм для обзора"} setReviews={setReviews} imageBackground={""} title={""}/>
     </>
   )
 }

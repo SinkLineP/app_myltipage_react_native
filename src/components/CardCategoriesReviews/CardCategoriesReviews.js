@@ -4,19 +4,15 @@ import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
 
 const CardCategoriesReviews = ({item, navigation, imageDefault}) => {
   const {title, image_url, transfer} = item;
-  console.log(image_url);
 
+  console.log(transfer);
 
   return (
     <TouchableOpacity
       style={stylesCardReviews.item}
       onPress={() =>
         navigation.navigate(
-          transfer,
-          {
-            title: title,
-            image: image_url
-          }
+          transfer
         )
       }>
       <Image style={stylesCardReviews.image} source={{uri: image_url}} />

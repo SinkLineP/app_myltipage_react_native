@@ -2,28 +2,23 @@ import React, {useState} from "react";
 import {View, FlatList, ImageBackground, StyleSheet, Text} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import Card from "../../components/Card/Card";
-import ModalWindow from "../../components/ModalWindow/ModalWindow";
 
-
-const ShowReviewContent = ({ navigation, reviews, setReviews, imageBackground, titleBtnAddedContent}) => {
-  const [showModal, setShowModal] = useState(false);
-
+const ShowReviewContent = ({ navigation, reviews, title}) => {
   return (
     <View>
-      {/*<ImageBackground source={require(imageBackground)}>*/}
-        <ModalWindow setReviews={setReviews} showModal={showModal} funcShowModal={(value) => setShowModal(value)} />
+      <ImageBackground source={require("./backgroundImage/background_01.png")}>
 
-        <View style={showReviewContentStyles.container}>
-          <Text style={showReviewContentStyles.buttonAddMove} onPress={() => setShowModal(true)}>{titleBtnAddedContent}</Text>
-        </View>
-
-        <FlatList
-          data={reviews}
-          renderItem={({ item }) => <Card item={item} navigation={navigation}/>}
-        />
+        {reviews === [] ? (
+          <Text>В данной категории нету {title}</Text>
+        ) : (
+          <FlatList
+            data={reviews}
+            renderItem={({ item }) => <Card item={item} navigation={navigation}/>}
+          />
+        )}
 
         <StatusBar style="auto" />
-      {/*</ImageBackground>*/}
+      </ImageBackground>
     </View>
   )
 };
