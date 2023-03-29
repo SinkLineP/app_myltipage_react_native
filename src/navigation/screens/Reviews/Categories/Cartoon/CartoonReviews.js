@@ -10,7 +10,7 @@ function CartoonReviews({navigation}) {
 
   return (
     <>
-      <ShowReviewContent navigation={navigation} reviews={reviews} titleBtnAddedContent={"Добавить мультфильм для обзора"} setReviews={setReviews} imageBackground={""} />
+      <ShowReviewContent navigation={navigation} reviews={reviews} setReviews={setReviews} imageBackground={""}/>
     </>
   )
 }

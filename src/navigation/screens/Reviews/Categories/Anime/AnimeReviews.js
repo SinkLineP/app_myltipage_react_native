@@ -10,7 +10,7 @@ function AnimeReviews({navigation}) {
 
   return (
     <>
-      <ShowReviewContent navigation={navigation} reviews={reviews} titleBtnAddedContent={"Добавить аниме для обзора"} setReviews={setReviews} imageBackground={""} />
+      <ShowReviewContent navigation={navigation} reviews={reviews} setReviews={setReviews} imageBackground={""}/>
     </>
   )
 }

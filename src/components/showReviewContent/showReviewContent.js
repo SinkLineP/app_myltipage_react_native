@@ -1,15 +1,17 @@
 import React, {useState} from "react";
-import {View, FlatList, ImageBackground, StyleSheet, Text} from "react-native";
+import {View, FlatList, Image, StyleSheet, Text} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import Card from "../../components/Card/Card";
 
-const ShowReviewContent = ({ navigation, reviews, title}) => {
+const ShowReviewContent = ({ navigation, reviews}) => {
   return (
     <View>
-      <ImageBackground source={require("./backgroundImage/background_01.png")}>
-
-        {reviews === [] ? (
-          <Text>В данной категории нету {title}</Text>
+      <View>
+        {reviews.length === 0 ? (
+          <>
+            <Image style={showReviewContentStyles.emptyPageImage} source={require("./emptyPage/emptyPage.png")} />
+            <Text style={showReviewContentStyles.empty}>Данный контент съело привидение.</Text>
+          </>
         ) : (
           <FlatList
             data={reviews}
@@ -18,7 +20,7 @@ const ShowReviewContent = ({ navigation, reviews, title}) => {
         )}
 
         <StatusBar style="auto" />
-      </ImageBackground>
+      </View>
     </View>
   )
 };
@@ -37,6 +39,20 @@ const showReviewContentStyles = StyleSheet.create({
     textTransform: "uppercase",
     marginTop: 10,
     textAlign: "center"
+  },
+  empty: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    fontSize: 18,
+    color: "#4a4848",
+    fontFamily: "shell-sans-bold"
+  },
+  emptyPageImage: {
+    height: 300,
+    width: 300,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 30,
   }
 })
 

@@ -7,6 +7,7 @@ import AnimeReviews from "./screens/Reviews/Categories/Anime/AnimeReviews";
 import MoveReviews from "./screens/Reviews/Categories/Move/MoveReviews";
 import CartoonReviews from "./screens/Reviews/Categories/Cartoon/CartoonReviews";
 import SerialsReviews from "./screens/Reviews/Categories/Serials/SerialsReviews";
+import CartoonSerials from "./screens/Reviews/Categories/CartoonSerials/CartoonSerials";
 
 const Stack = createStackNavigator();
 
@@ -15,9 +16,10 @@ const MainStackNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name="MainReviews" component={MainReviews} options={setOptions("Категории", "coral", "#fff", false)} />
       <Stack.Screen name="Move" component={MoveReviews} options={setOptions("Фильмы", "#9e3e1b", "#fff", false)} />
-      <Stack.Screen name="Cartoon" component={CartoonReviews} options={setOptions("Мультфильмы", "#922525", "#fff", false)} />
-      <Stack.Screen name="Serials" component={SerialsReviews} options={setOptions("Сериалы", "#3ca9fe", "#fff", false)} />
-      <Stack.Screen name="Anime" component={AnimeReviews} options={setOptions("Аниме", "#a84d90", "#fff", false)} />
+      <Stack.Screen name="Cartoon" component={CartoonReviews} options={setOptions("Мультфильмы", "#1e9dff", "#fff", false)} />
+      <Stack.Screen name="Serials" component={SerialsReviews} options={setOptions("Сериалы", "#fec260", "#fff", false)} />
+      <Stack.Screen name="Anime" component={AnimeReviews} options={setOptions("Аниме", "#ff34c7", "#fff", false)} />
+      <Stack.Screen name="CartoonSerials" component={CartoonSerials} options={setOptions("Мульт Сериалы", "#1588e2", "#fff", false)} />
       <Stack.Screen name="ReviewDetails" component={ReviewDetails} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
     </Stack.Navigator>
   );

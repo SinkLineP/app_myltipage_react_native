@@ -1,10 +1,8 @@
 import React, {useState} from "react";
-import {StyleSheet} from "react-native";
 import ShowReviewContent from "../../../../../components/showReviewContent/showReviewContent";
 
 
-
-function SerialsReviews({navigation}) {
+function CartoonSerials({ navigation }) {
   const [reviews, setReviews] = useState([]);
 
   return (
@@ -14,9 +12,4 @@ function SerialsReviews({navigation}) {
   )
 }
 
-
-const serialsReviewsStyles = StyleSheet.create({
-
-})
-
-export default SerialsReviews;
+export default CartoonSerials;

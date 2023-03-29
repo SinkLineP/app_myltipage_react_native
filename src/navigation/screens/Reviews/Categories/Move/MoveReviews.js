@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet} from "react-native";
 import ShowReviewContent from "../../../../../components/showReviewContent/showReviewContent";
 import {fantasticAnimalsPoster1, fantasticAnimalsPoster2, fantasticAnimalsPoster3} from "./postersLinks/postersURL";
+import axios from "axios";
 
 
 
@@ -12,9 +13,30 @@ function MoveReviews({navigation}) {
     {key: 3, title: "Фантастические твари: Тайны Дамблдора", body: "Профессор Альбус Дамблдор узнаёт, что могущественный тёмный волшебник Геллерт Грин-де-Вальд планирует захватить власть над миром. Понимая, что не сможет остановить его в одиночку, Дамблдор просит магозоолога Ньюта Саламандера возглавить команду выдающихся волшебников и одного отважного магла-пекаря. Им предстоят невероятно опасные приключения, встреча со старыми и укрощение новых магических существ и борьба со сторонниками Грин-де-Вальда, которых становится всё больше.", rating: 6.0, releaseDate: "2022 год", img: fantasticAnimalsPoster3 }
   ])
 
+  const getVideoMedia = async () => {
+    const options = {
+      method: 'GET',
+      url: 'https://moviesdatabase.p.rapidapi.com/titles',
+      headers: {
+        'X-RapidAPI-Key': '41b36c982dmsh60cef7fedf20b53p1669d1jsn79e704bf858a',
+        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+      }
+    };
+
+    axios.request(options).then(function (response) {
+      console.log(response.data.results);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
+
+  useEffect(() => {
+    getVideoMedia().then(r => r);
+  }, [])
+
   return (
     <>
-      <ShowReviewContent navigation={navigation} reviews={reviews} titleBtnAddedContent={"Добавить фильм для обзора"} setReviews={setReviews} imageBackground={""} title={""}/>
+      <ShowReviewContent navigation={navigation} reviews={reviews} setReviews={setReviews} imageBackground={""} title={""}/>
     </>
   )
 }

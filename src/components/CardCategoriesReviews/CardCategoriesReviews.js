@@ -5,8 +5,6 @@ import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
 const CardCategoriesReviews = ({item, navigation, imageDefault}) => {
   const {title, image_url, transfer} = item;
 
-  console.log(transfer);
-
   return (
     <TouchableOpacity
       style={stylesCardReviews.item}
@@ -28,7 +26,8 @@ const stylesCardReviews = StyleSheet.create({
     marginRight: 20,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#bababa"
+    borderColor: "#bababa",
+    backgroundColor: "white"
   },
   image: {
     height: 200,

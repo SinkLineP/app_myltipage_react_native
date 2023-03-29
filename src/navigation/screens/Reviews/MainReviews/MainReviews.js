@@ -4,6 +4,8 @@ import CardCategoriesReviews from "../../../../components/CardCategoriesReviews/
 import {BASE_URL} from "../../../../Variables/ServerConfig";
 import {useDispatch, useSelector} from "react-redux";
 import {removeCategoryReviews, setCategoryReviews} from "../../../../store/Slices/categoryReviewsSlice";
+import {StatusBar} from "expo-status-bar";
+import axios from "axios";
 
 
 const MainReviews = ({navigation}) => {
@@ -17,6 +19,8 @@ const MainReviews = ({navigation}) => {
     }
     return await response.json();
   }
+
+
 
   useEffect(() => {
     res().then(r => {
@@ -32,14 +36,16 @@ const MainReviews = ({navigation}) => {
     });
   }, [])
 
-  console.log(categoryReviews);
-
   return (
-    <FlatList
-      style={mainReviewsStyles.list}
-      data={categoryReviews}
-      renderItem={({item}) => <CardCategoriesReviews item={item} navigation={navigation} imageDefault={require("./images/move_default.jpg")} />}
-    />
+    <>
+      <FlatList
+        style={mainReviewsStyles.list}
+        data={categoryReviews}
+        renderItem={({item}) => <CardCategoriesReviews item={item} navigation={navigation} imageDefault={require("./images/move_default.jpg")} />}
+      />
+
+      <StatusBar style="auto" />
+    </>
   )
 
 
