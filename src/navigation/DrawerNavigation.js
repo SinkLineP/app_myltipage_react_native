@@ -10,7 +10,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator backBehavior="history" screenOptions={drawerNavigatorOptions(false)}>
       {useAuth() === false ? (
-        <Drawer.Screen name="Authorization" component={AuthorizationStackNavigator} options={setOptions("Авторизация", "#1571b5", "#fff", true)} />
+        <Drawer.Screen name="AuthorizationPage" component={AuthorizationStackNavigator} options={setOptions("Авторизация", "#1571b5", "#fff", true)} />
       ) : (
         <Drawer.Screen name="Profile" component={ProfileStackNavigator} options={setOptions("Профиль", "#1571b5", "#fff", true)} />
       )}

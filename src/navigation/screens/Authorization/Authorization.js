@@ -2,9 +2,20 @@ import React, {useState} from "react";
 import {View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Dimensions} from "react-native";
 import {Formik} from "formik";
 import {StatusBar} from "expo-status-bar";
+import * as Yup from 'yup';
 
+const errorsMessages = {
+  shortText: 'Слишком коротко!',
+  longText: 'Слишком длинно!',
+  required: 'Обязательно для заполнения'
+}
+const AuthorizationSchema = Yup.object().shape({
+  username: Yup.string().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
+  password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
+  confirmPassword: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
+});
 
-export default function SignUp() {
+export default function Authorization() {
   const [title, setTitle] = useState("Регистрация");
   const [btnTitle, setBtnTitle] = useState("Зарегистрироваться");
   const [btnStatus, setBtnStatus] = useState("registration");
@@ -27,6 +38,7 @@ export default function SignUp() {
             password: "",
             confirmPassword: "",
           }}
+          validationSchema={AuthorizationSchema}
           onSubmit={(values, {resetForm}) => {
             if (values.username && values.confirmPassword && values.password !== "") {
               console.log(values)
@@ -37,6 +49,7 @@ export default function SignUp() {
           {(props) => (
             <View style={AuthStyles.container}>
               <View style={AuthStyles.form}>
+
                 <TextInput
                   style={AuthStyles.input}
                   placeholder={"Введите имя пользователя.."}
@@ -61,7 +74,7 @@ export default function SignUp() {
                 ) : ""}
               </View>
 
-              <Text style={AuthStyles.btnSubmit} onPress={props.handleSubmit}>{btnTitle}</Text>
+              <Text style={AuthStyles.btnSubmit} onPress={props.handleSubmit} type={"submit"}>{btnTitle}</Text>
 
               {btnStatus === "registration" ? (
                 <Text style={AuthStyles.auth}>Есть учетная запись - <Text style={AuthStyles.link} onPress={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}>войти</Text></Text>

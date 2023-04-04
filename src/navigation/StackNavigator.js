@@ -9,7 +9,7 @@ import CartoonReviews from "./screens/Reviews/Categories/Cartoon/CartoonReviews"
 import SerialsReviews from "./screens/Reviews/Categories/Serials/SerialsReviews";
 import CartoonSerials from "./screens/Reviews/Categories/CartoonSerials/CartoonSerials";
 import MainProfile from "./screens/Profile/MainProfile/MainProfile";
-import SignUp from "./screens/Authorization/SignUp";
+import Authorization from "./screens/Authorization/Authorization";
 
 const Stack = createStackNavigator();
 
@@ -39,7 +39,7 @@ const ProfileStackNavigator = () => {
 const AuthorizationStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SignUp" component={SignUp} options={setOptions("", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", false)} />
     </Stack.Navigator>
   )
 }
