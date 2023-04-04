@@ -8,6 +8,8 @@ import MoveReviews from "./screens/Reviews/Categories/Move/MoveReviews";
 import CartoonReviews from "./screens/Reviews/Categories/Cartoon/CartoonReviews";
 import SerialsReviews from "./screens/Reviews/Categories/Serials/SerialsReviews";
 import CartoonSerials from "./screens/Reviews/Categories/CartoonSerials/CartoonSerials";
+import MainProfile from "./screens/Profile/MainProfile/MainProfile";
+import SignUp from "./screens/Authorization/SignUp";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,24 @@ const MainStackNavigator = () => {
   );
 }
 
+const ProfileStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "coral", "#fff", false)} />
+    </Stack.Navigator>
+  )
+}
+
+
+const AuthorizationStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="SignUp" component={SignUp} options={setOptions("", "#048f9d", "#fff", false)} />
+    </Stack.Navigator>
+  )
+}
+
+
 const ContactStackNavigator = () => {
   return (
     <Stack.Navigator>
@@ -33,4 +53,4 @@ const ContactStackNavigator = () => {
   );
 }
 
-export { MainStackNavigator, ContactStackNavigator };
+export { MainStackNavigator, ContactStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator };

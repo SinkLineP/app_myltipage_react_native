@@ -1,29 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {FlatList, StyleSheet} from "react-native";
 import CardCategoriesReviews from "../../../../components/CardCategoriesReviews/CardCategoriesReviews";
-import {BASE_URL} from "../../../../Variables/ServerConfig";
 import {useDispatch, useSelector} from "react-redux";
 import {removeCategoryReviews, setCategoryReviews} from "../../../../store/Slices/categoryReviewsSlice";
 import {StatusBar} from "expo-status-bar";
-import axios from "axios";
+import {getCategoriesReviews, getUsers} from "../../../../db/getData";
+import {removeUsers, setUsers} from "../../../../store/Slices/usersSlice";
 
 
 const MainReviews = ({navigation}) => {
   const dispatch = useDispatch();
   const categoryReviews = useSelector(state => state.categoryReviews.reviews);
 
-  const res = async () => {
-    const response = await fetch(`${BASE_URL}/api/category`);
-    if (!response.ok) {
-      throw new Error("Server Error!");
-    }
-    return await response.json();
-  }
-
-
 
   useEffect(() => {
-    res().then(r => {
+    getCategoriesReviews().then(r => {
         dispatch(removeCategoryReviews())
         r.categories.map(({id, image_url, title, transfer}) => {
           dispatch(setCategoryReviews({
@@ -35,6 +26,7 @@ const MainReviews = ({navigation}) => {
         })
     });
   }, [])
+
 
   return (
     <>
