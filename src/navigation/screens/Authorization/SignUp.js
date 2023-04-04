@@ -16,11 +16,8 @@ export default function SignUp() {
   }
 
   return (
-    <TouchableWithoutFeedback style={{paddingTop: 100}} onPress={() => Keyboard.dismiss()}>
-      <View style={{
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height
-      }}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={AuthStyles.content}>
         <Text style={AuthStyles.title}>{title}</Text>
 
         <Formik
@@ -129,5 +126,8 @@ const AuthStyles = StyleSheet.create({
     fontWeight: "bold",
     color: "#048f9d"
   },
-  form: {}
+  content: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height
+  }
 })
