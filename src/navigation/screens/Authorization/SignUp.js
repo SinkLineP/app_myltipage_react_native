@@ -9,10 +9,11 @@ export default function SignUp() {
   const [btnTitle, setBtnTitle] = useState("Зарегистрироваться");
   const [btnStatus, setBtnStatus] = useState("registration");
 
-  const changeForm = (title, btnTitle, btnStatus) => {
+  const changeForm = (title, btnTitle, btnStatus, funcResetForm) => {
     setTitle(title);
     setBtnTitle(btnTitle);
     setBtnStatus(btnStatus);
+    funcResetForm({values: ""})
   }
 
   return (
@@ -63,9 +64,9 @@ export default function SignUp() {
               <Text style={AuthStyles.btnSubmit} onPress={props.handleSubmit}>{btnTitle}</Text>
 
               {btnStatus === "registration" ? (
-                <Text style={AuthStyles.auth}>Есть учетная запись - <Text style={AuthStyles.link} onPress={() => changeForm("Авторизация", "Войти", "login")}>войти</Text></Text>
+                <Text style={AuthStyles.auth}>Есть учетная запись - <Text style={AuthStyles.link} onPress={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}>войти</Text></Text>
               ) : (
-                <Text style={AuthStyles.auth}>Нету учетной записи - <Text style={AuthStyles.link} onPress={() => changeForm("Регистрация", "Зарегистрироваться", "registration")}>зарегистрироваться</Text></Text>
+                <Text style={AuthStyles.auth}>Нету учетной записи - <Text style={AuthStyles.link} onPress={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)}>зарегистрироваться</Text></Text>
               )}
             </View>
           )}
