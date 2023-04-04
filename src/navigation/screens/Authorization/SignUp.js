@@ -1,16 +1,26 @@
 import React, {useState} from "react";
-import {View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native";
+import {View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, Dimensions} from "react-native";
 import {Formik} from "formik";
+import {StatusBar} from "expo-status-bar";
 
 
 export default function SignUp() {
   const [title, setTitle] = useState("Регистрация");
   const [btnTitle, setBtnTitle] = useState("Зарегистрироваться");
+  const [btnStatus, setBtnStatus] = useState("registration");
 
+  const changeForm = (title, btnTitle, btnStatus) => {
+    setTitle(title);
+    setBtnTitle(btnTitle);
+    setBtnStatus(btnStatus);
+  }
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View>
+    <TouchableWithoutFeedback style={{paddingTop: 100}} onPress={() => Keyboard.dismiss()}>
+      <View style={{
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height
+      }}>
         <Text style={AuthStyles.title}>{title}</Text>
 
         <Formik
@@ -19,54 +29,55 @@ export default function SignUp() {
             password: "",
             confirmPassword: "",
           }}
-          onSubmit={(values) => {
-            console.log(values)
+          onSubmit={(values, {resetForm}) => {
+            if (values.username && values.confirmPassword && values.password !== "") {
+              console.log(values)
+              resetForm({values: ""})
+            }
           }}
         >
           {(props) => (
             <View style={AuthStyles.container}>
-              <TextInput
-                style={AuthStyles.input}
-                placeholder={"Введите имя пользователя.."}
-                onChangeText={props.handleChange("username")}
-                value={props.values.username}
-              />
+              <View style={AuthStyles.form}>
+                <TextInput
+                  style={AuthStyles.input}
+                  placeholder={"Введите имя пользователя.."}
+                  onChangeText={props.handleChange("username")}
+                  value={props.values.username}
+                />
 
-              {/*<TextInput*/}
-              {/*  style={AuthStyles.input}*/}
-              {/*  placeholder={"Введите почту.."}*/}
-              {/*  onChangeText={props.handleChange("title")}*/}
-              {/*  value={props.values.username}*/}
-              {/*/>*/}
+                <TextInput
+                  style={AuthStyles.input}
+                  placeholder={"Введите пароль.."}
+                  onChangeText={props.handleChange("password")}
+                  value={props.values.password}
+                />
 
-              {/*<TextInput*/}
-              {/*  style={AuthStyles.input}*/}
-              {/*  placeholder={"Введите телефон.."}*/}
-              {/*  onChangeText={props.handleChange("title")}*/}
-              {/*  value={props.values.username}*/}
-              {/*/>*/}
+                {btnStatus === "registration" ? (
+                  <TextInput
+                    style={AuthStyles.input}
+                    placeholder={"Подтвердите пароль.."}
+                    onChangeText={props.handleChange("confirmPassword")}
+                    value={props.values.confirmPassword}
+                  />
+                ) : ""}
+              </View>
 
-              <TextInput
-                style={AuthStyles.input}
-                placeholder={"Введите пароль.."}
-                onChangeText={props.handleChange("password")}
-                value={props.values.password}
-              />
+              <Text style={AuthStyles.btnSubmit} onPress={props.handleSubmit}>{btnTitle}</Text>
 
-              <TextInput
-                style={AuthStyles.input}
-                placeholder={"Подтвердите пароль.."}
-                onChangeText={props.handleChange("confirmPassword")}
-                value={props.values.confirmPassword}
-              />
-
-              <Text style={AuthStyles.btnSubmit} onPress={() => props.handleSubmit}>{btnTitle}</Text>
+              {btnStatus === "registration" ? (
+                <Text style={AuthStyles.auth}>Есть учетная запись - <Text style={AuthStyles.link} onPress={() => changeForm("Авторизация", "Войти", "login")}>войти</Text></Text>
+              ) : (
+                <Text style={AuthStyles.auth}>Нету учетной записи - <Text style={AuthStyles.link} onPress={() => changeForm("Регистрация", "Зарегистрироваться", "registration")}>зарегистрироваться</Text></Text>
+              )}
             </View>
           )}
         </Formik>
 
+        <StatusBar style="auto" />
       </View>
     </TouchableWithoutFeedback>
+
   )
 }
 
@@ -78,7 +89,12 @@ const AuthStyles = StyleSheet.create({
     borderColor: "#048f9d",
     width: "auto",
     padding: 10,
-    marginBottom: 7
+    marginBottom: 7,
+    paddingLeft: 15,
+    paddingRight: 15,
+    color: "#404040",
+    fontWeight: "bold",
+    textDecorationLine: "none"
   },
   container: {
     width: "90%",
@@ -100,6 +116,18 @@ const AuthStyles = StyleSheet.create({
     color: "#048f9d",
     fontSize: 24,
     fontWeight: "bold",
-    marginTop: 15
-  }
+    marginTop: "20%"
+  },
+  auth: {
+    color: "#404040",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10
+  },
+  link: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#048f9d"
+  },
+  form: {}
 })
