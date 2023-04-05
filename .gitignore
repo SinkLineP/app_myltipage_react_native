@@ -22,3 +22,4 @@ web-build/
 /src/components/NotFound/Images/emptyPage.png
 /assets/SplashScreen/loading.jpg
 /src/navigation/screens/Reviews/MainReviews/images/move.jpg
+/package-lock.json
