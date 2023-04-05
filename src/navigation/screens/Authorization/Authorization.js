@@ -8,7 +8,8 @@ import Login from "./Login";
 const errorsMessages = {
   shortText: 'Слишком коротко!',
   longText: 'Слишком длинно!',
-  required: 'Обязательно для заполнения'
+  required: 'Обязательно для заполнения',
+  usernameIsBusy: 'Такой пользователь уже существует',
 }
 
 export default function Authorization() {
