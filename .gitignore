@@ -15,3 +15,10 @@ web-build/
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
+/src/navigation/screens/Reviews/MainReviews/images/serials.jpg
+/src/navigation/screens/Reviews/MainReviews/images/anime.jpg
+/src/navigation/screens/Reviews/MainReviews/images/cartoon.jpg
+/src/components/Profile/CardProfile/Images/default_profile_icon.webp
+/src/components/NotFound/Images/emptyPage.png
+/assets/SplashScreen/loading.jpg
+/src/navigation/screens/Reviews/MainReviews/images/move.jpg
