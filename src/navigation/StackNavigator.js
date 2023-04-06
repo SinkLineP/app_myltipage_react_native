@@ -35,6 +35,14 @@ const ProfileStackNavigator = () => {
   )
 }
 
+const EnglishLearning = () => {
+  return (
+    <Stack.Navigator>
+      {/*<Stack.Screen name="thousandWords" component={thousandWords} options={setOptions("1000 слов", "coral", "#fff", false)} />*/}
+    </Stack.Navigator>
+  )
+}
+
 
 const AuthorizationStackNavigator = () => {
   return (

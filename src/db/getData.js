@@ -16,7 +16,7 @@ export const getUsers = async () => {
   return await response.json();
 }
 
-export const checkIsCreatedUser = async (username) => {
+export const checkIsCreatedUser = async (email, password) => {
   const response = await fetch(`${BASE_URL}/users/check-is-created-user`, {
     method: 'POST',
     headers: {
@@ -24,7 +24,8 @@ export const checkIsCreatedUser = async (username) => {
     },
     body: JSON.stringify({
       user: {
-        username: username
+        mail: email,
+        password: password
       }
     })
   });
