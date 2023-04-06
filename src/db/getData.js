@@ -35,6 +35,22 @@ export const checkIsCreatedUser = async (email, password) => {
   return await response.json();
 }
 
+export const createUser = async (user) => {
+  const response = await fetch(`${BASE_URL}/users/create-user`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({
+      user: user
+    })
+  });
+  if (!response.ok) {
+    throw new Error("Server Error!");
+  }
+  return await response.json();
+}
+
 export const getFilmByOption = async ({Order, Type, RatingFrom, RatingTo, YearFrom, YearTo, Page}) => {
   const options = {
     method: 'GET',

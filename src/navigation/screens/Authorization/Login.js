@@ -5,13 +5,11 @@ import * as Yup from "yup";
 import {checkIsCreatedUser} from "../../../db/getData";
 import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
 import {useDispatch} from "react-redux";
+import {LoginSchema} from "./Schematics/Schematics";
 
 
-export default function Login({errorsMessages, btnTitle, changeForm, navigation}) {
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
-    password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
-  });
+export default function Login({btnTitle, changeForm, navigation}) {
+
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
 

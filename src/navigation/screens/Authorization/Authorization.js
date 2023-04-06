@@ -5,12 +5,7 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 
 
-const errorsMessages = {
-  shortText: 'Слишком коротко!',
-  longText: 'Слишком длинно!',
-  required: 'Обязательно для заполнения',
-  usernameIsBusy: 'Такой пользователь уже существует',
-}
+
 
 export default function Authorization({navigation}) {
   const [title, setTitle] = useState("Регистрация");
@@ -29,9 +24,9 @@ export default function Authorization({navigation}) {
       <View style={AuthStyles.content}>
         <Text style={AuthStyles.title}>{title}</Text>
         {btnStatus !== "registration" ? (
-          <Login navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm}  />
+          <Login navigation={navigation} btnStatus={btnStatus} btnTitle={btnTitle} changeForm={changeForm}  />
         ) : (
-          <SignUp navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm} />
+          <SignUp navigation={navigation} btnStatus={btnStatus} btnTitle={btnTitle} changeForm={changeForm} />
         )}
         <StatusBar style="auto" />
       </View>

@@ -1,96 +1,61 @@
-import React, {useState} from "react";
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import React, {useEffect, useState} from "react";
+import {Alert, BackHandler, ScrollView, StyleSheet} from "react-native";
 import {Formik} from "formik";
-import * as Yup from "yup";
-import VerificationSMS from "./VerificationSMS";
+import EmailAndPassword from "./PagesSignUp/EmailAndPassword";
+import ConfirmPhone from "./PagesSignUp/ConfirmPhone";
+import AboutUser from "./PagesSignUp/AboutUser";
+import {acceptPhoneSchema, SignUpSchema, aboutUser} from "./Schematics/Schematics";
 
 
-export default function SignUp({errorsMessages, btnStatus, btnTitle, changeForm}) {
-  const SignUpSchema = Yup.object().shape({
-    username: Yup.string().min(2, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
-    password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
-    confirmPassword: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).oneOf([Yup.ref('password')], 'Пароли не совпадают').required(errorsMessages.required),
-  });
+export default function SignUp({navigation, btnTitle, changeForm}) {
+  // const createUser = {
+  //   username: "",
+  //   mail: "",
+  //   phone: "",
+  //   lastname: "",
+  //   firstname: "",
+  //   surname: "",
+  //   password: "",
+  //   age: "",
+  //   avatar: ""
+  // }
+  const [page, setPage] = useState(1);
 
-  const acceptPhoneSchema = Yup.object().shape({
-    phone: Yup.number().min(10, errorsMessages.shortText).max(10, errorsMessages.longText).required(errorsMessages.required),
-  });
-
-  const SignUpObject = {
-    username: "",
-    mail: "",
-    phone: "",
-    lastname: "",
-    firstname: "",
-    surname: "",
-    password: "",
-    age: "",
-    avatar: ""
-  }
-
-  const [showAccept, setShowAccept] = useState(false);
-
-
-  if (showAccept === false) {
+  if (page === 1) {
     return (
       <Formik
         initialValues={{
-          username: "",
+          email: "",
           password: "",
           confirmPassword: "",
         }}
         validationSchema={SignUpSchema}
         onSubmit={(values, {resetForm}) => {
-          if (values.username && values.confirmPassword && values.password !== "") {
-            SignUpObject.username = values.username;
-            SignUpObject.password = values.password;
-            setShowAccept(true);
-            resetForm({values: ""})
-            //=======
-            return VerificationSMS()
-          }
+          // if (values.email && values.confirmPassword && values.password !== "") {
+          //   // createUser({
+          //   //   username: "",
+          //   //   mail: values.email,
+          //   //   phone: "",
+          //   //   lastname: "",
+          //   //   firstname: "",
+          //   //   surname: "",
+          //   //   password: values.password,
+          //   //   age: "",
+          //   //   avatar: ""
+          //   // }).then(r => r)
+          //   resetForm({values: ""})
+          // }
+          console.log(values)
         }}
       >
         {(props) => (
-          <View style={SignUpStyles.container}>
-            <View style={SignUpStyles.form}>
-
-              {props.errors.username && props.touched.username ? (<Text style={SignUpStyles.error}>{props.errors.username}</Text>) : <Text></Text>}
-              <TextInput
-                style={SignUpStyles.input}
-                placeholder={"Введите имя пользователя.."}
-                onChangeText={props.handleChange("username")}
-                value={props.values.username}
-              />
-
-              {props.errors.password && props.touched.password ? (<Text style={SignUpStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
-              <TextInput
-                style={SignUpStyles.input}
-                placeholder={"Введите пароль.."}
-                onChangeText={props.handleChange("password")}
-                value={props.values.password}
-              />
-
-              {props.errors.confirmPassword && props.touched.confirmPassword ? (<Text style={SignUpStyles.error}>{props.errors.confirmPassword}</Text>) : <Text></Text>}
-              <TextInput
-                style={SignUpStyles.input}
-                placeholder={"Подтвердите пароль.."}
-                onChangeText={props.handleChange("confirmPassword")}
-                value={props.values.confirmPassword}
-              />
-            </View>
-
-            <Text style={SignUpStyles.btnSubmit} onPress={props.handleSubmit} type={"submit"}>{btnTitle}</Text>
-
-            <Text style={SignUpStyles.auth}>Есть учетная запись - <Text style={SignUpStyles.link} onPress={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}>войти</Text></Text>
-          </View>
+          <EmailAndPassword page={page} changeForm={changeForm} setPage={setPage} props={props} SignUpStyles={SignUpStyles} />
         )}
       </Formik>
     )
-  } else {
+  } else if (page === 2) {
     return (
       <Formik
-
         initialValues={{
           phone: ""
         }}
@@ -101,15 +66,31 @@ export default function SignUp({errorsMessages, btnStatus, btnTitle, changeForm}
           }
         }}
       >
-        <View style={SignUpStyles.container}>
-          <Text style={SignUpStyles.text} onPress={() => setShowAccept(false)}>Back to Form</Text>
-        </View>
+        {(props) => (
+          <ConfirmPhone page={page} changeForm={changeForm} SignUpStyles={SignUpStyles} setPage={setPage} props={props} />
+        )}
+
+      </Formik>
+    )
+  } else if (page === 3) {
+    return (
+      <Formik
+        initialValues={{
+          phone: ""
+        }}
+        validationSchema={aboutUser}
+        onSubmit={(values, {resetForm}) => {
+          if (values.phone !== "") {
+            console.log(values)
+          }
+        }}
+      >
+        {(props) => (
+          <AboutUser SignUpStyles={SignUpStyles} changeForm={changeForm} setPage={setPage} page={page} btnTitle={btnTitle} props={props} />
+        )}
       </Formik>
     )
   }
-
-
-
 }
 
 
@@ -133,6 +114,7 @@ const SignUpStyles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: 10,
+    flex: 1
   },
   auth: {
     color: "#404040",
@@ -162,5 +144,14 @@ const SignUpStyles = StyleSheet.create({
   text: {
     color: "#048f9d",
     fontWeight: "bold"
+  },
+  notActive: {
+    padding: 10,
+    backgroundColor: "#91bdc6",
+    marginTop: 20,
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 25
   }
 })
