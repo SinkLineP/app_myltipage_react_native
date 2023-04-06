@@ -45,7 +45,30 @@ export default function SignUp({navigation, btnTitle, changeForm}) {
           //   // }).then(r => r)
           //   resetForm({values: ""})
           // }
-          console.log(values)
+
+          const {
+            username,
+            mail,
+            phone,
+            lastname,
+            firstname,
+            surname,
+            password,
+            age,
+            // avatar
+          } = values;
+          if (
+            username !== "" &&
+            mail !== "" &&
+            phone !== "" &&
+            lastname !== "" &&
+            firstname !== "" &&
+            surname !== "" &&
+            password !== "" &&
+            age !== ""
+          ) {
+            console.log(values)
+          }
         }}
       >
         {(props) => (

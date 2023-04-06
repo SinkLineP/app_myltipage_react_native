@@ -15,7 +15,7 @@ export const SignUpSchema = Yup.object().shape({
 });
 
 export const acceptPhoneSchema = Yup.object().shape({
-  phone: Yup.number().min(10, errorsMessages.shortText).max(10, errorsMessages.longText).required(errorsMessages.required),
+  phone: Yup.number().min(10, errorsMessages.shortText).max(11, errorsMessages.longText).required(errorsMessages.required),
 });
 
 export const LoginSchema = Yup.object().shape({
