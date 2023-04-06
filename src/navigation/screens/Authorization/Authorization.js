@@ -41,7 +41,7 @@ const AuthStyles = StyleSheet.create({
     color: "#048f9d",
     fontSize: 24,
     fontWeight: "bold",
-    marginTop: 20,
+    marginTop: 50,
   },
   content: {
     width: Dimensions.get('window').width,

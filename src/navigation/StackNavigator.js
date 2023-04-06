@@ -38,7 +38,7 @@ const ProfileStackNavigator = () => {
 
 const AuthorizationStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", false)} />
     </Stack.Navigator>
   )
