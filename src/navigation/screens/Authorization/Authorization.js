@@ -28,10 +28,10 @@ export default function Authorization({navigation}) {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={AuthStyles.content}>
         <Text style={AuthStyles.title}>{title}</Text>
-        {btnStatus === "registration" ? (
-          <SignUp navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm} />
-        ) : (
+        {btnStatus !== "registration" ? (
           <Login navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm}  />
+        ) : (
+          <SignUp navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm} />
         )}
         <StatusBar style="auto" />
       </View>
