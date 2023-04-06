@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {checkIsCreatedUser} from "../../../db/getData";
-import {setAuth, setCurrentUser} from "../../../store/Slices/usersSlice";
+import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
 import {useDispatch} from "react-redux";
 
 
-export default function Login({errorsMessages, btnStatus, btnTitle, changeForm, navigation}) {
+export default function Login({errorsMessages, btnTitle, changeForm, navigation}) {
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
     password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
@@ -29,7 +29,7 @@ export default function Login({errorsMessages, btnStatus, btnTitle, changeForm, 
               dispatch(setCurrentUser(r.user))
               setCode(r.code);
               resetForm({values: ""})
-              dispatch(setAuth(true))
+              dispatch(switchAuth())
               navigation.navigate(
                 "MainProfile"
               )
@@ -48,7 +48,7 @@ export default function Login({errorsMessages, btnStatus, btnTitle, changeForm, 
             {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}></Text>}
             <TextInput
               style={LoginStyles.input}
-              placeholder={"Введите имя пользователя.."}
+              placeholder={"Введите вашу почту.."}
               onChangeText={props.handleChange("email")}
               value={props.values.email}
             />

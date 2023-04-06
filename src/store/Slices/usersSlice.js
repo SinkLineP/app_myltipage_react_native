@@ -8,8 +8,8 @@ const usersSlice = createSlice({
     removeUsers(state) {
       state.users = []
     },
-    setAuth(state, action) {
-      state.isAuth = action.auth
+    switchAuth(state) {
+      state.isAuth = !state.isAuth
     },
     setCurrentUser(state, action) {
       state.currentUser = {
@@ -24,9 +24,12 @@ const usersSlice = createSlice({
         age: action.payload.age,
         avatar: action.payload.avatar,
       }
+    },
+    removeCurrentUser(state) {
+      state.currentUser = {}
     }
   }
 })
 
-export const {setCurrentUser, removeUsers, setAuth} = usersSlice.actions;
+export const {setCurrentUser, removeUsers, switchAuth, removeCurrentUser} = usersSlice.actions;
 export default usersSlice.reducer;
