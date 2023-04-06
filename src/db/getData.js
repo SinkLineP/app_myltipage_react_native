@@ -16,6 +16,24 @@ export const getUsers = async () => {
   return await response.json();
 }
 
+export const checkIsCreatedUser = async (username) => {
+  const response = await fetch(`${BASE_URL}/users/check-is-created-user`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({
+      user: {
+        username: username
+      }
+    })
+  });
+  if (!response.ok) {
+    throw new Error("Server Error!");
+  }
+  return await response.json();
+}
+
 export const getFilmByOption = async ({Order, Type, RatingFrom, RatingTo, YearFrom, YearTo, Page}) => {
   const options = {
     method: 'GET',
@@ -33,7 +51,6 @@ export const getFilmByOption = async ({Order, Type, RatingFrom, RatingTo, YearFr
 
   return await response.json();
 }
-
 export const getFilmByID = async (id) => {
   const options = {
     method: 'GET',

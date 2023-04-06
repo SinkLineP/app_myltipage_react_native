@@ -1,8 +1,15 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setAuth} from "../store/Slices/usersSlice";
 
 
-export default function useAuth() {
+export default function useAuth(boolean) {
   const auth = useSelector(state => state.users);
+
+  if (boolean !== undefined) {
+    const dispatch = useDispatch();
+    dispatch(setAuth(boolean))
+  }
+
   return auth.isAuth;
 }

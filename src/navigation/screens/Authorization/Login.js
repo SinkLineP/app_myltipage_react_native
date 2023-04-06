@@ -1,14 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import {checkIsCreatedUser} from "../../../db/getData";
+import {setAuth, setCurrentUser} from "../../../store/Slices/usersSlice";
+import {useDispatch} from "react-redux";
 
 
-export default function Login({errorsMessages, btnStatus, btnTitle, changeForm}) {
+export default function Login({errorsMessages, btnStatus, btnTitle, changeForm, navigation}) {
   const LoginSchema = Yup.object().shape({
     username: Yup.string().min(2, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
     password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
   });
+  const dispatch = useDispatch();
+  const [code, setCode] = useState(0);
 
   return (
     <Formik
@@ -19,15 +24,33 @@ export default function Login({errorsMessages, btnStatus, btnTitle, changeForm})
       validationSchema={LoginSchema}
       onSubmit={(values, {resetForm}) => {
         if (values.username && values.password !== "") {
-          console.log(values)
-          resetForm({values: ""})
+          checkIsCreatedUser(values.username).then(r => {
+            if (r.code !== 404) {
+              const userFromDB = r.user[0];
+
+              if (values.password === userFromDB.password) {
+                dispatch(setCurrentUser(r.user[0]))
+                setCode(r.code);
+                resetForm({values: ""})
+                dispatch(setAuth(true))
+                navigation.navigate(
+                  "MainProfile"
+                )
+              } else {
+                setCode(405)
+              }
+            } else if (r.code === 404) {
+              setCode(r.code);
+            }
+          })
         }
+        setTimeout(() => setCode(0), 3000);
       }}
     >
       {(props) => (
         <View style={LoginStyles.container}>
           <View style={LoginStyles.form}>
-            {props.errors.username && props.touched.username ? (<Text style={LoginStyles.error}>{props.errors.username}</Text>) : <Text></Text>}
+            {props.errors.username && props.touched.username ? (<Text style={LoginStyles.error}>{props.errors.username}</Text>) : <Text style={LoginStyles.error}>{code === 404 ? "Такого пользователя не существует." : ""}</Text>}
             <TextInput
               style={LoginStyles.input}
               placeholder={"Введите имя пользователя.."}
@@ -35,7 +58,7 @@ export default function Login({errorsMessages, btnStatus, btnTitle, changeForm})
               value={props.values.username}
             />
 
-            {props.errors.password && props.touched.password ? (<Text style={LoginStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
+            {props.errors.password && props.touched.password ? (<Text style={LoginStyles.error}>{props.errors.password}</Text>) : <Text style={LoginStyles.error}>{code === 405 ? "Пароль неверный." : ""}</Text>}
             <TextInput
               style={LoginStyles.input}
               placeholder={"Введите пароль.."}

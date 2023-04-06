@@ -1,4 +1,4 @@
 export const initialState = {
-  users: [],
+  currentUser: {},
   isAuth: false
 }

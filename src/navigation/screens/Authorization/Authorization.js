@@ -12,7 +12,7 @@ const errorsMessages = {
   usernameIsBusy: 'Такой пользователь уже существует',
 }
 
-export default function Authorization() {
+export default function Authorization({navigation}) {
   const [title, setTitle] = useState("Регистрация");
   const [btnTitle, setBtnTitle] = useState("Зарегистрироваться");
   const [btnStatus, setBtnStatus] = useState("registration");
@@ -29,9 +29,9 @@ export default function Authorization() {
       <View style={AuthStyles.content}>
         <Text style={AuthStyles.title}>{title}</Text>
         {btnStatus === "registration" ? (
-          <SignUp btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm} />
+          <SignUp navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm} />
         ) : (
-          <Login btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm}  />
+          <Login navigation={navigation} btnStatus={btnStatus} errorsMessages={errorsMessages} btnTitle={btnTitle} changeForm={changeForm}  />
         )}
         <StatusBar style="auto" />
       </View>
