@@ -3,9 +3,20 @@ import {View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Dimensions} 
 import {StatusBar} from "expo-status-bar";
 import SignUp from "./SignUp";
 import Login from "./Login";
+import {UserIsAuthed} from "../../../db/getData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
+export const handleAuthClick = async () => {
+  try {
+    const token = await AsyncStorage.getItem("token")
+    if(token !== null) {
+      UserIsAuthed(token).then(r => r)
+    }
+  } catch(e) {
+    console.log(e)
+  }
+}
 
 export default function Authorization({navigation}) {
   const [title, setTitle] = useState("Регистрация");
@@ -24,9 +35,9 @@ export default function Authorization({navigation}) {
       <View style={AuthStyles.content}>
         <Text style={AuthStyles.title}>{title}</Text>
         {btnStatus !== "registration" ? (
-          <Login navigation={navigation} btnStatus={btnStatus} btnTitle={btnTitle} changeForm={changeForm}  />
+          <Login navigation={navigation} btnTitle={btnTitle} changeForm={changeForm}  />
         ) : (
-          <SignUp navigation={navigation} btnStatus={btnStatus} btnTitle={btnTitle} changeForm={changeForm} />
+          <SignUp navigation={navigation} changeForm={changeForm} />
         )}
         <StatusBar style="auto" />
       </View>

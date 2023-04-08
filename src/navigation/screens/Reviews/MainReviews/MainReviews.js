@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {FlatList, StyleSheet} from "react-native";
 import CardCategoriesReviews from "../../../../components/CardCategoriesReviews/CardCategoriesReviews";
 import {useDispatch, useSelector} from "react-redux";
 import {removeCategoryReviews, setCategoryReviews} from "../../../../store/Slices/categoryReviewsSlice";
 import {StatusBar} from "expo-status-bar";
-import {getCategoriesReviews, getUsers} from "../../../../db/getData";
-import {removeUsers, setUsers} from "../../../../store/Slices/usersSlice";
+import {getCategoriesReviews} from "../../../../db/getData";
+// import {removeUsers, setUsers} from "../../../../store/Slices/usersSlice";
 
 
 const MainReviews = ({navigation}) => {

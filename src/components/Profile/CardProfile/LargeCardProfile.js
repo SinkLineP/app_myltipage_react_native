@@ -1,19 +1,18 @@
 import React from "react";
-import {StyleSheet, View, Image, Text, Button} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
-import useCurrentUser from "../../../hooks/useCurrentUser";
+import {StyleSheet, View, Image, Text} from "react-native";
+import {useSelector} from "react-redux";
 import useAuth from "../../../hooks/useAuth";
-import {removeCurrentUser} from "../../../store/Slices/usersSlice";
 
 
 export default function LargeCardProfile({navigation, funcExit}) {
-  const users = useSelector(state => state.users.users);
-  const currentUser = useCurrentUser();
+  const currentUser = useSelector(state => state.users.currentUser);
+  console.log(currentUser);
 
 
   return (
     <View style={LargeStyles.container}>
-      <Image style={LargeStyles.cardImage} source={require("./Images/default_profile_icon.webp")} />
+      <Image style={LargeStyles.cardImage} source={currentUser.avatar !== "" ? "" : require("./Images/default_profile_icon.webp")} />
+      <Text>Email: {currentUser.mail}</Text>
       <Text>First name: {currentUser.lastname}</Text>
       <Text>Name: {currentUser.firstname}</Text>
       <Text>Name: {currentUser.surname}</Text>

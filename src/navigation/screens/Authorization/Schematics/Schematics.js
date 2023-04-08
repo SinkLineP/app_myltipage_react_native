@@ -8,19 +8,13 @@ const errorsMessages = {
   passwordsDontMatch: 'Пароли не совпадают',
   emailIsNotCorrectFormat: 'Неверный формат почты'
 }
-export const SignUpSchema = Yup.object().shape({
+export const AuthSchema = Yup.object().shape({
   email: Yup.string().email(errorsMessages.emailIsNotCorrectFormat).min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
   password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
-  confirmPassword: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).oneOf([Yup.ref('password')], errorsMessages.passwordsDontMatch).required(errorsMessages.required),
 });
 
 export const acceptPhoneSchema = Yup.object().shape({
-  phone: Yup.number().min(10, errorsMessages.shortText).max(11, errorsMessages.longText).required(errorsMessages.required),
-});
-
-export const LoginSchema = Yup.object().shape({
-  email: Yup.string().email().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
-  password: Yup.string().min(6, errorsMessages.shortText).max(20, errorsMessages.longText).required(errorsMessages.required),
+  phone: Yup.number().min(11, errorsMessages.shortText).max(11, errorsMessages.longText).required(errorsMessages.required),
 });
 
 export const aboutUser = Yup.object().shape({

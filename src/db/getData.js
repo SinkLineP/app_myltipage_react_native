@@ -3,15 +3,7 @@ import {BASE_URL} from "../Variables/ServerConfig";
 export const getCategoriesReviews = async () => {
   const response = await fetch(`${BASE_URL}/api/category`);
   if (!response.ok) {
-    throw new Error("Server Error!");
-  }
-  return await response.json();
-}
-
-export const getUsers = async () => {
-  const response = await fetch(`${BASE_URL}/users`);
-  if (!response.ok) {
-    throw new Error("Server Error!");
+    throw new Error("Server Error! Categories.");
   }
   return await response.json();
 }
@@ -36,10 +28,11 @@ export const checkIsCreatedUser = async (email, password) => {
 }
 
 export const createUser = async (user) => {
-  const response = await fetch(`${BASE_URL}/users/create-user`, {
+  const response = await fetch(`${BASE_URL}/users`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
     },
     body: JSON.stringify({
       user: user
@@ -84,4 +77,40 @@ export const getFilmByID = async (id) => {
   }
 
   return await response.json();
+}
+
+export const LoginDB = async (user) => {
+  const response = await fetch(`${BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! Login.");
+  }
+  return await response.json()
+}
+
+export const AutoLogin = async (token) => {
+  const response = fetch(`${BASE_URL}/auto_login`, {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  })
+  return await response.json()
+}
+
+export const UserIsAuthed = async (token) => {
+  const response = fetch(`${BASE_URL}/user_is_authed`, {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  })
+  // if (!response.ok) {
+  //   throw new Error("Server Error! auth.");
+  // }
+  return response.message;
 }

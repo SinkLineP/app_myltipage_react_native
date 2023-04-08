@@ -1,11 +1,16 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import {Button, StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import * as Yup from "yup";
-import {checkIsCreatedUser} from "../../../db/getData";
+import {checkIsCreatedUser, LoginDB} from "../../../db/getData";
 import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
 import {useDispatch} from "react-redux";
-import {LoginSchema} from "./Schematics/Schematics";
+import {AuthSchema} from "./Schematics/Schematics";
+import {handleAuthClick} from "./Authorization";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import ButtonConfirm from "../../../components/Profile/Buttons/ButtonConfirm";
+import useAuth from "../../../hooks/useAuth";
+import FormAuth from "./components/Form/Form";
 
 
 export default function Login({btnTitle, changeForm, navigation}) {
@@ -19,51 +24,67 @@ export default function Login({btnTitle, changeForm, navigation}) {
         email: "",
         password: "",
       }}
-      validationSchema={LoginSchema}
+      validationSchema={AuthSchema}
       onSubmit={(values, {resetForm}) => {
-        if (values.email && values.password !== "") {
-          checkIsCreatedUser(values.email, values.password).then(r => {
-            if (r.code === "ok") {
-              dispatch(setCurrentUser(r.user))
-              setCode(r.code);
-              resetForm({values: ""})
-              dispatch(switchAuth())
-              navigation.navigate(
-                "MainProfile"
-              )
-            } else {
-              setCode(r.code);
-            }
-          })
+        handleAuthClick().then(r => r)
+        const user = {
+          mail: values.email,
+          password: values.password,
         }
-        setTimeout(() => setCode(""), 3000);
+        LoginDB(user).then((data) => {
+          console.log(data)
+          // try {
+          //   await AsyncStorage.setItem("token", data.jwt)
+          // } catch (e) {
+          //   console.log(e)
+          // }
+          // dispatch(setCurrentUser({
+          //   id: data.user.id,
+          //   username: data.user.username,
+          //   mail: data.user.mail,
+          //   phone: data.user.phone,
+          //   lastname: data.user.lastname,
+          //   firstname: data.user.firstname,
+          //   surname: data.user.surname,
+          //   password: data.user.password,
+          //   age: data.user.age,
+          //   avatar: data.user.avatar,
+          //   created_at: data.user.created_at,
+          //   updated_at: data.user.updated_at
+          // }))
+          // resetForm({values: ""})
+          // dispatch(switchAuth())
+          // navigation.navigate(
+          //   "MainProfile"
+          // )
+        })
+        //====================old code===================
+        // checkIsCreatedUser(values.email, values.password).then(r => {
+        //   if (r.code === "ok") {
+        //     dispatch(setCurrentUser(r.user))
+        //     setCode(r.code);
+        //     resetForm({values: ""})
+        //     dispatch(switchAuth())
+        //     navigation.navigate(
+        //       "MainProfile"
+        //     )
+        //   } else {
+        //     setCode(r.code);
+        //   }
+        // })
+        // setTimeout(() => setCode(""), 3000);
       }}
+
     >
       {(props) => (
-        <View style={LoginStyles.container}>
-          <View style={LoginStyles.form}>
-            <Text style={LoginStyles.error}>{code === "unprocessable_entity" ? "Почта или пароль не верна." : ""}</Text>
-            {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}></Text>}
-            <TextInput
-              style={LoginStyles.input}
-              placeholder={"Введите вашу почту.."}
-              onChangeText={props.handleChange("email")}
-              value={props.values.email}
-            />
-
-            {props.errors.password && props.touched.password ? (<Text style={LoginStyles.error}>{props.errors.password}</Text>) : <Text style={LoginStyles.error}></Text>}
-            <TextInput
-              style={LoginStyles.input}
-              placeholder={"Введите пароль.."}
-              onChangeText={props.handleChange("password")}
-              value={props.values.password}
-            />
-          </View>
-
-          <Text style={LoginStyles.btnSubmit} onPress={props.handleSubmit} type={"submit"}>{btnTitle}</Text>
-
-          <Text style={LoginStyles.auth}>Нету учетной записи - <Text style={LoginStyles.link} onPress={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)}>зарегистрироваться</Text></Text>
-        </View>
+        <FormAuth
+          titleContent={"Нету учетной записи - "}
+          titleButton={"зарегистрироваться"}
+          changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)}
+          props={props}
+          styles={LoginStyles}
+          btnConfirmTitle={"Войти"}
+        />
       )}
     </Formik>
   )

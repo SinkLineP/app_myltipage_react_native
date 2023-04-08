@@ -2,13 +2,8 @@ import React from "react";
 import {Text} from "react-native";
 
 
-export default function LinkSwitchLoginAndRegister({SignUpStyles, changeForm}) {
-
+export default function LinkSwitchLoginAndRegister({SignUpStyles, changeForm, titleContent, titleButton}) {
   return (
-    <Text style={SignUpStyles.auth}>
-      Есть учетная запись - <Text style={SignUpStyles.link} onPress={changeForm}>
-                              войти
-                            </Text>
-    </Text>
+    <Text style={SignUpStyles.auth}>{titleContent}<Text style={SignUpStyles.link} onPress={changeForm}>{titleButton}</Text></Text>
   )
 }

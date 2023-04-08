@@ -23,6 +23,8 @@ const usersSlice = createSlice({
         password: action.payload.password,
         age: action.payload.age,
         avatar: action.payload.avatar,
+        created_at: action.payload.created_at,
+        updated_at: action.payload.updated_at
       }
     },
     removeCurrentUser(state) {
