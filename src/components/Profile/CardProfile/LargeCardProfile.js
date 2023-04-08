@@ -1,6 +1,8 @@
 import React, {useState} from "react";
-import {StyleSheet, View, Image, Text, Dimensions, Button} from "react-native";
+import {StyleSheet, View, Text} from "react-native";
 import {useSelector} from "react-redux";
+import ShowProfile from "../../../navigation/screens/Profile/MainProfile/ShowProfile";
+import EditProfile from "../../../navigation/screens/Profile/MainProfile/EditProfile";
 
 
 export default function LargeCardProfile({navigation, funcExit}) {
@@ -29,56 +31,43 @@ export default function LargeCardProfile({navigation, funcExit}) {
     setEditing(!isEditing);
   }
 
+  const funcCancel = () => {
+    setEditing(!isEditing);
+  }
+
 
   return (
     <View style={LargeStyles.container}>
       {!isEditing ? (
-        <>
-          <View style={LargeStyles.containerFlex}>
-            <View style={LargeStyles.containerImage}>
-              <Image style={LargeStyles.cardImage} source={avatar === "" ? require("./Images/default_profile_icon.webp") : ""} />
-            </View>
-            <View style={LargeStyles.containerAboutUser}>
-              <OutputField stylesContent={LargeStyles.text} content={firstname} />
-              <OutputField stylesContent={LargeStyles.text} content={lastname} />
-              <OutputField stylesContent={LargeStyles.textLight} content={surname} />
-            </View>
-          </View>
-          <View>
-            <CustomButton titleButton={"Редактировать профиль"} stylesButton={LargeStyles.editButton} funcPress={() => funcEdit()} />
-          </View>
-          <View style={LargeStyles.aboutUser}>
-            <OutputField stylesContent={LargeStyles.userDateTitle} content={"Username: "} field={username} fieldStyles={LargeStyles.userDateContent} />
-            <OutputField stylesContent={LargeStyles.userDateTitle} content={"Email: "} field={mail} fieldStyles={LargeStyles.userDateContent} />
-            <OutputField stylesContent={LargeStyles.userDateTitle} content={"Phone: "} field={phone} fieldStyles={LargeStyles.userDateContent} />
-          </View>
-          <View>
-            <CustomButton titleButton={"Выйти из профиля"} stylesButton={LargeStyles.exit} funcPress={() => funcExit()} />
-          </View>
-        </>
+        <ShowProfile
+          avatar={avatar}
+          firstname={firstname}
+          lastname={lastname}
+          CustomButton={CustomButton}
+          funcEdit={funcEdit}
+          funcExit={funcExit}
+          mail={mail}
+          OutputField={OutputField}
+          phone={phone}
+          stylesShowProfile={LargeStyles}
+          surname={surname}
+          username={username}
+        />
       ) : (
-        <>
-          <OutputField stylesContent={LargeStyles.titleEditing} content={"Редактирование"} />
-          <View style={LargeStyles.containerFlex}>
-            <View style={LargeStyles.containerImage}>
-              <Image style={LargeStyles.cardImage} source={avatar === "" ? require("./Images/default_profile_icon.webp") : ""} />
-            </View>
-            <View style={LargeStyles.containerAboutUser}>
-              <OutputField stylesContent={LargeStyles.text} content={firstname} />
-              <OutputField stylesContent={LargeStyles.text} content={lastname} />
-              <OutputField stylesContent={LargeStyles.textLight} content={surname} />
-            </View>
-          </View>
-          <View style={LargeStyles.aboutUser}>
-            <OutputField stylesContent={LargeStyles.userDateTitle} content={"Username: "} field={username} fieldStyles={LargeStyles.userDateContent} />
-            <OutputField stylesContent={LargeStyles.userDateTitle} content={"Email: "} field={mail} fieldStyles={LargeStyles.userDateContent} />
-            <OutputField stylesContent={LargeStyles.userDateTitle} content={"Phone: "} field={phone} fieldStyles={LargeStyles.userDateContent} />
-          </View>
-          <View>
-            <CustomButton titleButton={"Сохранить"} stylesButton={LargeStyles.saveChanges} funcPress={() => funcEdit()} />
-            <CustomButton titleButton={"Отмена"} stylesButton={LargeStyles.cancelEditing} funcPress={() => funcEdit()} />
-          </View>
-        </>
+        <EditProfile
+          funcEdit={funcEdit}
+          avatar={avatar}
+          stylesEditProfile={LargeStyles}
+          surname={surname}
+          username={username}
+          phone={phone}
+          mail={mail}
+          OutputField={OutputField}
+          CustomButton={CustomButton}
+          funcCancel={funcCancel}
+          firstname={firstname}
+          lastname={lastname}
+        />
       )}
     </View>
   )
