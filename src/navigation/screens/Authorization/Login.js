@@ -28,11 +28,10 @@ export default function Login({btnTitle, changeForm, navigation}) {
       validationSchema={AuthSchema}
       onSubmit={(values, {resetForm}) => {
         handleAuthClick().then(r => r)
-        const user = {
+        LoginDB({
           mail: values.email,
           password: values.password,
-        }
-        LoginDB(user).then(async (data) => {
+        }).then(async (data) => {
           try {
             await AsyncStorage.setItem("token", data.jwt)
           } catch (e) {
@@ -58,21 +57,6 @@ export default function Login({btnTitle, changeForm, navigation}) {
             "MainProfile"
           )
         })
-        //====================old code===================
-        // checkIsCreatedUser(values.email, values.password).then(r => {
-        //   if (r.code === "ok") {
-        //     dispatch(setCurrentUser(r.user))
-        //     setCode(r.code);
-        //     resetForm({values: ""})
-        //     dispatch(switchAuth())
-        //     navigation.navigate(
-        //       "MainProfile"
-        //     )
-        //   } else {
-        //     setCode(r.code);
-        //   }
-        // })
-        // setTimeout(() => setCode(""), 3000);
       }}
 
     >

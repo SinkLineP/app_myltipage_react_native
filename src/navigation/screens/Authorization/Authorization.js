@@ -27,7 +27,7 @@ export default function Authorization({navigation}) {
     setTitle(title);
     setBtnTitle(btnTitle);
     setBtnStatus(btnStatus);
-    funcResetForm({values: ""})
+    funcResetForm({values: ""});
   }
 
   return (

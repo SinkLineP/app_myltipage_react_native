@@ -12,9 +12,8 @@ import {handleAuthClick} from "./Authorization";
 import FormAuth from "./components/Form/Form";
 
 export default function SignUp({navigation, changeForm}) {
-  const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.users.currentUser)
   const [showError, setError] = useState("");
+  const [funcReset, setFuncReset] = useState(() => {})
 
   return (
     <Formik
@@ -37,29 +36,7 @@ export default function SignUp({navigation, changeForm}) {
           avatar: ""
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
-            try {
-              await AsyncStorage.setItem('token', data.jwt);
-            } catch (error) { console.log(error) }
-
-            dispatch(setCurrentUser({
-              id: data.user.id,
-              username: data.user.username,
-              mail: data.user.mail,
-              phone: data.user.phone,
-              lastname: data.user.lastname,
-              firstname: data.user.firstname,
-              surname: data.user.surname,
-              password: data.user.password,
-              age: data.user.age,
-              avatar: data.user.avatar,
-              created_at: data.user.created_at,
-              updated_at: data.user.updated_at
-            }))
-            resetForm({values: ""})
-            dispatch(switchAuth())
-            navigation.navigate(
-              "MainProfile"
-            )
+            changeForm("Авторизация", "Войти", "login", resetForm)
           } else {
             setError(data.isUsedEmail);
             setTimeout(() => setError(""), 3000)
@@ -67,19 +44,22 @@ export default function SignUp({navigation, changeForm}) {
         })
       }}
     >
-      {(props) => (
-        <>
-          <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
-          <FormAuth
-            titleContent={"Есть учетная запись - "}
-            titleButton={"войти"}
-            changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}
-            props={props}
-            styles={SignUpStyles}
-            btnConfirmTitle={"Зарегистрироваться"}
-          />
-        </>
-      )}
+      {(props) => {
+
+        return (
+          <>
+            <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
+            <FormAuth
+              titleContent={"Есть учетная запись - "}
+              titleButton={"войти"}
+              changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}
+              props={props}
+              styles={SignUpStyles}
+              btnConfirmTitle={"Зарегистрироваться"}
+            />
+          </>
+        )
+      }}
     </Formik>
   )
 }
