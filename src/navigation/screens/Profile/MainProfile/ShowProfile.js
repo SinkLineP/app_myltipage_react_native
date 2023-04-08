@@ -16,7 +16,7 @@ export default function ShowProfile({stylesShowProfile, OutputField, CustomButto
         </View>
       </View>
       <View>
-        <CustomButton titleButton={"Редактировать профиль"} stylesButton={stylesShowProfile.editButton} funcPress={() => funcEdit()} />
+        <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Редактировать профиль"} funcPress={() => funcEdit()} />
       </View>
       <View style={stylesShowProfile.aboutUser}>
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Username: "} field={username} fieldStyles={stylesShowProfile.userDateContent} />
@@ -24,7 +24,7 @@ export default function ShowProfile({stylesShowProfile, OutputField, CustomButto
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={phone} fieldStyles={stylesShowProfile.userDateContent} />
       </View>
       <View>
-        <CustomButton titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => funcExit()} />
+        <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => funcExit()} />
       </View>
     </>
   )

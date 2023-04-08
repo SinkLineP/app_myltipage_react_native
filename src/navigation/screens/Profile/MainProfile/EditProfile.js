@@ -1,5 +1,5 @@
 import React from "react";
-import {Image, View} from "react-native";
+import {Image, View, Text} from "react-native";
 
 
 export default function EditProfile({stylesEditProfile, OutputField, CustomButton, avatar, firstname, lastname, surname, username, mail, phone, funcEdit, funcCancel}) {
@@ -10,6 +10,7 @@ export default function EditProfile({stylesEditProfile, OutputField, CustomButto
       <View style={stylesEditProfile.containerFlex}>
         <View style={stylesEditProfile.containerImage}>
           <Image style={stylesEditProfile.cardImage} source={avatar === "" ? require("./Images/default_profile_icon.webp") : ""} />
+          {/*<CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Выбрать изображение.."} stylesButton={stylesEditProfile.select} funcPress={() => funcEdit()} />*/}
         </View>
         <View style={stylesEditProfile.containerAboutUser}>
           <OutputField stylesContent={stylesEditProfile.text} content={firstname} />
@@ -23,8 +24,8 @@ export default function EditProfile({stylesEditProfile, OutputField, CustomButto
         <OutputField stylesContent={stylesEditProfile.userDateTitle} content={"Phone: "} field={phone} fieldStyles={stylesEditProfile.userDateContent} />
       </View>
       <View>
-        <CustomButton titleButton={"Сохранить"} stylesButton={stylesEditProfile.saveChanges} funcPress={() => funcEdit()} />
-        <CustomButton titleButton={"Отмена"} stylesButton={stylesEditProfile.cancelEditing} funcPress={() => funcCancel()} />
+        <CustomButton colorBG={"#8fcd75"} color={"white"} titleButton={"Сохранить"} stylesButton={stylesEditProfile.saveChanges} funcPress={() => funcEdit()} />
+        <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Отмена"} stylesButton={stylesEditProfile.cancelEditing} funcPress={() => funcCancel()} />
       </View>
     </>
   )

@@ -21,9 +21,17 @@ export default function LargeCardProfile({navigation, funcExit}) {
     }
   }
 
-  const CustomButton = ({stylesButton, funcPress, titleButton}) => {
+  const CustomButton = ({color, colorBG, funcPress, titleButton}) => {
     return (
-      <Text style={stylesButton} onPress={funcPress}>{titleButton}</Text>
+      <Text style={{
+        backgroundColor: colorBG,
+        textAlign: "center",
+        color: color,
+        fontWeight: "bold",
+        fontSize: 20,
+        padding: 10,
+        marginTop: 5
+      }} onPress={funcPress}>{titleButton}</Text>
     )
   }
 
@@ -104,17 +112,6 @@ const LargeStyles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50
-  },
-  exit: {
-    width: "100%",
-    backgroundColor: "#c74242",
-    padding: 5,
-    textAlign: "center",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: 20,
-    marginBottom: 20
   },
   text: {
     color: "white",
