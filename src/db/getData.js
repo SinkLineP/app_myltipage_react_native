@@ -8,17 +8,14 @@ export const getCategoriesReviews = async () => {
   return await response.json();
 }
 
-export const checkIsCreatedUser = async (email, password) => {
+export const checkIsCreatedUser = async (user) => {
   const response = await fetch(`${BASE_URL}/users/check-is-created-user`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
     },
     body: JSON.stringify({
-      user: {
-        mail: email,
-        password: password
-      }
+      user: user
     })
   });
   if (!response.ok) {

@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Formik} from "formik";
-import {AuthSchema} from "./Schematics/Schematics";
+import {AuthSchema, errorsMessages} from "./Schematics/Schematics";
 import ButtonConfirm from "../../../components/Profile/Buttons/ButtonConfirm";
 import LinkSwitchLoginAndRegister from "./LinkSwitchLoginAndRegister";
-import {createUser} from "../../../db/getData";
+import {checkIsCreatedUser, createUser} from "../../../db/getData";
 import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {handleAuthClick} from "./Authorization";
@@ -14,7 +14,7 @@ import FormAuth from "./components/Form/Form";
 export default function SignUp({navigation, changeForm}) {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.users.currentUser)
-
+  const [showError, setError] = useState("");
 
   return (
     <Formik
@@ -25,7 +25,7 @@ export default function SignUp({navigation, changeForm}) {
       validationSchema={AuthSchema}
       onSubmit={(values, {resetForm}) => {
         handleAuthClick().then(r => r)
-        const options = {
+        createUser({
           username: "",
           mail: values.email,
           phone: "",
@@ -35,46 +35,50 @@ export default function SignUp({navigation, changeForm}) {
           password: values.password,
           age: "",
           avatar: ""
-        };
+        }).then(async (data) => {
+          if (data.isUsedEmail === "") {
+            try {
+              await AsyncStorage.setItem('token', data.jwt);
+            } catch (error) { console.log(error) }
 
-        createUser(options).then(async (data) => {
-          try {
-            await AsyncStorage.setItem('token', data.jwt);
+            dispatch(setCurrentUser({
+              id: data.user.id,
+              username: data.user.username,
+              mail: data.user.mail,
+              phone: data.user.phone,
+              lastname: data.user.lastname,
+              firstname: data.user.firstname,
+              surname: data.user.surname,
+              password: data.user.password,
+              age: data.user.age,
+              avatar: data.user.avatar,
+              created_at: data.user.created_at,
+              updated_at: data.user.updated_at
+            }))
+            resetForm({values: ""})
+            dispatch(switchAuth())
+            navigation.navigate(
+              "MainProfile"
+            )
+          } else {
+            setError(data.isUsedEmail);
+            setTimeout(() => setError(""), 3000)
           }
-          catch (error) {
-            console.log(error)
-          }
-          dispatch(setCurrentUser({
-            id: data.user.id,
-            username: data.user.username,
-            mail: data.user.mail,
-            phone: data.user.phone,
-            lastname: data.user.lastname,
-            firstname: data.user.firstname,
-            surname: data.user.surname,
-            password: data.user.password,
-            age: data.user.age,
-            avatar: data.user.avatar,
-            created_at: data.user.created_at,
-            updated_at: data.user.updated_at
-          }))
-          resetForm({values: ""})
-          dispatch(switchAuth())
-          navigation.navigate(
-            "MainProfile"
-          )
         })
       }}
     >
       {(props) => (
-        <FormAuth
-          titleContent={"Есть учетная запись - "}
-          titleButton={"войти"}
-          changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}
-          props={props}
-          styles={SignUpStyles}
-          btnConfirmTitle={"Зарегистрироваться"}
-        />
+        <>
+          <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
+          <FormAuth
+            titleContent={"Есть учетная запись - "}
+            titleButton={"войти"}
+            changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}
+            props={props}
+            styles={SignUpStyles}
+            btnConfirmTitle={"Зарегистрироваться"}
+          />
+        </>
       )}
     </Formik>
   )
@@ -117,7 +121,7 @@ const SignUpStyles = StyleSheet.create({
   error: {
     color: "#b92121",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   text: {
     color: "#048f9d",

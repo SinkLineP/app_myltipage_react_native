@@ -1,12 +1,12 @@
 import * as Yup from "yup";
 
-const errorsMessages = {
+export const errorsMessages = {
   shortText: 'Слишком коротко!',
   longText: 'Слишком длинно!',
   required: 'Обязательно для заполнения',
-  usernameIsBusy: 'Такой пользователь уже существует',
+  userIsCreated: 'Такой пользователь уже существует',
   passwordsDontMatch: 'Пароли не совпадают',
-  emailIsNotCorrectFormat: 'Неверный формат почты'
+  emailIsNotCorrectFormat: 'Неверный формат почты',
 }
 export const AuthSchema = Yup.object().shape({
   email: Yup.string().email(errorsMessages.emailIsNotCorrectFormat).min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),

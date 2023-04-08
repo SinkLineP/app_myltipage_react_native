@@ -30,7 +30,7 @@ const MainStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "coral", "#fff", false)} />
+      <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "#048f9d", "#fff", false)} />
     </Stack.Navigator>
   )
 }
