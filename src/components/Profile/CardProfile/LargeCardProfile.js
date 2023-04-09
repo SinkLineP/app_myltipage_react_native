@@ -6,7 +6,7 @@ import EditProfile from "../../../navigation/screens/Profile/MainProfile/EditPro
 
 
 export default function LargeCardProfile({navigation, funcExit}) {
-  const {avatar, mail, lastname, firstname, surname, phone, username} = useSelector(state => state.users.currentUser);
+  const {avatar, mail, lastname, firstname, surname, phone, username, age, password} = useSelector(state => state.users.currentUser);
   const [isEditing, setEditing] = useState(false);
 
   const OutputField = ({stylesContent, content, field, fieldStyles}) => {
@@ -21,14 +21,14 @@ export default function LargeCardProfile({navigation, funcExit}) {
     }
   }
 
-  const CustomButton = ({color, colorBG, funcPress, titleButton}) => {
+  const CustomButton = ({color, colorBG, funcPress, titleButton, fontSize}) => {
     return (
       <Text style={{
         backgroundColor: colorBG,
         textAlign: "center",
         color: color,
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: fontSize !== undefined ? fontSize : 20,
         padding: 10,
         marginTop: 5
       }} onPress={funcPress}>{titleButton}</Text>
@@ -36,6 +36,10 @@ export default function LargeCardProfile({navigation, funcExit}) {
   }
 
   const funcEdit = () => {
+    setEditing(!isEditing);
+  }
+
+  const funcSave = () => {
     setEditing(!isEditing);
   }
 
@@ -60,10 +64,11 @@ export default function LargeCardProfile({navigation, funcExit}) {
           stylesShowProfile={LargeStyles}
           surname={surname}
           username={username}
+          age={age}
         />
       ) : (
         <EditProfile
-          funcEdit={funcEdit}
+          funcSave={funcSave}
           avatar={avatar}
           stylesEditProfile={LargeStyles}
           surname={surname}
@@ -75,6 +80,8 @@ export default function LargeCardProfile({navigation, funcExit}) {
           funcCancel={funcCancel}
           firstname={firstname}
           lastname={lastname}
+          age={age}
+          password={password}
         />
       )}
     </View>
@@ -99,6 +106,7 @@ const LargeStyles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-around",
     flexDirection: "row",
+    paddingBottom: 15
   },
   containerImage: {
     flex: 1,
@@ -123,7 +131,9 @@ const LargeStyles = StyleSheet.create({
     color: "rgba(255,255,255,0.9)",
     textTransform: "uppercase",
     lineHeight: 20,
-    fontSize: 18
+    fontSize: 18,
+    paddingLeft: 3
+
   },
   editButton: {
     width: "100%",
@@ -137,8 +147,8 @@ const LargeStyles = StyleSheet.create({
     marginBottom: 10
   },
   aboutUser: {
-    paddingLeft: 10,
     paddingTop: 15,
+    paddingBottom: 15,
   },
   userDateTitle: {
     color: "white",

@@ -2,7 +2,7 @@ import React from "react";
 import {Image, View} from "react-native";
 
 
-export default function ShowProfile({stylesShowProfile, OutputField, CustomButton, funcEdit, funcExit, avatar, firstname, lastname, surname, username, mail, phone}) {
+export default function ShowProfile({stylesShowProfile, OutputField, CustomButton, funcEdit, funcExit, avatar, firstname, lastname, surname, username, mail, phone, age}) {
   return (
     <>
       <View style={stylesShowProfile.containerFlex}>
@@ -20,6 +20,7 @@ export default function ShowProfile({stylesShowProfile, OutputField, CustomButto
       </View>
       <View style={stylesShowProfile.aboutUser}>
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Username: "} field={username} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Возраст: "} field={age} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Email: "} field={mail} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={phone} fieldStyles={stylesShowProfile.userDateContent} />
       </View>

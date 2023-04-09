@@ -29,9 +29,12 @@ const usersSlice = createSlice({
     },
     removeCurrentUser(state) {
       state.currentUser = {}
+    },
+    setAvatarForCurrentUser(state, action) {
+      state.currentUser.avatar = action.payload
     }
   }
 })
 
-export const {setCurrentUser, removeUsers, switchAuth, removeCurrentUser} = usersSlice.actions;
+export const {setCurrentUser, setAvatarForCurrentUser, switchAuth, removeCurrentUser} = usersSlice.actions;
 export default usersSlice.reducer;

@@ -1,18 +1,11 @@
 import React from "react";
-import {StyleSheet, Image} from "react-native";
+import {Image} from "react-native";
 
-export default function ImageViewer({ placeholderImageSource, selectedImage }) {
-  const imageSource = selectedImage !== null
+export default function ImageViewer({ selectedImage, styles }) {
+  const imageSource = selectedImage !== ""
     ? { uri: selectedImage }
-    : placeholderImageSource;
+    : require("./Images/default_profile_icon.webp");
 
-  return <Image style={stylesImageViewer.image} source={imageSource} />;
+  return <Image style={styles} source={imageSource} />;
 }
 
-const stylesImageViewer = StyleSheet.create({
-  image: {
-    height: 50,
-    width: 50,
-    borderRadius: 50
-  }
-})
