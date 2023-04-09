@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {View, StyleSheet, Button, Text} from "react-native";
 import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import * as ImagePicker from "expo-image-picker";
+import {setAvatarForCurrentUser} from "../../../../store/Slices/usersSlice";
 
 
 export default function EditProfile({
@@ -43,6 +44,16 @@ export default function EditProfile({
     }
   }
 
+  const user = {
+    id: currentUser.id,
+    username: "",
+    lastname: "",
+    firstname: "",
+    surname: "",
+    age: "",
+    avatar: selectedImage !== "" ? selectedImage : currentUser.avatar
+  }
+
   return (
     <>
       <OutputField stylesContent={stylesEditProfile.titleEditing} content={"Редактирование"} />
@@ -64,7 +75,7 @@ export default function EditProfile({
         <OutputField stylesContent={stylesEditProfile.userDateTitle} content={"Phone: "} field={phone} fieldStyles={stylesEditProfile.userDateContent} />
       </View>
       <View>
-        <CustomButton colorBG={"#8fcd75"} color={"white"} titleButton={"Сохранить"} stylesButton={stylesEditProfile.saveChanges} funcPress={() => funcSave()} />
+        <CustomButton colorBG={"#8fcd75"} color={"white"} titleButton={"Сохранить"} stylesButton={stylesEditProfile.saveChanges} funcPress={() => funcSave(user, selectedImage)} />
         <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Отмена"} stylesButton={stylesEditProfile.cancelEditing} funcPress={() => funcCancel()} />
       </View>
     </>

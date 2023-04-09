@@ -1,13 +1,18 @@
 import React from "react";
 import {Image, View} from "react-native";
+import {useSelector} from "react-redux";
+import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
 
 
-export default function ShowProfile({stylesShowProfile, OutputField, CustomButton, funcEdit, funcExit, avatar, firstname, lastname, surname, username, mail, phone, age}) {
+export default function ShowProfile({stylesShowProfile, OutputField, CustomButton, funcEdit, funcExit, firstname, lastname, surname, username, mail, phone, age}) {
+  const currentUser = useSelector(state => state.users.currentUser);
+  console.log(currentUser)
+
   return (
     <>
       <View style={stylesShowProfile.containerFlex}>
         <View style={stylesShowProfile.containerImage}>
-          <Image style={stylesShowProfile.cardImage} source={avatar === "" ? require("./Images/default_profile_icon.webp") : ""} />
+          <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
         </View>
         <View style={stylesShowProfile.containerAboutUser}>
           <OutputField stylesContent={stylesShowProfile.text} content={firstname} />

@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 import {StyleSheet, View, Text} from "react-native";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ShowProfile from "../../../navigation/screens/Profile/MainProfile/ShowProfile";
 import EditProfile from "../../../navigation/screens/Profile/MainProfile/EditProfile";
+import {EditUser} from "../../../db/getData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {setAvatarForCurrentUser} from "../../../store/Slices/usersSlice";
 
 
 export default function LargeCardProfile({navigation, funcExit}) {
@@ -35,12 +38,26 @@ export default function LargeCardProfile({navigation, funcExit}) {
     )
   }
 
+  const [token, setToken] = useState("");
+  const dispatch = useDispatch();
+
   const funcEdit = () => {
     setEditing(!isEditing);
   }
 
-  const funcSave = () => {
-    setEditing(!isEditing);
+  const funcSave = async (user, selectedImage) => {
+    try {
+      const tokenStorage = await AsyncStorage.getItem("token");
+      if (tokenStorage !== null) {
+        setToken(tokenStorage)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    EditUser({user, token}).then(r => {
+      dispatch(setAvatarForCurrentUser(selectedImage));
+      setEditing(!isEditing);
+    })
   }
 
   const funcCancel = () => {

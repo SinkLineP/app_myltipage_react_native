@@ -92,7 +92,7 @@ export const LoginDB = async (user) => {
 }
 
 export const AutoLogin = async (token) => {
-  const response = fetch(`${BASE_URL}/auto_login`, {
+  const response = await fetch(`${BASE_URL}/auto_login`, {
     headers: {
       "Authorization": `Bearer ${token}`
     }
@@ -101,13 +101,24 @@ export const AutoLogin = async (token) => {
 }
 
 export const UserIsAuthed = async (token) => {
-  const response = fetch(`${BASE_URL}/user_is_authed`, {
+  const response = await fetch(`${BASE_URL}/user_is_authed`, {
     headers: {
       "Authorization": `Bearer ${token}`
     }
   })
-  // if (!response.ok) {
-  //   throw new Error("Server Error! auth.");
-  // }
+  return response.message;
+}
+
+export const EditUser = async ({user, token}) => {
+  const response = await fetch(`${BASE_URL}/user-edit/`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": 'application/json' ,
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      user: user
+    })
+  })
   return response.message;
 }
