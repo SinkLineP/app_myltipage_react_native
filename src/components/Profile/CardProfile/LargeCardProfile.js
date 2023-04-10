@@ -11,15 +11,16 @@ import {setAvatarForCurrentUser, setCurrentUser} from "../../../store/Slices/use
 export default function LargeCardProfile({navigation, funcExit}) {
   const {avatar, mail, lastname, firstname, surname, phone, username, age, password} = useSelector(state => state.users.currentUser);
   const [isEditing, setEditing] = useState(false);
+  const textEmpty = "не указано"
 
   const OutputField = ({stylesContent, content, field, fieldStyles}) => {
     if (field !== undefined) {
       return (
-        <Text style={stylesContent}>{content}<Text style={fieldStyles}>{field !== "" ? field : "-пусто-"}</Text></Text>
+        <Text style={stylesContent}>{content}<Text style={fieldStyles}>{field !== "" ? field : textEmpty}</Text></Text>
       );
     } else {
       return (
-        <Text style={stylesContent}>{content !== "" ? content : "-пусто-"}</Text>
+        <Text style={stylesContent}>{content !== "" ? content : textEmpty}</Text>
       );
     }
   }
@@ -92,19 +93,10 @@ export default function LargeCardProfile({navigation, funcExit}) {
     <View style={LargeStyles.container}>
       {!isEditing ? (
         <ShowProfile
-          avatar={avatar}
-          firstname={firstname}
-          lastname={lastname}
           CustomButton={CustomButton}
           funcEdit={funcEdit}
           funcExit={funcExit}
-          mail={mail}
           OutputField={OutputField}
-          phone={phone}
-          stylesShowProfile={LargeStyles}
-          surname={surname}
-          username={username}
-          age={age}
         />
       ) : (
         <EditProfile
@@ -143,40 +135,6 @@ const LargeStyles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20
   },
-  containerFlex: {
-    display: "flex",
-    justifyContent: "space-around",
-    flexDirection: "row",
-    paddingBottom: 15
-  },
-  containerImage: {
-    flex: 1,
-    paddingLeft: "4%"
-  },
-  containerAboutUser: {
-    flex: 1,
-    paddingTop: 15,
-  },
-  cardImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginLeft: 20
-  },
-  text: {
-    color: "white",
-    textTransform: "uppercase",
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  textLight: {
-    color: "rgba(255,255,255,0.9)",
-    textTransform: "uppercase",
-    lineHeight: 20,
-    fontSize: 18,
-    paddingLeft: 3
-
-  },
   editButton: {
     width: "100%",
     backgroundColor: "#13bfd4",
@@ -187,18 +145,6 @@ const LargeStyles = StyleSheet.create({
     fontSize: 20,
     marginTop: 30,
     marginBottom: 10
-  },
-  aboutUser: {
-    paddingTop: 15,
-    paddingBottom: 15,
-  },
-  userDateTitle: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 16
-  },
-  userDateContent: {
-    fontWeight: "normal",
   },
   titleEditing: {
     color: "white",

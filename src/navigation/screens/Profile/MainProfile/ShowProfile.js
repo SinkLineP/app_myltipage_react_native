@@ -1,12 +1,11 @@
 import React from "react";
-import {Image, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {useSelector} from "react-redux";
 import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
 
 
-export default function ShowProfile({stylesShowProfile, OutputField, CustomButton, funcEdit, funcExit, firstname, lastname, surname, username, mail, phone, age}) {
+export default function ShowProfile({OutputField, CustomButton, funcEdit, funcExit}) {
   const currentUser = useSelector(state => state.users.currentUser);
-  console.log(currentUser)
 
   return (
     <>
@@ -15,19 +14,20 @@ export default function ShowProfile({stylesShowProfile, OutputField, CustomButto
           <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
         </View>
         <View style={stylesShowProfile.containerAboutUser}>
-          <OutputField stylesContent={stylesShowProfile.text} content={firstname} />
-          <OutputField stylesContent={stylesShowProfile.text} content={lastname} />
-          <OutputField stylesContent={stylesShowProfile.textLight} content={surname} />
+          <OutputField stylesContent={stylesShowProfile.text} content={currentUser.firstname} />
+          <OutputField stylesContent={stylesShowProfile.text} content={currentUser.lastname} />
+          <OutputField stylesContent={stylesShowProfile.textLight} content={currentUser.surname} />
         </View>
       </View>
       <View>
         <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Редактировать профиль"} funcPress={() => funcEdit()} />
       </View>
       <View style={stylesShowProfile.aboutUser}>
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Username: "} field={username} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Возраст: "} field={age} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Email: "} field={mail} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={phone} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Возраст: "} field={currentUser.age} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Пол: "} field={currentUser.gender} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Username: "} field={currentUser.username} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Email: "} field={currentUser.mail} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={currentUser.phone} fieldStyles={stylesShowProfile.userDateContent} />
       </View>
       <View>
         <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => funcExit()} />
@@ -35,3 +35,51 @@ export default function ShowProfile({stylesShowProfile, OutputField, CustomButto
     </>
   )
 }
+
+const stylesShowProfile = StyleSheet.create({
+  containerFlex: {
+    display: "flex",
+    justifyContent: "space-around",
+    flexDirection: "row",
+    paddingBottom: 15
+  },
+  containerImage: {
+    flex: 1,
+    paddingLeft: "4%"
+  },
+  cardImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginLeft: 20
+  },
+  containerAboutUser: {
+    flex: 1,
+    paddingTop: 15,
+  },
+  text: {
+    color: "white",
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  textLight: {
+    color: "rgba(255,255,255,0.9)",
+    textTransform: "uppercase",
+    lineHeight: 20,
+    fontSize: 18,
+    paddingLeft: 3
+  },
+  aboutUser: {
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  userDateTitle: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  userDateContent: {
+    fontWeight: "normal",
+  }
+})

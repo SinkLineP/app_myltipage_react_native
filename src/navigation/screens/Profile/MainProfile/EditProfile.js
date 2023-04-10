@@ -128,8 +128,17 @@ export default function EditProfile({
                 value={props.values.age}
               />
 
+              <Text></Text>
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Ваш пол: "} field={username} fieldStyles={stylesEditProfile.userDateContent} />
+              <TextInput
+                style={stylesEdit.input}
+                placeholder={"Введите имя пользователя.."}
+                onChangeText={props.handleChange("username")}
+                value={props.values.username}
+              />
+
               {props.errors.username && props.touched.username ? (<Text style={stylesEdit.error}>{props.errors.username}</Text>) : <Text></Text>}
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Username: "} field={username} fieldStyles={stylesEditProfile.userDateContent} />
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Имя пользователя: "} field={username} fieldStyles={stylesEditProfile.userDateContent} />
               <TextInput
                 style={stylesEdit.input}
                 placeholder={"Введите имя пользователя.."}
