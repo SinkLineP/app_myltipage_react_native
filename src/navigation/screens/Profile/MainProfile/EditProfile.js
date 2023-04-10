@@ -63,14 +63,13 @@ export default function EditProfile({
         onSubmit={(values) => {
           const user = {
             id: currentUser.id,
-            username: values.username,
-            lastname: values.lastname,
-            firstname: values.firstname,
-            surname: values.surname,
-            age: values.age,
+            username: values.username !== "" ? values.username : currentUser.username,
+            lastname: values.lastname !== "" ? values.lastname : currentUser.lastname,
+            firstname: values.firstname !== "" ? values.firstname : currentUser.firstname,
+            surname: values.surname !== "" ? values.surname : currentUser.surname,
+            age: values.age !== "" ? values.age : currentUser.age,
             avatar: selectedImage !== "" ? selectedImage : currentUser.avatar
           }
-
           funcSave(user, selectedImage)
           console.log(values)
         }}
