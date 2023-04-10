@@ -2,9 +2,11 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 import {useSelector} from "react-redux";
 import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
+import {OutputField} from "../../../../components/OutputField/OutputField";
+import {CustomButton} from "../../../../components/Profile/Buttons/CustomButton";
 
 
-export default function ShowProfile({OutputField, CustomButton, funcEdit, funcExit}) {
+export default function ShowProfile({funcExit, funcSettings}) {
   const currentUser = useSelector(state => state.users.currentUser);
   const language = "RU";
 
@@ -32,9 +34,6 @@ export default function ShowProfile({OutputField, CustomButton, funcEdit, funcEx
           <OutputField stylesContent={stylesShowProfile.textLight} content={currentUser.surname} />
         </View>
       </View>
-      <View>
-        <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Редактировать профиль"} funcPress={() => funcEdit()} />
-      </View>
       <View style={stylesShowProfile.aboutUser}>
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Возраст: "} field={currentUser.age} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Пол: "} field={translateGender(language, currentUser.gender)} fieldStyles={stylesShowProfile.userDateContent} />
@@ -43,6 +42,7 @@ export default function ShowProfile({OutputField, CustomButton, funcEdit, funcEx
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={currentUser.phone} fieldStyles={stylesShowProfile.userDateContent} />
       </View>
       <View>
+        <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Настройки"} funcPress={() => funcSettings()} />
         <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => funcExit()} />
       </View>
     </>

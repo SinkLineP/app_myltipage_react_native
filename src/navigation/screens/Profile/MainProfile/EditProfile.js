@@ -1,21 +1,25 @@
 import React, {useEffect, useState} from "react";
-import {View, StyleSheet, TextInput, Text, Button} from "react-native";
+import {View, StyleSheet, TextInput, Text} from "react-native";
 import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
 import {useSelector} from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 import {Formik} from "formik";
 import {EditUserSchema} from "./Schematics/Schematics";
 import { ButtonGroup } from '@rneui/themed'
+import {OutputField} from "../../../../components/OutputField/OutputField";
+import {CustomButton} from "../../../../components/Profile/Buttons/CustomButton";
 
 
-export default function EditProfile({
-    OutputField,
-    CustomButton,
-    funcSave,
-    funcCancel,
-  }) {
+export default function EditProfile({funcSave, funcCancel}) {
   const currentUser = useSelector(state => state.users.currentUser);
   const [selectedImage, setSelectedImage] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(1);
+
+
+  useEffect(() => {
+    setSelectedIndex(returnIndexGender(currentUser.gender));
+  }, [currentUser.gender])
+
   const PickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -61,13 +65,6 @@ export default function EditProfile({
       return "other";
     }
   }
-
-  const [selectedIndex, setSelectedIndex] = useState(1);
-
-  useEffect(() => {
-    setSelectedIndex(returnIndexGender(currentUser.gender));
-  }, [currentUser.gender])
-
 
 
   return (

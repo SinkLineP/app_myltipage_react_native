@@ -5,39 +5,13 @@ import ShowProfile from "../../../navigation/screens/Profile/MainProfile/ShowPro
 import EditProfile from "../../../navigation/screens/Profile/MainProfile/EditProfile";
 import {EditUser} from "../../../db/getData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {setAvatarForCurrentUser, setCurrentUser} from "../../../store/Slices/usersSlice";
+import {setCurrentUser} from "../../../store/Slices/usersSlice";
+import SettingsProfile from "../../../navigation/screens/Profile/MainProfile/SettingsProfile";
 
 
 export default function CardProfile({navigation, funcExit}) {
   const [isEditing, setEditing] = useState(false);
-  const textEmpty = "не указано"
-
-  const OutputField = ({stylesContent, content, field, fieldStyles}) => {
-    if (field !== undefined) {
-      return (
-        <Text style={stylesContent}>{content}<Text style={fieldStyles}>{field !== "" ? field : textEmpty}</Text></Text>
-      );
-    } else {
-      return (
-        <Text style={stylesContent}>{content !== "" ? content : textEmpty}</Text>
-      );
-    }
-  }
-
-  const CustomButton = ({color, colorBG, funcPress, titleButton, fontSize}) => {
-    return (
-      <Text style={{
-        backgroundColor: colorBG,
-        textAlign: "center",
-        color: color,
-        fontWeight: "bold",
-        fontSize: fontSize !== undefined ? fontSize : 20,
-        padding: 10,
-        marginTop: 5
-      }} onPress={funcPress}>{titleButton}</Text>
-    )
-  }
-
+  const [isSetting, setSetting] = useState(false);
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.users.currentUser);
@@ -80,21 +54,35 @@ export default function CardProfile({navigation, funcExit}) {
     setEditing(!isEditing);
   }
 
+  const funcSettings = () => {
+    setSetting(!isSetting)
+  }
+
+  const RenderShow = () => {
+    if (isSetting) {
+      return (
+        <SettingsProfile
+          setting={isSetting}
+          funcSetting={setSetting}
+          funcEdit={funcEdit}
+        />
+      )
+    } else {
+      return (
+        <ShowProfile
+          funcExit={funcExit}
+          funcSettings={funcSettings}
+        />
+      )
+    }
+  }
+
   return (
     <View style={LargeStyles.container}>
-      {!isEditing ? (
-        <ShowProfile
-          CustomButton={CustomButton}
-          funcEdit={funcEdit}
-          funcExit={funcExit}
-          OutputField={OutputField}
-        />
-      ) : (
+      {!isEditing ? (<RenderShow />) : (
         <EditProfile
           funcSave={funcSave}
           stylesEditProfile={LargeStyles}
-          OutputField={OutputField}
-          CustomButton={CustomButton}
           funcCancel={funcCancel}
         />
       )}
