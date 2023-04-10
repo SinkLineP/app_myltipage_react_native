@@ -81,6 +81,13 @@ export default function LargeCardProfile({navigation, funcExit}) {
   }
 
 
+  const funcDeleteImage = () => {
+    EditUser({user, token}).then(r => {
+      dispatch(setAvatarForCurrentUser(""))
+      setEditing(!isEditing);
+    })
+  }
+
   return (
     <View style={LargeStyles.container}>
       {!isEditing ? (
@@ -153,7 +160,8 @@ const LargeStyles = StyleSheet.create({
   cardImage: {
     width: 100,
     height: 100,
-    borderRadius: 50
+    borderRadius: 50,
+    marginLeft: 20
   },
   text: {
     color: "white",

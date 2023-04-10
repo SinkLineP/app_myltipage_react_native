@@ -45,6 +45,8 @@ export default function EditProfile({
   const editUserPhoto = (photo) => {
     if (photo !== "") {
       return selectedImage;
+    }  else if (photo === "deleted") {
+      return require("./Images/default_profile_icon.webp");
     } else {
       return currentUser.avatar;
     }
@@ -68,7 +70,7 @@ export default function EditProfile({
             firstname: values.firstname !== "" ? values.firstname : currentUser.firstname,
             surname: values.surname !== "" ? values.surname : currentUser.surname,
             age: values.age !== "" ? values.age : currentUser.age,
-            avatar: selectedImage !== "" ? selectedImage : currentUser.avatar
+            avatar: selectedImage !== "" && selectedImage !== "deleted" ? selectedImage :  selectedImage === "deleted" ? selectedImage : currentUser.avatar
           }
           funcSave(user, selectedImage)
           console.log(values)
@@ -83,6 +85,7 @@ export default function EditProfile({
               </View>
               <View style={stylesEdit.imageSelectContainer}>
                 <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Выбрать изображение.."} fontSize={18} stylesButton={stylesEditProfile.select} funcPress={() => PickImageAsync()} />
+                <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Удалить изображение.."} fontSize={18} stylesButton={stylesEditProfile.select} funcPress={() => setSelectedImage("deleted")} />
               </View>
             </View>
             <View style={stylesEditProfile.aboutUser}>
@@ -153,10 +156,11 @@ const stylesEdit = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
+    paddingTop: 20,
   },
   imageSelectContainer: {
     flex: 1,
-    paddingTop: 12
+    // paddingTop: 12
   },
   input: {
     color: "white",
