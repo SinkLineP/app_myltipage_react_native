@@ -5,7 +5,8 @@ import ShowProfile from "../../../navigation/screens/Profile/MainProfile/ShowPro
 import EditProfile from "../../../navigation/screens/Profile/MainProfile/EditProfile";
 import {EditUser} from "../../../db/getData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {setAvatarForCurrentUser} from "../../../store/Slices/usersSlice";
+import {setAvatarForCurrentUser, setCurrentUser} from "../../../store/Slices/usersSlice";
+import {current} from "@reduxjs/toolkit";
 
 
 export default function LargeCardProfile({navigation, funcExit}) {
@@ -40,6 +41,7 @@ export default function LargeCardProfile({navigation, funcExit}) {
 
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.users.currentUser);
 
   const funcEdit = () => {
     setEditing(!isEditing);
@@ -55,12 +57,26 @@ export default function LargeCardProfile({navigation, funcExit}) {
       console.log(e)
     }
     EditUser({user, token}).then(r => {
-      dispatch(setAvatarForCurrentUser(selectedImage));
+      dispatch(setCurrentUser({
+        id: currentUser.id,
+        username: user.username,
+        mail: currentUser.mail,
+        phone: currentUser.phone,
+        lastname: user.lastname,
+        firstname: user.firstname,
+        surname: user.surname,
+        password: currentUser.password,
+        age: user.age,
+        avatar: user.avatar,
+        created_at: currentUser.created_at,
+        updated_at: currentUser.updated_at
+      }))
       setEditing(!isEditing);
     })
   }
 
-  const funcCancel = () => {
+  const funcCancel = (resetForm) => {
+    resetForm({values: ""})
     setEditing(!isEditing);
   }
 
@@ -117,7 +133,8 @@ const LargeStyles = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 10,
     borderStyle: "solid",
-    borderRadius: 10
+    borderRadius: 10,
+    marginBottom: 20
   },
   containerFlex: {
     display: "flex",

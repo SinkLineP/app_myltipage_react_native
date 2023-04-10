@@ -37,6 +37,7 @@ export default function Login({btnTitle, changeForm, navigation}) {
           } catch (e) {
             console.log(e)
           }
+
           dispatch(setCurrentUser({
             id: data.user.id,
             username: data.user.username,
@@ -51,6 +52,7 @@ export default function Login({btnTitle, changeForm, navigation}) {
             created_at: data.user.created_at,
             updated_at: data.user.updated_at
           }))
+
           resetForm({values: ""})
           dispatch(switchAuth())
           navigation.navigate(
