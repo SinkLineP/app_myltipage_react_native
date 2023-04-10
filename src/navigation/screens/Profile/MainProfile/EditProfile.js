@@ -1,32 +1,18 @@
-import React, {useState} from "react";
-import {View, StyleSheet, TextInput, Text} from "react-native";
+import React, {useEffect, useState} from "react";
+import {View, StyleSheet, TextInput, Text, Button} from "react-native";
 import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
 import {useSelector} from "react-redux";
 import * as ImagePicker from "expo-image-picker";
-import {AuthSchema} from "../../Authorization/Schematics/Schematics";
-import {handleAuthClick} from "../../Authorization/Authorization";
-import {LoginDB} from "../../../../db/getData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
 import {Formik} from "formik";
 import {EditUserSchema} from "./Schematics/Schematics";
+import { ButtonGroup } from '@rneui/themed'
 
 
 export default function EditProfile({
-    stylesEditProfile,
     OutputField,
     CustomButton,
-    firstname,
-    lastname,
-    surname,
-    username,
-    mail,
-    phone,
     funcSave,
     funcCancel,
-    age,
-    // avatar,
-    // password
   }) {
   const currentUser = useSelector(state => state.users.currentUser);
   const [selectedImage, setSelectedImage] = useState("");
@@ -52,6 +38,38 @@ export default function EditProfile({
     }
   }
 
+  const returnIndexGender = (gender) => {
+    if (gender === "male") {
+      return 0;
+    } else if (gender === "other") {
+      return 1;
+    } else if (gender === "female") {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  const returnGenderFromIndex = (index) => {
+    if (index === 0) {
+      return "male";
+    } else if (index === 1) {
+      return "other";
+    } else if (index === 2) {
+      return "female";
+    } else {
+      return "other";
+    }
+  }
+
+  const [selectedIndex, setSelectedIndex] = useState(1);
+
+  useEffect(() => {
+    setSelectedIndex(returnIndexGender(currentUser.gender));
+  }, [currentUser.gender])
+
+
+
   return (
       <Formik
         initialValues={{
@@ -71,28 +89,27 @@ export default function EditProfile({
             surname: values.surname !== "" ? values.surname : currentUser.surname,
             age: values.age !== "" ? values.age : currentUser.age,
             avatar: selectedImage !== "" && selectedImage !== "deleted" ? selectedImage :  selectedImage === "deleted" ? selectedImage : currentUser.avatar,
-            gender: ""
+            gender: returnGenderFromIndex(selectedIndex)
           }
-          funcSave(user, selectedImage)
-          console.log(values)
+          funcSave(user)
         }}
       >
         {(props) => (
           <>
-            <OutputField stylesContent={stylesEditProfile.titleEditing} content={"Редактирование"} />
+            <OutputField stylesContent={stylesEdit.titleEditing} content={"Редактирование"} />
             <View style={stylesEdit.containerImage}>
               <View style={stylesEdit.imageContainer}>
-                <ImageViewer styles={stylesEditProfile.cardImage} selectedImage={editUserPhoto(selectedImage)} />
+                <ImageViewer styles={stylesEdit.cardImage} selectedImage={editUserPhoto(selectedImage)} />
               </View>
               <View style={stylesEdit.imageSelectContainer}>
-                <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Выбрать изображение.."} fontSize={18} stylesButton={stylesEditProfile.select} funcPress={() => PickImageAsync()} />
-                <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Удалить изображение.."} fontSize={18} stylesButton={stylesEditProfile.select} funcPress={() => setSelectedImage("deleted")} />
+                <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Выбрать изображение.."} fontSize={18} funcPress={() => PickImageAsync()} />
+                <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Удалить изображение.."} fontSize={18} funcPress={() => setSelectedImage("deleted")} />
               </View>
             </View>
-            <View style={stylesEditProfile.aboutUser}>
+            <View style={stylesEdit.aboutUser}>
 
               {props.errors.firstname && props.touched.firstname ? (<Text style={stylesEdit.error}>{props.errors.firstname}</Text>) : <Text></Text>}
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Имя: "} field={firstname} fieldStyles={stylesEditProfile.userDateContent} />
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Имя: "} field={currentUser.firstname} fieldStyles={stylesEdit.userDateContent} />
               <TextInput
                 style={stylesEdit.input}
                 placeholder={"Введите имя.."}
@@ -101,7 +118,7 @@ export default function EditProfile({
               />
 
               {props.errors.lastname && props.touched.lastname ? (<Text style={stylesEdit.error}>{props.errors.lastname}</Text>) : <Text></Text>}
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Фамилия: "} field={lastname} fieldStyles={stylesEditProfile.userDateContent} />
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Фамилия: "} field={currentUser.lastname} fieldStyles={stylesEdit.userDateContent} />
               <TextInput
                 style={stylesEdit.input}
                 placeholder={"Введите фамилию.."}
@@ -110,7 +127,7 @@ export default function EditProfile({
               />
 
               {props.errors.surname && props.touched.surname ? (<Text style={stylesEdit.error}>{props.errors.surname}</Text>) : <Text></Text>}
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Отчество: "} field={surname} fieldStyles={stylesEditProfile.userDateContent} />
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Отчество: "} field={currentUser.surname} fieldStyles={stylesEdit.userDateContent} />
               <TextInput
                 style={stylesEdit.input}
                 placeholder={"Введите отчество.."}
@@ -119,7 +136,7 @@ export default function EditProfile({
               />
 
               {props.errors.age && props.touched.age ? (<Text style={stylesEdit.error}>{props.errors.age}</Text>) : <Text></Text>}
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Возраст: "} field={age} fieldStyles={stylesEditProfile.userDateContent} />
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Возраст: "} field={currentUser.age} fieldStyles={stylesEdit.userDateContent} />
               <TextInput
                 keyboardType={"numeric"}
                 style={stylesEdit.input}
@@ -129,16 +146,21 @@ export default function EditProfile({
               />
 
               <Text></Text>
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Ваш пол: "} field={username} fieldStyles={stylesEditProfile.userDateContent} />
-              <TextInput
-                style={stylesEdit.input}
-                placeholder={"Введите имя пользователя.."}
-                onChangeText={props.handleChange("username")}
-                value={props.values.username}
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Ваш пол: "} field={currentUser.username} fieldStyles={stylesEdit.userDateContent} />
+              <ButtonGroup
+                textStyle={stylesEdit.groupButtonsText}
+                buttons={['male', 'other', 'female']}
+                selectedIndex={selectedIndex}
+                onPress={(value) => {
+                  setSelectedIndex(value)
+                }}
+                containerStyle={stylesEdit.groupButtons}
+                selectedButtonStyle={stylesEdit.groupButtonsSelectedButton}
               />
 
+
               {props.errors.username && props.touched.username ? (<Text style={stylesEdit.error}>{props.errors.username}</Text>) : <Text></Text>}
-              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Имя пользователя: "} field={username} fieldStyles={stylesEditProfile.userDateContent} />
+              <OutputField stylesContent={stylesEdit.userDateTitle} content={"Имя пользователя: "} field={currentUser.username} fieldStyles={stylesEdit.userDateContent} />
               <TextInput
                 style={stylesEdit.input}
                 placeholder={"Введите имя пользователя.."}
@@ -150,8 +172,8 @@ export default function EditProfile({
               {/*<OutputField stylesContent={stylesEditProfile.userDateTitle} content={"Phone: "} field={phone} fieldStyles={stylesEditProfile.userDateContent} />*/}
             </View>
             <View>
-              <CustomButton colorBG={"#8fcd75"} color={"white"} titleButton={"Сохранить"} stylesButton={stylesEditProfile.saveChanges} funcPress={() => props.handleSubmit()} />
-              <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Отмена"} stylesButton={stylesEditProfile.cancelEditing} funcPress={() => funcCancel(props.resetForm)} />
+              <CustomButton colorBG={"#8fcd75"} color={"white"} titleButton={"Сохранить"} stylesButton={stylesEdit.saveChanges} funcPress={() => props.handleSubmit()} />
+              <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Отмена"} stylesButton={stylesEdit.cancelEditing} funcPress={() => funcCancel(props.resetForm)} />
             </View>
           </>
         )}
@@ -170,7 +192,6 @@ const stylesEdit = StyleSheet.create({
   },
   imageSelectContainer: {
     flex: 1,
-    // paddingTop: 12
   },
   input: {
     color: "white",
@@ -179,6 +200,8 @@ const stylesEdit = StyleSheet.create({
     borderColor: "#fff",
     marginBottom: 15,
     paddingLeft: 10,
+    marginLeft: 10,
+    width: "93.5%",
     backgroundColor: "rgba(66,189,202,0.81)"
   },
   userDateTitle: {
@@ -192,6 +215,60 @@ const stylesEdit = StyleSheet.create({
     color: "#b92121",
     fontWeight: "bold",
     textAlign: "center"
+  },
+  titleEditing: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    paddingBottom: 20
+  },
+  saveChanges: {
+    backgroundColor: "#8fcd75",
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    padding: 10,
+    marginTop: 20
+  },
+  cancelEditing: {
+    backgroundColor: "#c74242",
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+    padding: 10,
+    marginTop: 5
+  },
+  userDateContent: {
+    fontWeight: "normal",
+  },
+  aboutUser: {
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  cardImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginLeft: 20
+  },
+  groupButtons: {
+    borderRadius: 50,
+    borderColor: "#fff",
+    height: 30,
+    backgroundColor: "rgba(66,189,202,0.81)",
+    textAlign: "center",
+    marginRight: 10,
+    marginBottom: 15
+  },
+  groupButtonsText: {
+    color: "#fff",
+    textTransform: "uppercase",
+    fontWeight: "bold"
+  },
+  groupButtonsSelectedButton: {
+    backgroundColor: "rgb(68,230,233)",
   }
 })
-

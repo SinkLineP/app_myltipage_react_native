@@ -1,6 +1,6 @@
 import React from "react"
 import {Dimensions, ScrollView, StyleSheet, View} from "react-native";
-import LargeCardProfile from "../../../../components/Profile/CardProfile/LargeCardProfile";
+import CardProfile from "../../../../components/Profile/CardProfile/CardProfile";
 import {useDispatch} from "react-redux";
 import {removeCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,7 +22,7 @@ export default function MainProfile({navigation}) {
   return (
     <>
       <ScrollView style={MainProfileStyles.container}>
-        <LargeCardProfile navigation={navigation} funcExit={exitProfile} />
+        <CardProfile navigation={navigation} funcExit={exitProfile} />
       </ScrollView>
     </>
   )

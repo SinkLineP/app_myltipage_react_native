@@ -6,6 +6,19 @@ import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
 
 export default function ShowProfile({OutputField, CustomButton, funcEdit, funcExit}) {
   const currentUser = useSelector(state => state.users.currentUser);
+  const language = "RU";
+
+  const translateGender = (lang, gender) => {
+    if (lang === "RU") {
+      if (gender === "male") {
+        return "Мужчина";
+      } else if (gender === "other") {
+        return "Другое";
+      } else if (gender === "female") {
+        return "Женщина";
+      }
+    }
+  }
 
   return (
     <>
@@ -24,7 +37,7 @@ export default function ShowProfile({OutputField, CustomButton, funcEdit, funcEx
       </View>
       <View style={stylesShowProfile.aboutUser}>
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Возраст: "} field={currentUser.age} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Пол: "} field={currentUser.gender} fieldStyles={stylesShowProfile.userDateContent} />
+        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Пол: "} field={translateGender(language, currentUser.gender)} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Username: "} field={currentUser.username} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Email: "} field={currentUser.mail} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={currentUser.phone} fieldStyles={stylesShowProfile.userDateContent} />
@@ -81,5 +94,5 @@ const stylesShowProfile = StyleSheet.create({
   },
   userDateContent: {
     fontWeight: "normal",
-  }
+  },
 })

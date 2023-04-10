@@ -8,8 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {setAvatarForCurrentUser, setCurrentUser} from "../../../store/Slices/usersSlice";
 
 
-export default function LargeCardProfile({navigation, funcExit}) {
-  const {avatar, mail, lastname, firstname, surname, phone, username, age, password} = useSelector(state => state.users.currentUser);
+export default function CardProfile({navigation, funcExit}) {
   const [isEditing, setEditing] = useState(false);
   const textEmpty = "не указано"
 
@@ -47,7 +46,7 @@ export default function LargeCardProfile({navigation, funcExit}) {
     setEditing(!isEditing);
   }
 
-  const funcSave = async (user, selectedImage) => {
+  const funcSave = async (user) => {
     try {
       const tokenStorage = await AsyncStorage.getItem("token");
       if (tokenStorage !== null) {
@@ -81,14 +80,6 @@ export default function LargeCardProfile({navigation, funcExit}) {
     setEditing(!isEditing);
   }
 
-
-  const funcDeleteImage = () => {
-    EditUser({user, token}).then(r => {
-      dispatch(setAvatarForCurrentUser(""))
-      setEditing(!isEditing);
-    })
-  }
-
   return (
     <View style={LargeStyles.container}>
       {!isEditing ? (
@@ -101,19 +92,10 @@ export default function LargeCardProfile({navigation, funcExit}) {
       ) : (
         <EditProfile
           funcSave={funcSave}
-          avatar={avatar}
           stylesEditProfile={LargeStyles}
-          surname={surname}
-          username={username}
-          phone={phone}
-          mail={mail}
           OutputField={OutputField}
           CustomButton={CustomButton}
           funcCancel={funcCancel}
-          firstname={firstname}
-          lastname={lastname}
-          age={age}
-          password={password}
         />
       )}
     </View>
@@ -146,29 +128,4 @@ const LargeStyles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 10
   },
-  titleEditing: {
-    color: "white",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 20,
-    paddingBottom: 20
-  },
-  saveChanges: {
-    backgroundColor: "#8fcd75",
-    color: "white",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 20,
-    padding: 10,
-    marginTop: 20
-  },
-  cancelEditing: {
-    backgroundColor: "#c74242",
-    textAlign: "center",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    padding: 10,
-    marginTop: 5
-  }
 })
