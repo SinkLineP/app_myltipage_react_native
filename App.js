@@ -52,6 +52,7 @@ function AppWrapper() {
             password: data.user.password,
             age: data.user.age,
             avatar: data.user.avatar,
+            gender: data.user.gender,
             created_at: data.user.created_at,
             updated_at: data.user.updated_at
           }))

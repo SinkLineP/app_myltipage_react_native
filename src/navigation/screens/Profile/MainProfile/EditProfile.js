@@ -70,7 +70,8 @@ export default function EditProfile({
             firstname: values.firstname !== "" ? values.firstname : currentUser.firstname,
             surname: values.surname !== "" ? values.surname : currentUser.surname,
             age: values.age !== "" ? values.age : currentUser.age,
-            avatar: selectedImage !== "" && selectedImage !== "deleted" ? selectedImage :  selectedImage === "deleted" ? selectedImage : currentUser.avatar
+            avatar: selectedImage !== "" && selectedImage !== "deleted" ? selectedImage :  selectedImage === "deleted" ? selectedImage : currentUser.avatar,
+            gender: ""
           }
           funcSave(user, selectedImage)
           console.log(values)

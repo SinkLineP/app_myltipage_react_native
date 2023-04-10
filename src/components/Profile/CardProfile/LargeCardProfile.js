@@ -6,7 +6,6 @@ import EditProfile from "../../../navigation/screens/Profile/MainProfile/EditPro
 import {EditUser} from "../../../db/getData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {setAvatarForCurrentUser, setCurrentUser} from "../../../store/Slices/usersSlice";
-import {current} from "@reduxjs/toolkit";
 
 
 export default function LargeCardProfile({navigation, funcExit}) {
@@ -68,6 +67,7 @@ export default function LargeCardProfile({navigation, funcExit}) {
         password: currentUser.password,
         age: user.age,
         avatar: user.avatar,
+        gender: user.gender,
         created_at: currentUser.created_at,
         updated_at: currentUser.updated_at
       }))

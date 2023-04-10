@@ -1,19 +1,13 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, TextInput, View} from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {StyleSheet, Text} from "react-native";
 import {Formik} from "formik";
-import {AuthSchema, errorsMessages} from "./Schematics/Schematics";
-import ButtonConfirm from "../../../components/Profile/Buttons/ButtonConfirm";
-import LinkSwitchLoginAndRegister from "./LinkSwitchLoginAndRegister";
-import {checkIsCreatedUser, createUser} from "../../../db/getData";
-import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
-import {useDispatch, useSelector} from "react-redux";
+import {AuthSchema} from "./Schematics/Schematics";
+import {createUser} from "../../../db/getData";
 import {handleAuthClick} from "./Authorization";
 import FormAuth from "./components/Form/Form";
 
 export default function SignUp({navigation, changeForm}) {
   const [showError, setError] = useState("");
-  const [funcReset, setFuncReset] = useState(() => {})
 
   return (
     <Formik
@@ -33,7 +27,8 @@ export default function SignUp({navigation, changeForm}) {
           surname: "",
           password: values.password,
           age: "",
-          avatar: ""
+          avatar: "deleted",
+          gender: "other"
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
             changeForm("Авторизация", "Войти", "login", resetForm)
@@ -45,7 +40,6 @@ export default function SignUp({navigation, changeForm}) {
       }}
     >
       {(props) => {
-
         return (
           <>
             <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>

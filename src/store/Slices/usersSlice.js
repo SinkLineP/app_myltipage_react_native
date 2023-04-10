@@ -21,6 +21,7 @@ const usersSlice = createSlice({
         firstname: action.payload.firstname,
         surname: action.payload.surname,
         password: action.payload.password,
+        gender: action.payload.gender,
         age: action.payload.age,
         avatar: action.payload.avatar,
         created_at: action.payload.created_at,
