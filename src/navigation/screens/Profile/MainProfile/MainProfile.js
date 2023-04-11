@@ -10,7 +10,7 @@ export default function MainProfile({navigation}) {
     <>
       <ScrollView style={MainProfileStyles.container}>
         <ShowProfile navigation={navigation} />
-        <FriendlyTab />
+        <FriendlyTab navigation={navigation} />
       </ScrollView>
     </>
   )

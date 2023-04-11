@@ -16,6 +16,10 @@ import EditProfile from "./screens/Profile/MainProfile/Tabs/EditPages/EditProfil
 import EditEmail from "./screens/Profile/MainProfile/Tabs/EditPages/EditEmail";
 import EditPassword from "./screens/Profile/MainProfile/Tabs/EditPages/EditPassword";
 import EditPhone from "./screens/Profile/MainProfile/Tabs/EditPages/EditPhone";
+import AllFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
+import RequestFriendsPages from "./screens/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
+import ResponseFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
+
 
 const Stack = createStackNavigator();
 
@@ -45,6 +49,10 @@ const ProfileStackNavigator = () => {
       <Stack.Screen name="EditEmail" component={EditEmail} options={setOptions("Изменение почты", "#048f9d", "#fff", false)} />
       <Stack.Screen name="EditPassword" component={EditPassword} options={setOptions("Изменение пароля", "#048f9d", "#fff", false)} />
       <Stack.Screen name="EditPhone" component={EditPhone} options={setOptions("Изменение телефона", "#048f9d", "#fff", false)} />
+      {/* Friends */}
+      <Stack.Screen name="AllFriendsPage" component={AllFriendsPage} options={setOptions("Друзья", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="RequestFriendsPages" component={RequestFriendsPages} options={setOptions("Заявки в друзья", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="ResponseFriendsPage" component={ResponseFriendsPage} options={setOptions("Запросы в друзья", "#048f9d", "#fff", false)} />
     </Stack.Navigator>
   )
 }
