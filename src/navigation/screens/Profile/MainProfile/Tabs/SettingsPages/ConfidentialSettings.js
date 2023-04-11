@@ -11,17 +11,17 @@ export default function ConfidentialSettings({navigation}) {
       <View style={stylesConfidentialSettings.whiteSpace}>
         <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Изменение почты"} funcPress={() => {
           navigation.navigate(
-            "EditProfile"
+            "EditEmail"
           )
         }} />
         <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Изменение пароля"} funcPress={() => {
           navigation.navigate(
-            "EditProfile"
+            "EditPassword"
           )
         }} />
         <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Изменение телефона"} funcPress={() => {
           navigation.navigate(
-            "EditProfile"
+            "EditPhone"
           )
         }} />
       </View>
