@@ -122,3 +122,18 @@ export const EditUser = async ({user, token}) => {
   })
   return response.message;
 }
+
+export const getAllUsers = async () => {
+  const response = await fetch(`${BASE_URL}/users/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Server Error!");
+  }
+
+  return await response.json();
+}

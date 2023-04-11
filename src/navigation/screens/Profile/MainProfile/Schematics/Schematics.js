@@ -13,5 +13,5 @@ export const EditUserSchema = Yup.object().shape({
   lastname: Yup.string().matches(regexpOnlyString, errorsMessages.onlyString).min(2, errorsMessages.shortText).max(50, errorsMessages.longText),
   surname: Yup.string().matches(regexpOnlyString, errorsMessages.onlyString).min(2, errorsMessages.shortText).max(50, errorsMessages.longText),
   age: Yup.string().min(1, errorsMessages.shortText).max(3, errorsMessages.longText),
-  username: Yup.string().min(2, errorsMessages.shortText).max(30, errorsMessages.longText),
+  username: Yup.string().min(2, errorsMessages.shortText).max(18, errorsMessages.longText),
 });

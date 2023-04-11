@@ -18,7 +18,7 @@ export const acceptPhoneSchema = Yup.object().shape({
 });
 
 export const aboutUser = Yup.object().shape({
-  username: Yup.string().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
+  username: Yup.string().min(2, errorsMessages.shortText).max(18, errorsMessages.longText).required(errorsMessages.required),
   lastname: Yup.string().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
   firstname: Yup.string().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
   surname: Yup.string().min(2, errorsMessages.shortText).max(50, errorsMessages.longText).required(errorsMessages.required),
