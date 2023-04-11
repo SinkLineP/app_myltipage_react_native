@@ -125,7 +125,7 @@ export default function EditProfile({navigation}) {
       >
         {(props) => (
           <ScrollView style={stylesEdit.container}>
-            <CustomCard>
+            <CustomCard isBottomMargin={true}>
               <View style={stylesEdit.containerImage}>
                 <View style={stylesEdit.imageContainer}>
                   <ImageViewer styles={stylesEdit.cardImage} selectedImage={editUserPhoto(selectedImage)} />

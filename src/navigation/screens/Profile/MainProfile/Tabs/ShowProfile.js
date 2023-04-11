@@ -1,11 +1,12 @@
 import React from "react";
-import {StyleSheet, View, Text} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {OutputField} from "../../../../../components/OutputField/OutputField";
 import {CustomButton} from "../../../../../components/Profile/Buttons/CustomButton";
 import {removeCurrentUser, switchAuth} from "../../../../../store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomCard from "../../../../../components/Card/CustomCard";
 
 
 export default function ShowProfile({navigation}) {
@@ -36,7 +37,7 @@ export default function ShowProfile({navigation}) {
   }
 
   return (
-    <>
+    <CustomCard isBottomMargin={false}>
       <View style={stylesShowProfile.containerFlex}>
         <View style={stylesShowProfile.containerImage}>
           <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
@@ -62,7 +63,7 @@ export default function ShowProfile({navigation}) {
         }} />
         <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => exitProfile()} />
       </View>
-    </>
+    </CustomCard>
   )
 }
 

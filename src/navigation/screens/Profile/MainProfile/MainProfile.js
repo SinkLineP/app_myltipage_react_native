@@ -2,17 +2,15 @@ import React from "react"
 import {Dimensions, ScrollView, StyleSheet} from "react-native";
 import CustomCard from "../../../../components/Card/CustomCard";
 import ShowProfile from "./Tabs/ShowProfile";
+import FriendlyTab from "./Tabs/FriendlyTab";
 
 
 export default function MainProfile({navigation}) {
   return (
     <>
       <ScrollView style={MainProfileStyles.container}>
-        <CustomCard>
-          <ShowProfile
-            navigation={navigation}
-          />
-        </CustomCard>
+        <ShowProfile navigation={navigation} />
+        <FriendlyTab />
       </ScrollView>
     </>
   )
