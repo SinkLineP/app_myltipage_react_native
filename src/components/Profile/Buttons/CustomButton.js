@@ -9,8 +9,7 @@ export const CustomButton = ({color, colorBG, funcPress, titleButton, fontSize})
       color: color,
       fontWeight: "bold",
       fontSize: fontSize !== undefined ? fontSize : 20,
-      padding: 10,
-      marginTop: 5
+      padding: 10
     }} onPress={funcPress}>{titleButton}</Text>
   )
 }

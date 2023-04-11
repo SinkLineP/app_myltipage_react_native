@@ -1,14 +1,17 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
-import {useSelector} from "react-redux";
-import ImageViewer from "../../../../components/ImageViewer/ImageViewer";
-import {OutputField} from "../../../../components/OutputField/OutputField";
-import {CustomButton} from "../../../../components/Profile/Buttons/CustomButton";
+import {StyleSheet, View, Text} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
+import {OutputField} from "../../../../../components/OutputField/OutputField";
+import {CustomButton} from "../../../../../components/Profile/Buttons/CustomButton";
+import {removeCurrentUser, switchAuth} from "../../../../../store/Slices/usersSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-export default function ShowProfile({funcExit, funcSettings}) {
+export default function ShowProfile({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
   const language = "RU";
+  const dispatch = useDispatch();
 
   const translateGender = (lang, gender) => {
     if (lang === "RU") {
@@ -19,6 +22,16 @@ export default function ShowProfile({funcExit, funcSettings}) {
       } else if (gender === "female") {
         return "Женщина";
       }
+    }
+  }
+
+  const exitProfile = async () => {
+    dispatch(switchAuth());
+    dispatch(removeCurrentUser);
+    try {
+      await AsyncStorage.removeItem("token")
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -41,9 +54,13 @@ export default function ShowProfile({funcExit, funcSettings}) {
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Email: "} field={currentUser.mail} fieldStyles={stylesShowProfile.userDateContent} />
         <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={currentUser.phone} fieldStyles={stylesShowProfile.userDateContent} />
       </View>
-      <View>
-        <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Настройки"} funcPress={() => funcSettings()} />
-        <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => funcExit()} />
+      <View style={stylesShowProfile.whiteSpace}>
+        <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Настройки"} funcPress={() => {
+          navigation.navigate(
+            "SettingsProfile"
+          )
+        }} />
+        <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => exitProfile()} />
       </View>
     </>
   )
@@ -95,4 +112,8 @@ const stylesShowProfile = StyleSheet.create({
   userDateContent: {
     fontWeight: "normal",
   },
+  whiteSpace: {
+    flexDirection: "column",
+    gap: 10
+  }
 })

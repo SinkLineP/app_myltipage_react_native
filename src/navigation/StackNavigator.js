@@ -10,6 +10,12 @@ import SerialsReviews from "./screens/Reviews/Categories/Serials/SerialsReviews"
 import CartoonSerials from "./screens/Reviews/Categories/CartoonSerials/CartoonSerials";
 import MainProfile from "./screens/Profile/MainProfile/MainProfile";
 import Authorization from "./screens/Authorization/Authorization";
+import SettingsProfile from "./screens/Profile/MainProfile/Tabs/SettingsPages/SettingsProfile";
+import ConfidentialSettings from "./screens/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
+import EditProfile from "./screens/Profile/MainProfile/Tabs/EditPages/EditProfile";
+import EditEmail from "./screens/Profile/MainProfile/Tabs/EditPages/EditEmail";
+import EditPassword from "./screens/Profile/MainProfile/Tabs/EditPages/EditPassword";
+import EditPhone from "./screens/Profile/MainProfile/Tabs/EditPages/EditPhone";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +37,14 @@ const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "#048f9d", "#fff", false)} />
+      {/* Settings Pages */}
+      <Stack.Screen name="SettingsProfile" component={SettingsProfile} options={setOptions("Настройки", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="ConfidentialSettings" component={ConfidentialSettings} options={setOptions("Конфиденциальные данные", "#048f9d", "#fff", false)} />
+      {/* Edit Pages */}
+      <Stack.Screen name="EditProfile" component={EditProfile} options={setOptions("Редактирование профиля", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="EditEmail" component={EditEmail} options={setOptions("Изменение почты", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="EditPassword" component={EditPassword} options={setOptions("Изменение пароля", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="EditPhone" component={EditPhone} options={setOptions("Изменение телефона", "#048f9d", "#fff", false)} />
     </Stack.Navigator>
   )
 }

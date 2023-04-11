@@ -1,28 +1,18 @@
 import React from "react"
-import {Dimensions, ScrollView, StyleSheet, View} from "react-native";
-import CardProfile from "../../../../components/Profile/CardProfile/CardProfile";
-import {useDispatch} from "react-redux";
-import {removeCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {Dimensions, ScrollView, StyleSheet} from "react-native";
+import CustomCard from "../../../../components/Card/CustomCard";
+import ShowProfile from "./Tabs/ShowProfile";
 
 
 export default function MainProfile({navigation}) {
-  const dispatch = useDispatch();
-
-  const exitProfile = async () => {
-    dispatch(switchAuth());
-    dispatch(removeCurrentUser);
-    try {
-      await AsyncStorage.removeItem("token")
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
   return (
     <>
       <ScrollView style={MainProfileStyles.container}>
-        <CardProfile navigation={navigation} funcExit={exitProfile} />
+        <CustomCard>
+          <ShowProfile
+            navigation={navigation}
+          />
+        </CustomCard>
       </ScrollView>
     </>
   )
