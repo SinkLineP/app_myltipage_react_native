@@ -175,7 +175,7 @@ export default function EditProfile({navigation}) {
                 />
 
                 <Text></Text>
-                <OutputField stylesContent={stylesEdit.userDateTitle} content={"Ваш пол: "} field={currentUser.username} fieldStyles={stylesEdit.userDateContent} />
+                <OutputField stylesContent={stylesEdit.userDateTitle} content={"Ваш пол: "} field={currentUser.gender} fieldStyles={stylesEdit.userDateContent} />
                 <ButtonGroup
                   textStyle={stylesEdit.groupButtonsText}
                   buttons={['male', 'other', 'female']}

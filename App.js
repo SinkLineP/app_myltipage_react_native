@@ -9,6 +9,8 @@ import store from "./src/store/index";
 import {AutoLogin} from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {View} from "react-native";
+import {StatusBar} from "expo-status-bar";
 
 
 
@@ -16,6 +18,7 @@ export default function App () {
   return (
     <Provider store={store}>
       <AppWrapper />
+      <StatusBar style={"auto"} />
     </Provider>
   )
 }

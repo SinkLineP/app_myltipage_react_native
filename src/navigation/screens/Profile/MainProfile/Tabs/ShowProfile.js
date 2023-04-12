@@ -1,12 +1,11 @@
-import React from "react";
-import {StyleSheet, View} from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, View, Text, Image, ScrollView, Dimensions} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
-import {OutputField} from "../../../../../components/OutputField/OutputField";
-import {CustomButton} from "../../../../../components/Profile/Buttons/CustomButton";
 import {removeCurrentUser, switchAuth} from "../../../../../store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CustomCard from "../../../../../components/Card/CustomCard";
+import {StatusBar} from "expo-status-bar";
+
 
 
 export default function ShowProfile({navigation}) {
@@ -36,85 +35,171 @@ export default function ShowProfile({navigation}) {
     }
   }
 
+  const WidgetInput = ({counts, title}) => {
+    return (
+      <View style={stylesShowProfile.widgetInput}>
+        <Text style={stylesShowProfile.countTitle}>{counts}</Text>
+        <Text style={stylesShowProfile.contentTitle}>{title}</Text>
+      </View>
+    )
+  }
+
+  const follow = () => {
+    console.log("follow")
+  }
+
+  const [feeds, setFeeds] = useState([
+    {id: 0, title: "los angeles", image: ""},
+    {id: 1, title: "new york", image: ""},
+    {id: 2, title: "californiua", image: ""},
+    {id: 3, title: "Texas", image: ""},
+  ])
+
+
   return (
-    <CustomCard isBottomMargin={false}>
-      <View style={stylesShowProfile.containerFlex}>
-        <View style={stylesShowProfile.containerImage}>
-          <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
+    <>
+      <View style={stylesShowProfile.container}>
+        <View style={stylesShowProfile.containerHeader}>
+          <View style={stylesShowProfile.header}>
+            <View>
+              <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
+            </View>
+            <View style={stylesShowProfile.containerAboutUser}>
+              <Text style={stylesShowProfile.names}>{currentUser.firstname} {currentUser.lastname}</Text>
+              <Text style={stylesShowProfile.country}>country</Text>
+              <View style={stylesShowProfile.containerFollowAndMessage}>
+                <Text style={stylesShowProfile.followButton} onPress={() => follow()}>Подписаться</Text>
+              </View>
+            </View>
+            <View style={stylesShowProfile.containerAboutUser}>
+              <Text onPress={() => {
+                navigation.push(
+                  "EditProfile"
+                )
+              }} style={stylesShowProfile.settings}>⋮</Text>
+            </View>
+          </View>
+          <View style={stylesShowProfile.widgetFriendsAndFeeds}>
+            <WidgetInput counts={0} title={"Постов"} />
+            <WidgetInput counts={0} title={"Подписчиков"} />
+            <WidgetInput counts={0} title={"Подписок"} />
+          </View>
         </View>
-        <View style={stylesShowProfile.containerAboutUser}>
-          <OutputField stylesContent={stylesShowProfile.text} content={currentUser.firstname} />
-          <OutputField stylesContent={stylesShowProfile.text} content={currentUser.lastname} />
-          <OutputField stylesContent={stylesShowProfile.textLight} content={currentUser.surname} />
+        <View style={stylesShowProfile.description}>
+          <ScrollView>
+            <Text>Description</Text>
+          </ScrollView>
         </View>
+        <View style={stylesShowProfile.feeds}>
+          <Text>Feeds</Text>
+        </View>
+        <StatusBar style="auto" />
       </View>
-      <View style={stylesShowProfile.aboutUser}>
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Возраст: "} field={currentUser.age} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Пол: "} field={translateGender(language, currentUser.gender)} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Username: "} field={currentUser.username} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Email: "} field={currentUser.mail} fieldStyles={stylesShowProfile.userDateContent} />
-        <OutputField stylesContent={stylesShowProfile.userDateTitle} content={"Phone: "} field={currentUser.phone} fieldStyles={stylesShowProfile.userDateContent} />
-      </View>
-      <View style={stylesShowProfile.whiteSpace}>
-        <CustomButton colorBG={"#13bfd4"} color={"white"} titleButton={"Настройки"} funcPress={() => {
-          navigation.navigate(
-            "SettingsProfile"
-          )
-        }} />
-        <CustomButton colorBG={"#c74242"} color={"white"} titleButton={"Выйти из профиля"} stylesButton={stylesShowProfile.exit} funcPress={() => exitProfile()} />
-      </View>
-    </CustomCard>
+    </>
   )
 }
 
 const stylesShowProfile = StyleSheet.create({
-  containerFlex: {
-    display: "flex",
-    justifyContent: "space-around",
-    flexDirection: "row",
-    paddingBottom: 15
-  },
-  containerImage: {
-    flex: 1,
-    paddingLeft: "4%"
+  whiteSpace: {
+    flexDirection: "column",
+    gap: 10
   },
   cardImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    marginLeft: 20
+    borderWidth: 1,
+  },
+  containerImage: {
+
+  },
+  header: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   containerAboutUser: {
-    flex: 1,
-    paddingTop: 15,
+    marginTop: 20,
+    // marginBottom: "auto"
   },
-  text: {
-    color: "white",
-    textTransform: "uppercase",
+  names: {
+    color: "black",
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 24
   },
-  textLight: {
-    color: "rgba(255,255,255,0.9)",
-    textTransform: "uppercase",
-    lineHeight: 20,
-    fontSize: 18,
-    paddingLeft: 3
-  },
-  aboutUser: {
-    paddingTop: 15,
-    paddingBottom: 15,
-  },
-  userDateTitle: {
-    color: "white",
+  settings: {
+    marginTop: 1,
+    width: 25,
+    height: 25,
+    textAlign: "center",
+    lineHeight: 31,
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 24,
+    marginRight: 15
   },
-  userDateContent: {
-    fontWeight: "normal",
+  container: {
+    width: "98%",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
-  whiteSpace: {
-    flexDirection: "column",
-    gap: 10
+  widgetFriendsAndFeeds: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  widgetInput: {
+  },
+  countTitle: {
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+  contentTitle: {
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+  description: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginTop: 10,
+    height: 150,
+    maxHeight: 150,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  containerHeader: {
+    backgroundColor: "#fff",
+    borderRadius: 10
+  },
+  followButton: {
+    borderWidth: 2,
+    borderColor: "#1674bd",
+    color: "#1674bd",
+    padding: 5,
+    marginTop: 5,
+    borderRadius: 5,
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+  containerFollowAndMessage: {
+    flexDirection: "row",
+  },
+  country: {
+    color: "#4a4848",
+    fontStyle: "italic",
+    fontWeight: "bold"
+  },
+  feeds: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginTop: 10,
+    height: Dimensions.get('window').height / 2.4 ,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
   }
 })

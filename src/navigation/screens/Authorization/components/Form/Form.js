@@ -4,12 +4,12 @@ import ButtonConfirm from "../../../../../components/Profile/Buttons/ButtonConfi
 import LinkSwitchLoginAndRegister from "../../LinkSwitchLoginAndRegister";
 
 
-export default function FormAuth({styles, props, changeForm, btnConfirmTitle, titleButton, titleContent}) {
+export default function FormAuth({styles, props, changeForm, btnConfirmTitle, titleButton, titleContent, noCorrectData}) {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
 
-        {props.errors.email && props.touched.email ? (<Text style={styles.error}>{props.errors.email}</Text>) : <Text></Text>}
+        {props.errors.email && props.touched.email ? (<Text style={styles.error}>{props.errors.email}</Text>) : <Text style={styles.error}>{noCorrectData}</Text>}
         <TextInput
           style={styles.input}
           placeholder={"Введите адрес электронной почты.."}

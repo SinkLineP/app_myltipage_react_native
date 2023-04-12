@@ -26,14 +26,14 @@ export default function FriendlyTab({navigation}) {
         }}>
           <Text style={{
             textAlign: "center",
-            color: "white",
+            color: "black",
             textTransform: "uppercase",
             fontWeight: "bold",
             fontSize: 18,
           }}>{countFriends}</Text>
           <Text style={{
             textAlign: "center",
-            color: "white",
+            color: "black",
             textTransform: "uppercase",
             fontWeight: "bold",
             fontSize: 10,
@@ -44,18 +44,17 @@ export default function FriendlyTab({navigation}) {
   }
 
   return (
-    <CustomCard>
-      <View style={stylesFriendlyTab.container}>
-        <ButtonFriends title={`\n\nВсе\nдрузья`} countFriends={allFriends} transfer={"AllFriendsPage"}/>
-        <ButtonFriends title={`\n\nЗаявки\nв друзья`} countFriends={requestInFriends} transfer={"RequestFriendsPages"} isBorder={true} />
-        <ButtonFriends title={`\n\nЗапросы\nв друзья`} countFriends={responseInFriends} transfer={"ResponseFriendsPage"} />
-      </View>
-    </CustomCard>
+    <View style={stylesFriendlyTab.container}>
+      <ButtonFriends title={`\n\nВсе\nдрузья`} countFriends={allFriends} transfer={"AllFriendsPage"}/>
+      <ButtonFriends title={`\n\nЗаявки\nв друзья`} countFriends={requestInFriends} transfer={"RequestFriendsPages"} isBorder={true} />
+      <ButtonFriends title={`\n\nЗапросы\nв друзья`} countFriends={responseInFriends} transfer={"ResponseFriendsPage"} />
+    </View>
   )
 }
 
 const stylesFriendlyTab = StyleSheet.create({
   container: {
+    marginTop: 40,
     flexDirection: "row",
     justifyContent: "space-around"
   }

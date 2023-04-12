@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {StyleSheet} from "react-native";
 import {Formik} from "formik";
 import {LoginDB} from "../../../db/getData";
@@ -12,6 +12,7 @@ import FormAuth from "./components/Form/Form";
 
 export default function Login({changeForm, navigation}) {
   const dispatch = useDispatch();
+  const [noCorrectData, setNoCorrectData] = useState("")
 
   return (
     <Formik
@@ -21,38 +22,44 @@ export default function Login({changeForm, navigation}) {
       }}
       validationSchema={AuthSchema}
       onSubmit={(values, {resetForm}) => {
-        handleAuthClick().then(r => r)
         LoginDB({
           mail: values.email,
           password: values.password,
         }).then(async (data) => {
-          try {
-            await AsyncStorage.setItem("token", data.jwt)
-          } catch (e) {
-            console.log(e)
+          if (data.user !== "empty") {
+            handleAuthClick().then(r => r)
+
+            try {
+              await AsyncStorage.setItem("token", data.jwt)
+            } catch (e) {
+              console.log(e)
+            }
+
+            dispatch(setCurrentUser({
+              id: data.user.id,
+              username: data.user.username,
+              mail: data.user.mail,
+              phone: data.user.phone,
+              lastname: data.user.lastname,
+              firstname: data.user.firstname,
+              surname: data.user.surname,
+              password: data.user.password,
+              age: data.user.age,
+              avatar: data.user.avatar,
+              gender: data.user.gender,
+              created_at: data.user.created_at,
+              updated_at: data.user.updated_at
+            }))
+
+            resetForm({values: ""})
+            dispatch(switchAuth())
+            navigation.navigate(
+              "MainProfile"
+            )
+          } else {
+            setNoCorrectData(data.failure)
+            setTimeout(() => setNoCorrectData(""), 3000)
           }
-
-          dispatch(setCurrentUser({
-            id: data.user.id,
-            username: data.user.username,
-            mail: data.user.mail,
-            phone: data.user.phone,
-            lastname: data.user.lastname,
-            firstname: data.user.firstname,
-            surname: data.user.surname,
-            password: data.user.password,
-            age: data.user.age,
-            avatar: data.user.avatar,
-            gender: data.user.gender,
-            created_at: data.user.created_at,
-            updated_at: data.user.updated_at
-          }))
-
-          resetForm({values: ""})
-          dispatch(switchAuth())
-          navigation.navigate(
-            "MainProfile"
-          )
         })
       }}
 
@@ -65,6 +72,7 @@ export default function Login({changeForm, navigation}) {
           props={props}
           styles={LoginStyles}
           btnConfirmTitle={"Войти"}
+          noCorrectData={noCorrectData}
         />
       )}
     </Formik>
