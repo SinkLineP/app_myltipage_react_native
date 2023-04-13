@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {StyleSheet} from "react-native";
+import {StyleSheet, Text} from "react-native";
 import {Formik} from "formik";
 import {LoginDB} from "../../../db/getData";
 import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AuthSchema} from "./Schematics/Schematics";
 import {handleAuthClick} from "./Authorization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,7 +12,8 @@ import FormAuth from "./components/Form/Form";
 
 export default function Login({changeForm, navigation}) {
   const dispatch = useDispatch();
-  const [noCorrectData, setNoCorrectData] = useState("")
+  const [noCorrectData, setNoCorrectData] = useState("");
+  const isAuth = useSelector(state => state.users.isAuth);
 
   return (
     <Formik
@@ -65,15 +66,18 @@ export default function Login({changeForm, navigation}) {
 
     >
       {(props) => (
-        <FormAuth
-          titleContent={"Нету учетной записи - "}
-          titleButton={"зарегистрироваться"}
-          changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)}
-          props={props}
-          styles={LoginStyles}
-          btnConfirmTitle={"Войти"}
-          noCorrectData={noCorrectData}
-        />
+        <>
+          <Text></Text>
+          <FormAuth
+            titleContent={"Нету учетной записи - "}
+            titleButton={"зарегистрироваться"}
+            changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)}
+            props={props}
+            styles={LoginStyles}
+            btnConfirmTitle={"Войти"}
+            noCorrectData={noCorrectData}
+          />
+        </>
       )}
     </Formik>
   )

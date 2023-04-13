@@ -6,7 +6,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     removeUsers(state) {
-      state.users = []
+      state.currentUser = {}
     },
     switchAuth(state) {
       state.isAuth = !state.isAuth

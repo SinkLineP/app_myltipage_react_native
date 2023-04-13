@@ -25,15 +25,7 @@ export default function ShowProfile({navigation}) {
     }
   }
 
-  const exitProfile = async () => {
-    dispatch(switchAuth());
-    dispatch(removeCurrentUser);
-    try {
-      await AsyncStorage.removeItem("token")
-    } catch (e) {
-      console.log(e)
-    }
-  }
+
 
   const WidgetInput = ({counts, title}) => {
     return (
