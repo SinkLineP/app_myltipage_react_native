@@ -40,6 +40,7 @@ const MainStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", false)} />
       <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "#ebebeb", "#fff", false)} />
       {/* Settings Pages */}
       <Stack.Screen name="SettingsProfile" component={SettingsProfile} options={setOptions("Настройки", "#048f9d", "#fff", false)} />
@@ -75,4 +76,4 @@ const MenuStackNavigator = () => {
   );
 }
 
-export { MainStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator, MenuStackNavigator };
+export { MainStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator, MenuStackNavigator};

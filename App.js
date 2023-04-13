@@ -9,6 +9,8 @@ import {AutoLogin} from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
+import DrawerNavigator from "./src/navigation/DrawerNavigation";
+import TabNavigator from "./src/navigation/TabNavigator";
 
 
 
@@ -70,7 +72,7 @@ function AppWrapper() {
   if (fontsLoaded) {
     return (
       <NavigationContainer>
-        <DrawerNavigator />
+        <TabNavigator />
       </NavigationContainer>
     )
   } else { //если не загружены шрифты не отображать

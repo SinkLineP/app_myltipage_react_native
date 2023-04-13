@@ -14,6 +14,7 @@ import useAuth from "../hooks/useAuth";
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
+  const currentUser = useSelector(state => state.users.currentUser)
   return (
     <Tab.Navigator screenOptions={({route}) => ({
       headerShown: false,
