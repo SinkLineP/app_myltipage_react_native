@@ -20,6 +20,8 @@ import AllFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/AllF
 import RequestFriendsPages from "./screens/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
 import ResponseFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
 import Menu from "./screens/Menu/Menu";
+import Search from "./screens/Search/Search";
+import Chat from "./screens/Chat/Chat";
 
 
 const Stack = createStackNavigator();
@@ -76,4 +78,21 @@ const MenuStackNavigator = () => {
   );
 }
 
-export { MainStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator, MenuStackNavigator};
+
+const SearchStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "#ffffff", "#1e9dff", false)} />
+    </Stack.Navigator>
+  );
+}
+
+const ChatStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Chat" component={Chat} options={setOptions("Чат", "#ffffff", "#1e9dff", false)} />
+    </Stack.Navigator>
+  );
+}
+
+export { MainStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator, MenuStackNavigator, SearchStackNavigator, ChatStackNavigator};

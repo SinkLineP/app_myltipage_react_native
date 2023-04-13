@@ -1,9 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
+  ChatStackNavigator,
   MainStackNavigator,
   MenuStackNavigator,
-  ProfileStackNavigator
+  ProfileStackNavigator, SearchStackNavigator
 } from "./StackNavigator";
 import {FontAwesome} from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
@@ -36,9 +37,17 @@ const BottomTabNavigator = () => {
         } else if (route.name === 'ProfileTab') {
           icon.name = focused ? userIsAuthed("user-circle-o", "ios-enter-outline") : userIsAuthed("user-circle-o", "ios-enter-outline");
           icon.typeOutput = userIsAuthed("FontAwesome", "IonIcons");
-          icon.size = 23
-        }  else if (route.name === 'MenuTab') {
+          icon.size = 27
+        } else if (route.name === 'MenuTab') {
           icon.name = focused ? 'ios-menu' : 'ios-menu';
+          icon.typeOutput = "IonIcons";
+          icon.size = 27
+        } else if (route.name === 'SearchTab') {
+          icon.name = focused ? 'search-outline' : 'search-outline';
+          icon.typeOutput = "IonIcons";
+          icon.size = 27
+        } else if (route.name === 'ChatTab') {
+          icon.name = focused ? 'md-chatbox-ellipses-outline' : 'md-chatbox-ellipses-outline';
           icon.typeOutput = "IonIcons";
           icon.size = 27
         }
@@ -58,7 +67,9 @@ const BottomTabNavigator = () => {
       }
     })}>
       <Tab.Screen options={{title: "Главная"}} name="HomeTab" component={MainStackNavigator} />
-      <Tab.Screen options={{title: userIsAuthed("Профиль", "Авторизироваться")}} name="ProfileTab" component={ProfileStackNavigator} />
+      <Tab.Screen options={{title: "Поиск"}} name="SearchTab" component={SearchStackNavigator} />
+      <Tab.Screen options={{title: userIsAuthed("Профиль", "Войти")}} name="ProfileTab" component={ProfileStackNavigator} />
+      <Tab.Screen options={{title: "Чаты"}} name="ChatTab" component={ChatStackNavigator} />
       <Tab.Screen options={{title: "Меню"}} name="MenuTab" component={MenuStackNavigator} />
     </Tab.Navigator>
   );
