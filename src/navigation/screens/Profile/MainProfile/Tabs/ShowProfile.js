@@ -48,14 +48,6 @@ export default function ShowProfile({navigation}) {
     console.log("follow")
   }
 
-  const [feeds, setFeeds] = useState([
-    {id: 0, title: "los angeles", image: ""},
-    {id: 1, title: "new york", image: ""},
-    {id: 2, title: "californiua", image: ""},
-    {id: 3, title: "Texas", image: ""},
-  ])
-
-
   return (
     <>
       <View style={stylesShowProfile.container}>

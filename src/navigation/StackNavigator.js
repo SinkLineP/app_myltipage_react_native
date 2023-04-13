@@ -19,10 +19,10 @@ import EditPhone from "./screens/Profile/MainProfile/Tabs/EditPages/EditPhone";
 import AllFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
 import RequestFriendsPages from "./screens/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
 import ResponseFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
+import Menu from "./screens/Menu/Menu";
 
 
 const Stack = createStackNavigator();
-
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator>
@@ -67,12 +67,12 @@ const AuthorizationStackNavigator = () => {
 }
 
 
-const ContactStackNavigator = () => {
+const MenuStackNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="ContactsPage" component={ContactsPage} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", "#ffffff", "#1e9dff", false)} />
     </Stack.Navigator>
   );
 }
 
-export { MainStackNavigator, ContactStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator };
+export { MainStackNavigator, ProfileStackNavigator, AuthorizationStackNavigator, MenuStackNavigator };
