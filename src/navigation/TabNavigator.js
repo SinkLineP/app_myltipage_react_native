@@ -16,7 +16,6 @@ const BottomTabNavigator = () => {
   const isAuth = useSelector(state => state.users.isAuth);
 
   const userIsAuthed = (responseAuthorized, responseUnauthorized) => {
-    console.log(isAuth);
     return isAuth === true ? responseAuthorized : responseUnauthorized;
   }
 
