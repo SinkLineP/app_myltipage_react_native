@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "reviews_app",
-    "slug": "reviews_app",
+    "name": "reviewsApp",
+    "slug": "reviewsApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,9 +15,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sinkline.reviewsApp"
     },
     "android": {
+      "package": "com.sinkline.reviewsApp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["@react-native-google-signin/google-signin"]
   }
 }

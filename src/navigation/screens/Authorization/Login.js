@@ -30,6 +30,8 @@ export default function Login({changeForm, navigation}) {
           if (data.user !== "empty") {
             handleAuthClick().then(r => r)
 
+            console.log(data.user)
+
             try {
               await AsyncStorage.setItem("token", data.jwt)
             } catch (e) {

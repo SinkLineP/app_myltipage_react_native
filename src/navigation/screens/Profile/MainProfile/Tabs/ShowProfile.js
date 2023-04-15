@@ -1,31 +1,14 @@
-import React, {useState} from "react";
-import {StyleSheet, View, Text, Image, ScrollView, Dimensions} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import {StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
+import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
-import {removeCurrentUser, switchAuth} from "../../../../../store/Slices/usersSlice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
+import {generateUsername} from "../../../../../Variables/functions";
 
 
 
 export default function ShowProfile({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
-  const language = "RU";
-  const dispatch = useDispatch();
-
-  const translateGender = (lang, gender) => {
-    if (lang === "RU") {
-      if (gender === "male") {
-        return "Мужчина";
-      } else if (gender === "other") {
-        return "Другое";
-      } else if (gender === "female") {
-        return "Женщина";
-      }
-    }
-  }
-
-
 
   const WidgetInput = ({counts, title}) => {
     return (
@@ -34,10 +17,6 @@ export default function ShowProfile({navigation}) {
         <Text style={stylesShowProfile.contentTitle}>{title}</Text>
       </View>
     )
-  }
-
-  const follow = () => {
-    console.log("follow")
   }
 
   return (
@@ -49,10 +28,10 @@ export default function ShowProfile({navigation}) {
               <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
             </View>
             <View style={stylesShowProfile.containerAboutUser}>
-              <Text style={stylesShowProfile.names}>{currentUser.firstname} {currentUser.lastname}</Text>
+              <Text style={stylesShowProfile.names}>{currentUser.username}</Text>
               <Text style={stylesShowProfile.country}>country</Text>
               <View style={stylesShowProfile.containerFollowAndMessage}>
-                <Text style={stylesShowProfile.followButton} onPress={() => follow()}>Подписаться</Text>
+                <Text style={stylesShowProfile.followButton}>Подписаться</Text>
               </View>
             </View>
             <View style={stylesShowProfile.containerAboutUser}>
@@ -105,12 +84,13 @@ const stylesShowProfile = StyleSheet.create({
   },
   containerAboutUser: {
     marginTop: 20,
-    // marginBottom: "auto"
+    paddingLeft: 10,
+    width: "50%"
   },
   names: {
     color: "black",
     fontWeight: "bold",
-    fontSize: 24
+    fontSize: 14
   },
   settings: {
     marginTop: 1,

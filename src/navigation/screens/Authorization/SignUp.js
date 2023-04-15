@@ -5,6 +5,7 @@ import {AuthSchema} from "./Schematics/Schematics";
 import {createUser} from "../../../db/getData";
 import {handleAuthClick} from "./Authorization";
 import FormAuth from "./components/Form/Form";
+import {generateUsername} from "../../../Variables/functions";
 
 export default function SignUp({navigation, changeForm}) {
   const [showError, setError] = useState("");
@@ -19,7 +20,7 @@ export default function SignUp({navigation, changeForm}) {
       onSubmit={(values, {resetForm}) => {
         handleAuthClick().then(r => r)
         createUser({
-          username: "",
+          username: generateUsername(values.email),
           mail: values.email,
           phone: "",
           lastname: "",

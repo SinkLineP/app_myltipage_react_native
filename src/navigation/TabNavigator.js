@@ -36,7 +36,7 @@ const BottomTabNavigator = () => {
         } else if (route.name === 'ProfileTab') {
           icon.name = focused ? userIsAuthed("user-circle-o", "ios-enter-outline") : userIsAuthed("user-circle-o", "ios-enter-outline");
           icon.typeOutput = userIsAuthed("FontAwesome", "IonIcons");
-          icon.size = 27
+          icon.size = userIsAuthed(24, 27)
         } else if (route.name === 'MenuTab') {
           icon.name = focused ? 'ios-menu' : 'ios-menu';
           icon.typeOutput = "IonIcons";

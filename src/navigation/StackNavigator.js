@@ -81,16 +81,16 @@ const MenuStackNavigator = () => {
 
 const SearchStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "#ffffff", "#1e9dff", false)} />
+    <Stack.Navigator>
+      <Stack.Screen name="tomato" component={Search} options={setOptions("Поиск", "#e65300", "#1e9dff", false)} />
     </Stack.Navigator>
   );
 }
 
 const ChatStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Chat" component={Chat} options={setOptions("Чат", "#ffffff", "#1e9dff", false)} />
+    <Stack.Navigator>
+      <Stack.Screen name="Chat" component={Chat} options={setOptions("Чат", "#ff9a75", "#1e9dff", false)} />
     </Stack.Navigator>
   );
 }
