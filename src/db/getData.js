@@ -86,7 +86,7 @@ export const LoginDB = async (user) => {
     body: JSON.stringify(user)
   })
   if (!response.ok) {
-    throw new Error("Server Error! Login.");
+    throw new Error("Server Error! LoginEmail.");
   }
   return await response.json()
 }
@@ -140,10 +140,10 @@ export const getAllUsers = async () => {
 
 //=============================
 
-export const VerifyUserPhone = async (phone, message, smsCode) => {
+export const VerifyUserPhone = async (phone, smsCode) => {
   console.log(smsCode);
 
-  const response = await fetch(`https://sms.ru/sms/send?api_id=${API_ID_SMS}&to=${phone}&msg=${message}: ${smsCode}&json=1&ttl=${TIME_TO_DELETE_THE_SMS}`, {
+  const response = await fetch(`https://sms.ru/sms/send?api_id=${API_ID_SMS}&to=${phone}&msg=Код+подтверждения:+${smsCode}&json=1&ttl=${TIME_TO_DELETE_THE_SMS}&test=1`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -174,4 +174,39 @@ export const createUserWithPhone = async (user) => {
     throw new Error("Server Error!");
   }
   return await response.json();
+}
+
+
+export const LoginDBPhone = async (user) => {
+  const response = await fetch(`${BASE_URL}/login-with-phone`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! LoginPhone.");
+  }
+  return await response.json()
+}
+
+export const checkCreatedUserWithPhone = async (phone) => {
+  const response = await fetch(`${BASE_URL}/check-created-user-with-phone`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      user: {
+        phone: phone
+      }
+    })
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! LoginPhone.");
+  }
+  return await response.json()
 }

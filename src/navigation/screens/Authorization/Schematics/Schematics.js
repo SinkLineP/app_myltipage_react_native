@@ -5,6 +5,7 @@ export const errorsMessages = {
   longText: 'Слишком длинно!',
   required: 'Обязательно для заполнения',
   userIsCreated: 'Такой пользователь уже существует',
+  userIsNoCreated: 'Такого пользователя не существует',
   passwordsDontMatch: 'Пароли не совпадают',
   emailIsNotCorrectFormat: 'Неверный формат почты',
 }

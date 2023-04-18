@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import {View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Dimensions} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import SignUpEmail from "./SignUpEmail";
-import Login from "./Login";
+import LoginEmail from "./LoginEmail";
 import {UserIsAuthed} from "../../../../db/getData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignUpPhone from "./SignUpPhone";
+import LoginPhone from "./LoginPhone";
 
 
 export const handleAuthClick = async () => {
@@ -35,7 +36,10 @@ export default function Authorization({navigation}) {
       <View style={AuthStyles.content}>
         <Text style={AuthStyles.title}>{title}</Text>
         {btnStatus !== "registration" ? (
-          <Login navigation={navigation} btnTitle={btnTitle} changeForm={changeForm}  />
+          <>
+            <LoginPhone changeForm={changeForm} navigation={navigation} />
+            {/*<LoginEmail navigation={navigation} btnTitle={btnTitle} changeForm={changeForm}  />*/}
+          </>
         ) : (
           <>
             {/*<SignUpEmail navigation={navigation} changeForm={changeForm} />*/}

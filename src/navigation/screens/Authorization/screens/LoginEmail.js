@@ -11,7 +11,7 @@ import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm"
 import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
 
 
-export default function Login({changeForm, navigation}) {
+export default function LoginEmail({changeForm, navigation}) {
   const dispatch = useDispatch();
   const [noCorrectData, setNoCorrectData] = useState("");
   const isAuth = useSelector(state => state.users.isAuth);
@@ -72,7 +72,7 @@ export default function Login({changeForm, navigation}) {
           <Text></Text>
           <View style={LoginStyles.container}>
             <View style={LoginStyles.form}>
-              {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}></Text>}
+              {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}>{noCorrectData}</Text>}
               <TextInput
                 style={LoginStyles.input}
                 placeholder={"Введите адрес электронной почты.."}
