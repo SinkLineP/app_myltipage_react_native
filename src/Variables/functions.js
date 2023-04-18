@@ -1,5 +1,3 @@
-import {useState} from "react";
-
 export const rand = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -29,4 +27,6 @@ export const stopInterval = (interval) => {
   clearInterval(interval);
   interval = null;
 }
-
+export const returnMinutesFromNumber = (number) => {
+  return number * 60;
+}

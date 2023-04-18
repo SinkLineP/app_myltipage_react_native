@@ -15,27 +15,20 @@ export default function SignUpPhone({navigation, changeForm}) {
   const [showError, setError] = useState("");
   const [statusCode, setStatusCode] = useState("BAD");
   const [showTimer, setShowTimer] = useState("Отправить код");
-  let time = TIME_TO_DELETE_THE_SMS;
-  let interval = null;
+  const [submittedSMSCode, setSubmittedCode] = useState(0);
+
 
   return (
     <Formik
       initialValues={{
         phone: "",
-        // sms_code: ""
+        sms_code: ""
       }}
       validationSchema={acceptPhoneSchema}
       onSubmit={(values, {resetForm}) => {
         handleAuthClick().then(r => r)
-        const smsCode = rand(1000, 9999);
-        VerifyUserPhone(values.phone, "Код подтверждения", smsCode).then(r => {
-          if (r.status === "OK") {
-            setStatusCode("OK")
-          } else {
-            setStatusCode("BAD")
-            console.log(r.status_code);
-          }
-        });
+
+
 
         // createUser({
         //   username: generateUsername(),
@@ -79,21 +72,41 @@ export default function SignUpPhone({navigation, changeForm}) {
                     placeholder={"+7 (___) ___ __ __"}
                   />
 
-                  <TouchableHighlight style={SignUpStyles.buttonSendSMSCode} onPress={(val) => {console.log(val)}} underlayColor='transparent'>
+                  <TouchableHighlight style={SignUpStyles.buttonSendSMSCode} onPress={() => {}} underlayColor='transparent'>
                     <View>
                       <Text style={SignUpStyles.titleSendSMSCode} onPress={() => {
                         if (props.values.phone.length === 11) {
-                          interval = setInterval(() => {
-                            const minutes = Math.floor(time / 60);
-                            let seconds = time % 60;
-                            seconds = seconds < 10 ? "0" + seconds: seconds;
-                            setShowTimer(`${minutes}:${seconds}`);
-                            time--;
-                          }, 1000);
+                          const smsCode = rand(1000, 9999);
+                          let time = TIME_TO_DELETE_THE_SMS;
+                          let interval = null;
+                          let timeout = null;
 
-                          if (time === 0) {
-                            stopInterval(interval);
-                          }
+                          VerifyUserPhone(props.values.phone, "Код подтверждения", smsCode).then(r => {
+                            if (r.status === "OK") {
+                              setStatusCode("OK");
+                              setSubmittedCode(smsCode);
+
+                              // запускаем таймер
+                              interval = setInterval(() => {
+                                const minutes = Math.floor(time / 60);
+                                let seconds = time % 60;
+                                seconds = seconds < 10 ? "0" + seconds: seconds;
+                                setShowTimer(`${minutes}:${seconds}`);
+                                time--;
+                              }, 1000);
+
+                              console.log(r);
+
+                              // очистка таймера
+                              timeout = setTimeout(() => {
+                                stopInterval(interval);
+                                setShowTimer("Отправить код")
+                              }, TIME_TO_DELETE_THE_SMS * 1000 + 1000)
+                            } else {
+                              setStatusCode("BAD");
+                              console.log(r.status_code);
+                            }
+                          });
                         }
                       }}>{showTimer}</Text>
                     </View>
