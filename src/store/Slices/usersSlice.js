@@ -39,9 +39,12 @@ const usersSlice = createSlice({
     },
     setLimitMessage(state, action) {
       state.limitMessage = action.payload
+    },
+    setDefaultPassword(state, action) {
+      state.defaultPassword = action.payload
     }
   }
 })
 
-export const {setCurrentUser, setLimitSendSMS, switchAuth, removeCurrentUser, setLimitMessage} = usersSlice.actions;
+export const {setCurrentUser, setLimitSendSMS, switchAuth, removeCurrentUser, setLimitMessage, setDefaultPassword} = usersSlice.actions;
 export default usersSlice.reducer;

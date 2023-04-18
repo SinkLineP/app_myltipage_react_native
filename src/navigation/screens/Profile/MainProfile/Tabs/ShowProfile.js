@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
 import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {StatusBar} from "expo-status-bar";
 import {generateUsername} from "../../../../../Variables/functions";
+import {ModalWindowProfile} from "../../../../../components/ModalWindow/ModalWindowProfile";
 
 
 
 export default function ShowProfile({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
+  const defaultPassword = useSelector(state => state.users.defaultPassword);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const WidgetInput = ({counts, title}) => {
     return (
@@ -19,8 +22,24 @@ export default function ShowProfile({navigation}) {
     )
   }
 
+  useEffect(() => {
+    if (defaultPassword !== "") {
+      setModalVisible(true);
+    } else {
+      setModalVisible(false);
+    }
+  }, [])
+
   return (
     <>
+      <ModalWindowProfile
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        contentModal={`В данный момент ваш пароль`}
+        titleModal={"Срочно измените ваш пароль!"}
+        defaultPassword={defaultPassword}
+        textButton={"Окей"}
+      />
       <View style={stylesShowProfile.container}>
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Formik} from "formik";
 import {createUserWithPhone, VerifyUserPhone} from "../../../../db/getData";
 import {
-  customValidate,
+  customValidate, generatePassword,
   generateUsername,
   rand,
   stopInterval,
@@ -12,7 +12,7 @@ import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm"
 import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
 import { MaskedTextInput } from "react-native-mask-text";
 import {TIME_TO_DELETE_THE_SMS} from "../../../../Variables/ServerConfig";
-import {setLimitSendSMS} from "../../../../store/Slices/usersSlice";
+import {setDefaultPassword, setLimitSendSMS} from "../../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -39,7 +39,7 @@ export default function SignUpPhone({navigation, changeForm}) {
       }}
       onSubmit={() => {
         if (Number(valuesSMSCode) === submittedSMSCode && Number(valuesSMSCode) !== 0 && submittedSMSCode !== 0) {
-          console.log(generateUsername())
+          const generatePassword = rand(100000, 999999);
           createUserWithPhone({
             username: generateUsername(),
             mail: "",
@@ -47,12 +47,13 @@ export default function SignUpPhone({navigation, changeForm}) {
             lastname: "",
             firstname: "",
             surname: "",
-            password: valuesPhone,
+            password: `${generatePassword}`,
             age: "",
             avatar: "deleted",
             gender: "other",
           }).then(async (data) => {
             if (data.isUsedPhone === "") {
+              dispatch(setDefaultPassword(generatePassword))
               changeForm("Авторизация", "Войти", "login")
             } else {
               setError(data.isUsedPhone);

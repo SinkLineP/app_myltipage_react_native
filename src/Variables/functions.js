@@ -9,7 +9,6 @@ export const rand = (min, max) => {
 export const generateUsernameFromEmail = (email) => {
   const minNumber = 1000;
   const maxNumber = 9999;
-
   const emailTitle = email.split("@")[0];
   const randNumber = rand(minNumber, maxNumber);
 
@@ -19,7 +18,6 @@ export const generateUsernameFromEmail = (email) => {
 export const generateUsername = () => {
   const minNumber = 1000;
   const maxNumber = 9999;
-
   const randNumber = rand(minNumber, maxNumber);
 
   return `Username-${randNumber}`;
@@ -43,4 +41,12 @@ export const customValidate = (value, minLength, maxLength) => {
 
 export const hourToMilliseconds = (hrs,min,sec) => {
   return (hrs*60*60+min*60+sec)*1000;
+}
+
+export const generatePassword = () => {
+  const minNumber = 100000;
+  const maxNumber = 999999;
+  const randNumber = rand(minNumber, maxNumber);
+
+  return `${randNumber}`;
 }
