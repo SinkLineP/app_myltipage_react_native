@@ -1,4 +1,6 @@
 export const initialState = {
   currentUser: {},
-  isAuth: false
+  isAuth: false,
+  limitSendSMS: 15,
+  limitMessage: ""
 }

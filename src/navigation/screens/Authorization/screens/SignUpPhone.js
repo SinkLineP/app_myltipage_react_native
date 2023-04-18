@@ -1,21 +1,34 @@
 import React, {useState} from "react";
 import {Formik} from "formik";
-import {acceptPhoneSchema} from "../Schematics/Schematics";
-import {handleAuthClick} from "./Authorization";
-import {createUser, VerifyUserPhone} from "../../../../db/getData";
-import {rand, stopInterval, TimerCountDownFromNumber} from "../../../../Variables/functions";
+import {createUserWithPhone, VerifyUserPhone} from "../../../../db/getData";
+import {
+  customValidate,
+  generateUsername,
+  rand,
+  stopInterval,
+} from "../../../../Variables/functions";
 import {Text, View, StyleSheet, TouchableHighlight} from "react-native";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
 import { MaskedTextInput } from "react-native-mask-text";
 import {TIME_TO_DELETE_THE_SMS} from "../../../../Variables/ServerConfig";
+import {setLimitSendSMS} from "../../../../store/Slices/usersSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export default function SignUpPhone({navigation, changeForm}) {
+  const limitSendSMS = useSelector(state => state.users.limitSendSMS);
+  const limitMessage = useSelector(state => state.users.limitMessage);
   const [showError, setError] = useState("");
   const [statusCode, setStatusCode] = useState("BAD");
   const [showTimer, setShowTimer] = useState("Отправить код");
   const [submittedSMSCode, setSubmittedCode] = useState(0);
+  const [noCorrectSMS, setNoCorrectSMS] = useState("");
+  const [valuesPhone, setValuesPhone] = useState("");
+  const [valuesSMSCode, setValuesSMSCode] = useState("");
+  const dispatch = useDispatch();
+  let interval = null;
+  let timeout = null;
 
 
   return (
@@ -24,104 +37,132 @@ export default function SignUpPhone({navigation, changeForm}) {
         phone: "",
         sms_code: ""
       }}
-      validationSchema={acceptPhoneSchema}
-      onSubmit={(values, {resetForm}) => {
-        handleAuthClick().then(r => r)
-
-
-
-        // createUser({
-        //   username: generateUsername(),
-        //   mail: "",
-        //   phone: values.phone,
-        //   lastname: "",
-        //   firstname: "",
-        //   surname: "",
-        //   password: "",
-        //   age: "",
-        //   avatar: "deleted",
-        //   gender: "other",
-        //   smsCode: ""
-        // }).then(async (data) => {
-        //   if (data.isUsedEmail === "") {
-        //     changeForm("Авторизация", "Войти", "login", resetForm)
-        //   } else {
-        //     setError(data.isUsedEmail);
-        //     setTimeout(() => setError(""), 3000)
-        //   }
-        // })
+      onSubmit={() => {
+        if (Number(valuesSMSCode) === submittedSMSCode && Number(valuesSMSCode) !== 0 && submittedSMSCode !== 0) {
+          console.log(generateUsername())
+          createUserWithPhone({
+            username: generateUsername(),
+            mail: "",
+            phone: valuesPhone,
+            lastname: "",
+            firstname: "",
+            surname: "",
+            password: valuesPhone,
+            age: "",
+            avatar: "deleted",
+            gender: "other",
+          }).then(async (data) => {
+            if (data.isUsedPhone === "") {
+              changeForm("Авторизация", "Войти", "login")
+            } else {
+              setError(data.isUsedPhone);
+              setTimeout(() => setError(""), 3000)
+            }
+          })
+        }
       }}
     >
       {(props) => {
         return (
           <>
-            <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
-
             <View style={SignUpStyles.container}>
               <View style={SignUpStyles.form}>
 
                 <View>
-                  {props.errors.phone && props.touched.phone ? (<Text style={SignUpStyles.error}>{props.errors.phone}</Text>) : <Text style={SignUpStyles.error}></Text>}
+                  <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
+                  <Text style={SignUpStyles.limitMessage}>{limitMessage}</Text>
+
+                  {props.errors.phone && props.touched.phone ? (
+                    <Text style={SignUpStyles.error}>{props.errors.phone}</Text>
+                  ) : (
+                    <Text style={SignUpStyles.error}>{customValidate(valuesPhone, 11, 11)}</Text>
+                  )}
 
                   <MaskedTextInput
                     mask="+7 (999) 999 99 99"
-                    onChangeText={(_, rawText) => props.setFieldValue("phone", rawText)}
-                    value={props.values.phone}
+                    onChangeText={(_, phone) => setValuesPhone(phone)}
+                    value={valuesPhone}
                     style={SignUpStyles.input}
                     keyboardType="numeric"
                     placeholder={"+7 (___) ___ __ __"}
                   />
 
-                  <TouchableHighlight style={SignUpStyles.buttonSendSMSCode} onPress={() => {}} underlayColor='transparent'>
-                    <View>
-                      <Text style={SignUpStyles.titleSendSMSCode} onPress={() => {
-                        if (props.values.phone.length === 11) {
-                          const smsCode = rand(1000, 9999);
-                          let time = TIME_TO_DELETE_THE_SMS;
-                          let interval = null;
-                          let timeout = null;
+                  <TouchableHighlight style={SignUpStyles.buttonSendSMSCode} underlayColor='transparent'>
+                    {limitSendSMS !== 0 ? (
+                      <View>
+                        <Text style={SignUpStyles.titleSendSMSCode} onPress={() => {
+                          if (valuesPhone.length === 11) {
+                            dispatch(setLimitSendSMS(limitSendSMS - 1))
+                            let time = TIME_TO_DELETE_THE_SMS;
+                            const smsCode = rand(100000, 999999);
 
-                          VerifyUserPhone(props.values.phone, "Код подтверждения", smsCode).then(r => {
-                            if (r.status === "OK") {
-                              setStatusCode("OK");
-                              setSubmittedCode(smsCode);
+                            VerifyUserPhone(valuesPhone, "Код подтверждения", smsCode).then(r => {
+                              if (r.sms[valuesPhone].status === "OK") {
+                                setStatusCode("OK");
+                                setSubmittedCode(smsCode);
 
-                              // запускаем таймер
-                              interval = setInterval(() => {
-                                const minutes = Math.floor(time / 60);
-                                let seconds = time % 60;
-                                seconds = seconds < 10 ? "0" + seconds: seconds;
-                                setShowTimer(`${minutes}:${seconds}`);
-                                time--;
-                              }, 1000);
+                                // запускаем таймер
+                                interval = setInterval(() => {
+                                  const minutes = Math.floor(time / 60);
+                                  let seconds = time % 60;
+                                  seconds = seconds < 10 ? "0" + seconds: seconds;
+                                  setShowTimer(`${minutes}:${seconds}`);
+                                  time--;
+                                }, 1000);
 
-                              console.log(r);
+                                console.log(r);
 
-                              // очистка таймера
-                              timeout = setTimeout(() => {
-                                stopInterval(interval);
-                                setShowTimer("Отправить код")
-                              }, TIME_TO_DELETE_THE_SMS * 1000 + 1000)
-                            } else {
-                              setStatusCode("BAD");
-                              console.log(r.status_code);
-                            }
-                          });
-                        }
-                      }}>{showTimer}</Text>
-                    </View>
+                                // очистка таймера
+                                timeout = setTimeout(() => {
+                                  stopInterval(interval);
+                                  setShowTimer("Отправить код")
+                                }, TIME_TO_DELETE_THE_SMS * 1000 + 1000)
+                              } else {
+                                setStatusCode("BAD");
+
+                                if (r.sms[valuesPhone].status_code === 202) {
+                                  setError("Неправильно указан номер телефона")
+                                }
+
+                                setTimeout(() => setError(""), 3000)
+                              }
+                            });
+                          }
+                        }}>{showTimer}</Text>
+                      </View>
+                    ) : (
+                      <Text style={SignUpStyles.titleSendSMSCode}>Недоступно</Text>
+                    )}
                   </TouchableHighlight>
                 </View>
-
-
+                <View>
+                  {props.errors.phone && props.touched.phone ? (<Text style={SignUpStyles.error}>{props.errors.phone}</Text>) : <Text style={SignUpStyles.error}>{noCorrectSMS}</Text>}
+                  <MaskedTextInput
+                    mask="999-999"
+                    onChangeText={(_, sms_code) => {
+                      if (Number(sms_code) !== submittedSMSCode) {
+                        console.log(sms_code);
+                        console.log(submittedSMSCode);
+                        setNoCorrectSMS("Код не верный");
+                      } else {
+                        setNoCorrectSMS("");
+                      }
+                      setValuesSMSCode(sms_code);
+                    }}
+                    value={valuesSMSCode}
+                    style={SignUpStyles.input}
+                    keyboardType="numeric"
+                    placeholder={"Введите код.."}
+                  />
+                </View>
               </View>
 
-              {statusCode === "OK" && props.values !== "" ? (
+              {Number(valuesSMSCode) === submittedSMSCode && Number(valuesSMSCode) !== 0 && submittedSMSCode !== 0 ? (
                 <ButtonConfirm color={"white"} background={"#048f9d"} size={25} title={"Зарегистрироваться"} funcPress={props.handleSubmit} />
               ) : (
-                <ButtonConfirm  color={"white"} background={"#4a9da4"} size={25} title={"Зарегистрироваться"} funcPress={props.handleSubmit} />
+                <ButtonConfirm color={"white"} background={"#5eb7c0"} size={25} title={"Зарегистрироваться"} funcPress={props.handleSubmit} />
               )}
-              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)} titleButton={"войти"} titleContent={"Есть учетная запись - "} />
+              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Авторизация", "Войти", "login")} titleButton={"войти"} titleContent={"Есть учетная запись - "} />
             </View>
           </>
         )
@@ -153,6 +194,12 @@ const SignUpStyles = StyleSheet.create({
     flex: 1
   },
   error: {
+    color: "#b92121",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 5
+  },
+  limitMessage: {
     color: "#b92121",
     fontWeight: "bold",
     textAlign: "center",

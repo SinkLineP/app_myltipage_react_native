@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
-import {Provider, useDispatch} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
-import {AutoLogin, checkAuth} from "./src/db/getData";
-import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
+import {AutoLogin} from "./src/db/getData";
+import {setCurrentUser, setLimitMessage, setLimitSendSMS, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
-import DrawerNavigator from "./src/navigation/DrawerNavigation";
 import TabNavigator from "./src/navigation/TabNavigator";
-
+import {hourToMilliseconds} from "./src/Variables/functions";
+import {CLEAR_LIMIT_MESSAGE, LIMIT_SMS} from "./src/Variables/ServerConfig";
 
 
 export default function App () {
+
+
   return (
     <Provider store={store}>
       <AppWrapper />
@@ -27,6 +29,7 @@ function AppWrapper() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
+  const limitSendSMS = useSelector(state => state.users.limitSendSMS);
 
   //асинхронная функция загрузки шрифтов
   useEffect(() => {
@@ -63,10 +66,23 @@ function AppWrapper() {
         })
       }
     }
+
     fetchData().then(r => r)
   }, []);
 
+  useEffect(() => {
+    if (limitSendSMS === 0) {
+      dispatch(setLimitMessage("Лимит исчерпан вернитесть через 3 часа"));
 
+      setTimeout(() => {
+        dispatch(setLimitMessage(CLEAR_LIMIT_MESSAGE));
+        dispatch(setLimitSendSMS(LIMIT_SMS));
+        console.log("limit cleared!");
+      }, hourToMilliseconds(3, 0, 0));
+    } else {
+      dispatch(setLimitMessage(""));
+    }
+  })
 
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {

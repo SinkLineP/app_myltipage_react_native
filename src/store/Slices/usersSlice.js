@@ -33,9 +33,15 @@ const usersSlice = createSlice({
     },
     setAvatarForCurrentUser(state, action) {
       state.currentUser.avatar = action.payload
+    },
+    setLimitSendSMS(state, action) {
+      state.limitSendSMS = action.payload
+    },
+    setLimitMessage(state, action) {
+      state.limitMessage = action.payload
     }
   }
 })
 
-export const {setCurrentUser, setAvatarForCurrentUser, switchAuth, removeCurrentUser} = usersSlice.actions;
+export const {setCurrentUser, setLimitSendSMS, switchAuth, removeCurrentUser, setLimitMessage} = usersSlice.actions;
 export default usersSlice.reducer;

@@ -18,8 +18,7 @@ export default function SignUpEmail({navigation, changeForm}) {
         password: ""
       }}
       validationSchema={AuthSchema}
-      onSubmit={(values, {resetForm}) => {
-        handleAuthClick().then(r => r)
+      onSubmit={(values) => {
         createUser({
           username: generateUsernameFromEmail(values.email),
           mail: values.email,
@@ -30,10 +29,10 @@ export default function SignUpEmail({navigation, changeForm}) {
           password: values.password,
           age: "",
           avatar: "deleted",
-          gender: "other"
+          gender: "other",
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
-            changeForm("Авторизация", "Войти", "login", resetForm)
+            changeForm("Авторизация", "Войти", "login")
           } else {
             setError(data.isUsedEmail);
             setTimeout(() => setError(""), 3000)
@@ -65,7 +64,7 @@ export default function SignUpEmail({navigation, changeForm}) {
               </View>
 
               <ButtonConfirm customStyles={SignUpStyles.btnSubmit} color={"white"} background={"#048f9d"} size={25} title={"Зарегистрироваться"} funcPress={props.handleSubmit} />
-              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)} titleButton={"войти"} titleContent={"Есть учетная запись - "} />
+              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Авторизация", "Войти", "login")} titleButton={"войти"} titleContent={"Есть учетная запись - "} />
             </View>
           </>
         )

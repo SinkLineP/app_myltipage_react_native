@@ -24,11 +24,10 @@ export default function Authorization({navigation}) {
   const [btnTitle, setBtnTitle] = useState("Зарегистрироваться");
   const [btnStatus, setBtnStatus] = useState("registration");
 
-  const changeForm = (title, btnTitle, btnStatus, funcResetForm) => {
+  const changeForm = (title, btnTitle, btnStatus) => {
     setTitle(title);
     setBtnTitle(btnTitle);
     setBtnStatus(btnStatus);
-    funcResetForm({values: ""});
   }
 
   return (

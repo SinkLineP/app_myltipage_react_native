@@ -23,7 +23,7 @@ export default function Login({changeForm, navigation}) {
         password: "",
       }}
       validationSchema={AuthSchema}
-      onSubmit={(values, {resetForm}) => {
+      onSubmit={(values) => {
         LoginDB({
           mail: values.email,
           password: values.password,
@@ -55,7 +55,6 @@ export default function Login({changeForm, navigation}) {
               updated_at: data.user.updated_at
             }))
 
-            resetForm({values: ""})
             dispatch(switchAuth())
             navigation.navigate(
               "MainProfile"
@@ -91,7 +90,7 @@ export default function Login({changeForm, navigation}) {
             </View>
 
             <ButtonConfirm customStyles={LoginStyles.btnSubmit} color={"white"} background={"#048f9d"} size={25} title={"Войти"} funcPress={props.handleSubmit} />
-            <LinkSwitchLoginAndRegister changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)} titleButton={"зарегистрироваться"} titleContent={"Нету учетной записи - "} />
+            <LinkSwitchLoginAndRegister changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration")} titleButton={"зарегистрироваться"} titleContent={"Нету учетной записи - "} />
           </View>
         </>
       )}

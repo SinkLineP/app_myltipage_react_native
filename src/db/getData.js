@@ -156,3 +156,22 @@ export const VerifyUserPhone = async (phone, message, smsCode) => {
 
   return await response.json();
 }
+
+
+export const createUserWithPhone = async (user) => {
+  console.log(user)
+  const response = await fetch(`${BASE_URL}/create-with-phone`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      user: user
+    })
+  });
+  if (!response.ok) {
+    throw new Error("Server Error!");
+  }
+  return await response.json();
+}

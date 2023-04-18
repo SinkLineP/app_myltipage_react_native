@@ -7,3 +7,6 @@ export const BASE_URL = `https://${DOMAIN_SERVER}`;
 export const API_ID_SMS = "3644ABC4-AAC5-7628-CA3C-F781BD026520";
 export const API_KEY_GOOGLE_CAPTHA = "6LfTepQlAAAAAIPK0wfwPLXQPLh9dcYNuZGK7TpJ";
 export const TIME_TO_DELETE_THE_SMS = returnMinutesFromNumber(5);
+export const THREE_HOURS_IN_MILLISECONDS = 10800000;
+export const CLEAR_LIMIT_MESSAGE = "";
+export const LIMIT_SMS = 15;

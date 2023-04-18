@@ -15,7 +15,7 @@ export const AuthSchema = Yup.object().shape({
 
 export const acceptPhoneSchema = Yup.object().shape({
   phone: Yup.string().min(11, errorsMessages.shortText).max(11, errorsMessages.longText).required(errorsMessages.required),
-  sms_code: Yup.number().min(6, errorsMessages.shortText).max(6, errorsMessages.longText).required(errorsMessages.required),
+  sms_code: Yup.string().min(6, errorsMessages.shortText).max(6, errorsMessages.longText).required(errorsMessages.required),
 });
 
 export const aboutUser = Yup.object().shape({

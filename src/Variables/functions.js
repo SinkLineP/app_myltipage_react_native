@@ -1,3 +1,5 @@
+import {errorsMessages} from "../navigation/screens/Authorization/Schematics/Schematics";
+
 export const rand = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -29,4 +31,16 @@ export const stopInterval = (interval) => {
 }
 export const returnMinutesFromNumber = (number) => {
   return number * 60;
+}
+
+export const customValidate = (value, minLength, maxLength) => {
+  if (value.length < minLength && value.length !== 0) {
+    return errorsMessages.shortText;
+  } else if (value.length > maxLength) {
+    return errorsMessages.longText;
+  }
+}
+
+export const hourToMilliseconds = (hrs,min,sec) => {
+  return (hrs*60*60+min*60+sec)*1000;
 }
