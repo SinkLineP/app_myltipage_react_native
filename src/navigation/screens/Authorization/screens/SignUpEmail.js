@@ -1,13 +1,14 @@
 import React, {useState} from "react";
-import {StyleSheet, Text} from "react-native";
+import {StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
-import {AuthSchema} from "./Schematics/Schematics";
-import {createUser} from "../../../db/getData";
+import {AuthSchema} from "../Schematics/Schematics";
+import {createUser} from "../../../../db/getData";
 import {handleAuthClick} from "./Authorization";
-import FormAuth from "./components/Form/Form";
-import {generateUsername} from "../../../Variables/functions";
+import {generateUsernameFromEmail} from "../../../../Variables/functions";
+import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
+import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
 
-export default function SignUp({navigation, changeForm}) {
+export default function SignUpEmail({navigation, changeForm}) {
   const [showError, setError] = useState("");
 
   return (
@@ -20,7 +21,7 @@ export default function SignUp({navigation, changeForm}) {
       onSubmit={(values, {resetForm}) => {
         handleAuthClick().then(r => r)
         createUser({
-          username: generateUsername(values.email),
+          username: generateUsernameFromEmail(values.email),
           mail: values.email,
           phone: "",
           lastname: "",
@@ -44,14 +45,28 @@ export default function SignUp({navigation, changeForm}) {
         return (
           <>
             <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
-            <FormAuth
-              titleContent={"Есть учетная запись - "}
-              titleButton={"войти"}
-              changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)}
-              props={props}
-              styles={SignUpStyles}
-              btnConfirmTitle={"Зарегистрироваться"}
-            />
+            <View style={SignUpStyles.container}>
+              <View style={SignUpStyles.form}>
+                {props.errors.email && props.touched.email ? (<Text style={SignUpStyles.error}>{props.errors.email}</Text>) : <Text style={SignUpStyles.error}></Text>}
+                <TextInput
+                  style={SignUpStyles.input}
+                  placeholder={"Введите адрес электронной почты.."}
+                  onChangeText={props.handleChange("email")}
+                  value={props.values.email}
+                />
+
+                {props.errors.password && props.touched.password ? (<Text style={SignUpStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
+                <TextInput
+                  style={SignUpStyles.input}
+                  placeholder={"Введите пароль.."}
+                  onChangeText={props.handleChange("password")}
+                  value={props.values.password}
+                />
+              </View>
+
+              <ButtonConfirm customStyles={SignUpStyles.btnSubmit} color={"white"} background={"#048f9d"} size={25} title={"Зарегистрироваться"} funcPress={props.handleSubmit} />
+              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Авторизация", "Войти", "login", props.resetForm)} titleButton={"войти"} titleContent={"Есть учетная запись - "} />
+            </View>
           </>
         )
       }}
@@ -81,17 +96,6 @@ const SignUpStyles = StyleSheet.create({
     marginRight: "auto",
     marginTop: 10,
     flex: 1
-  },
-  auth: {
-    color: "#404040",
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 10
-  },
-  link: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#048f9d"
   },
   error: {
     color: "#b92121",

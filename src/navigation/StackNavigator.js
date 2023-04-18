@@ -9,7 +9,7 @@ import CartoonReviews from "./screens/Reviews/Categories/Cartoon/CartoonReviews"
 import SerialsReviews from "./screens/Reviews/Categories/Serials/SerialsReviews";
 import CartoonSerials from "./screens/Reviews/Categories/CartoonSerials/CartoonSerials";
 import MainProfile from "./screens/Profile/MainProfile/MainProfile";
-import Authorization from "./screens/Authorization/Authorization";
+import Authorization from "./screens/Authorization/screens/Authorization";
 import SettingsProfile from "./screens/Profile/MainProfile/Tabs/SettingsPages/SettingsProfile";
 import ConfidentialSettings from "./screens/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
 import EditProfile from "./screens/Profile/MainProfile/Tabs/EditPages/EditProfile";

@@ -1,13 +1,14 @@
 import React, {useState} from "react";
-import {StyleSheet, Text} from "react-native";
+import {StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
-import {LoginDB} from "../../../db/getData";
-import {setCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
+import {LoginDB} from "../../../../db/getData";
+import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {AuthSchema} from "./Schematics/Schematics";
+import {AuthSchema} from "../Schematics/Schematics";
 import {handleAuthClick} from "./Authorization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FormAuth from "./components/Form/Form";
+import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
+import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
 
 
 export default function Login({changeForm, navigation}) {
@@ -70,15 +71,28 @@ export default function Login({changeForm, navigation}) {
       {(props) => (
         <>
           <Text></Text>
-          <FormAuth
-            titleContent={"Нету учетной записи - "}
-            titleButton={"зарегистрироваться"}
-            changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)}
-            props={props}
-            styles={LoginStyles}
-            btnConfirmTitle={"Войти"}
-            noCorrectData={noCorrectData}
-          />
+          <View style={LoginStyles.container}>
+            <View style={LoginStyles.form}>
+              {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}></Text>}
+              <TextInput
+                style={LoginStyles.input}
+                placeholder={"Введите адрес электронной почты.."}
+                onChangeText={props.handleChange("email")}
+                value={props.values.email}
+              />
+
+              {props.errors.password && props.touched.password ? (<Text style={LoginStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
+              <TextInput
+                style={LoginStyles.input}
+                placeholder={"Введите пароль.."}
+                onChangeText={props.handleChange("password")}
+                value={props.values.password}
+              />
+            </View>
+
+            <ButtonConfirm customStyles={LoginStyles.btnSubmit} color={"white"} background={"#048f9d"} size={25} title={"Войти"} funcPress={props.handleSubmit} />
+            <LinkSwitchLoginAndRegister changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration", props.resetForm)} titleButton={"зарегистрироваться"} titleContent={"Нету учетной записи - "} />
+          </View>
         </>
       )}
     </Formik>

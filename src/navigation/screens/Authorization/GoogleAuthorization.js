@@ -1,1 +1,0 @@
-//npx expo install react-native@0.71.6

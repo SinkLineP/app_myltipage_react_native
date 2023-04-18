@@ -31,6 +31,7 @@
     "expo-random": "~13.1.1",
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.4",
+    "expo-updates": "~0.16.4",
     "expo-web-browser": "~12.1.1",
     "formik": "^2.2.9",
     "frisbee": "^3.1.0",
@@ -42,14 +43,15 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-loading-spinner-overlay": "^3.0.1",
+    "react-native-mask-text": "^0.13.2",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
+    "react-native-text-input-mask": "^3.1.4",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
     "redux-api-middleware": "^3.2.1",
-    "yup": "^1.0.2",
-    "expo-updates": "~0.16.4"
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
