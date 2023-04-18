@@ -143,7 +143,7 @@ export const getAllUsers = async () => {
 export const VerifyUserPhone = async (phone, message, smsCode) => {
   console.log(smsCode);
 
-  const response = await fetch(`https://sms.ru/sms/send?api_id=${API_ID_SMS}&to=${phone}&msg=${message}: ${smsCode}&json=1&test=1&ttl=${TIME_TO_DELETE_THE_SMS}`, {
+  const response = await fetch(`https://sms.ru/sms/send?api_id=${API_ID_SMS}&to=${phone}&msg=${message}: ${smsCode}&json=1&ttl=${TIME_TO_DELETE_THE_SMS}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
