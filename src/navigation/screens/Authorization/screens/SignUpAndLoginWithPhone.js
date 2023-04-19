@@ -1,35 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Formik} from "formik";
-import {
-  checkCreatedUserWithPhone,
-  createUserWithPhone,
-  LoginDBPhone, VerifyUserPhone,
-} from "../../../../db/getData";
-import {
-  customValidate,
-  generateUsername, handleAuthClick,
-  rand, stopInterval,
-} from "../../../../Variables/functions";
+import {checkCreatedUserWithPhone, createUserWithPhone, LoginDBPhone, VerifyUserPhone} from "../../../../db/getData";
+import {customValidate, generateUsername, handleAuthClick, rand} from "../../../../Variables/functions";
 import {Text, View, StyleSheet} from "react-native";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import {setCurrentUser, setLimitSendSMS, switchAuth} from "../../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextInputMasked from "../components/TextInputMasked/TextInputMasked";
-import ButtonSubmitSMSCode from "../components/ButtonSubmitSMSCode/ButtonSubmitSMSCode";
-import isEqual from "isequal.es/index";
-import CountDown from "react-native-countdown-component";
-import TimerScreen from "../components/TimerScreen/TimerScreen";
-import {TIME_TO_DELETE_THE_SMS} from "../../../../Variables/ServerConfig";
 
 
 export default function SignUpAndLoginWithPhone({navigation}) {
   const limitSendSMS = useSelector(state => state.users.limitSendSMS);
   const limitMessage = useSelector(state => state.users.limitMessage);
-  const currentUser = useSelector(state => state.users.currentUser);
-  const [showError, setError] = useState("");
-  const [statusCode, setStatusCode] = useState("BAD");
-  const [showTimer, setShowTimer] = useState("Отправить код");
   const [submittedSMSCode, setSubmittedCode] = useState(0);
   const [noCorrectSMS, setNoCorrectSMS] = useState("");
   const [valuesPhone, setValuesPhone] = useState("");
@@ -37,8 +20,6 @@ export default function SignUpAndLoginWithPhone({navigation}) {
   const [isCreatedUser, setCreatedUser] = useState("");
   const [showInputSMSCode, setShowInputSMSCode] = useState(false);
   const dispatch = useDispatch();
-  let interval = null;
-  let timeout = null;
 
 
   const funcCheckCreatedUser = (phone) => {
@@ -66,7 +47,40 @@ export default function SignUpAndLoginWithPhone({navigation}) {
     setValuesSMSCode(sms_code);
   }
 
+  const funcSubmitButton = async (data) => {
+    handleAuthClick().then(r => r)
+    console.log(data.user)
+    try {
+      await AsyncStorage.setItem("token", data.jwt)
+    } catch (e) {
+      console.log(e)
+    }
 
+    dispatch(setCurrentUser({
+      id: data.user.id,
+      username: data.user.username,
+      mail: data.user.mail,
+      phone: data.user.phone,
+      lastname: data.user.lastname,
+      firstname: data.user.firstname,
+      surname: data.user.surname,
+      password: data.user.password,
+      age: data.user.age,
+      avatar: data.user.avatar,
+      gender: data.user.gender,
+      created_at: data.user.created_at,
+      updated_at: data.user.updated_at
+    }))
+
+    setShowInputSMSCode(false);
+    setSubmittedCode(0);
+    setValuesPhone("");
+    setValuesSMSCode("");
+    dispatch(switchAuth());
+    navigation.navigate(
+      "MainProfile"
+    );
+  }
 
 
   return (
@@ -81,39 +95,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
               phone: valuesPhone
             }).then(async (data) => {
               if (data.user !== "empty") {
-                handleAuthClick().then(r => r)
-                console.log(data.user)
-                try {
-                  await AsyncStorage.setItem("token", data.jwt)
-                } catch (e) {
-                  console.log(e)
-                }
-
-                dispatch(setCurrentUser({
-                  id: data.user.id,
-                  username: data.user.username,
-                  mail: data.user.mail,
-                  phone: data.user.phone,
-                  lastname: data.user.lastname,
-                  firstname: data.user.firstname,
-                  surname: data.user.surname,
-                  password: data.user.password,
-                  age: data.user.age,
-                  avatar: data.user.avatar,
-                  gender: data.user.gender,
-                  created_at: data.user.created_at,
-                  updated_at: data.user.updated_at
-                }))
-
-                setShowInputSMSCode(false);
-                setSubmittedCode(0);
-                setStatusCode("BAD");
-                setValuesPhone("");
-                setValuesSMSCode("");
-                dispatch(switchAuth());
-                navigation.navigate(
-                  "MainProfile"
-                );
+                await funcSubmitButton(data);
               }
             })
           } else if (isCreatedUser === "uncreated") {
@@ -131,39 +113,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
               gender: "other",
             }).then(async (data) => {
               if (data.isUsedPhone === "") {
-                handleAuthClick().then(r => r)
-                console.log(data.user)
-                try {
-                  await AsyncStorage.setItem("token", data.jwt)
-                } catch (e) {
-                  console.log(e)
-                }
-
-                dispatch(setCurrentUser({
-                  id: data.user.id,
-                  username: data.user.username,
-                  mail: data.user.mail,
-                  phone: data.user.phone,
-                  lastname: data.user.lastname,
-                  firstname: data.user.firstname,
-                  surname: data.user.surname,
-                  password: data.user.password,
-                  age: data.user.age,
-                  avatar: data.user.avatar,
-                  gender: data.user.gender,
-                  created_at: data.user.created_at,
-                  updated_at: data.user.updated_at
-                }))
-
-                setShowInputSMSCode(false);
-                setSubmittedCode(0);
-                setStatusCode("BAD");
-                setValuesPhone("");
-                setValuesSMSCode("");
-                dispatch(switchAuth());
-                navigation.navigate(
-                  "MainProfile"
-                );
+                await funcSubmitButton(data);
               }
             })
           }
@@ -178,7 +128,6 @@ export default function SignUpAndLoginWithPhone({navigation}) {
               <View style={LoginStyles.form}>
                 <View>
                   {/*error show*/}
-                  {showError !== "" ? (<Text style={LoginStyles.error}>{showError}</Text>) : ("")}
                   {limitMessage !== "" ? (<Text style={LoginStyles.limitMessage}>{limitMessage}</Text>) : ("")}
 
                   {props.errors.phone && props.touched.phone ? (
@@ -207,7 +156,6 @@ export default function SignUpAndLoginWithPhone({navigation}) {
 
                         VerifyUserPhone(valuesPhone, smsCode).then(r => {
                           if (r.sms[valuesPhone].status === "OK") {
-                            setStatusCode(r.sms[valuesPhone].status);
                             setSubmittedCode(smsCode);
                             console.log(r);
                           } else {
