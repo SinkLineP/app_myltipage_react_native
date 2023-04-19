@@ -189,6 +189,13 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                 title={isCreatedUser === "created" ? "Войти" : "Зарегистрироваться"}
                 funcPress={props.handleSubmit}
               />
+
+              <View>
+                <Text style={LoginStyles.textLink}>
+                  <Text style={LoginStyles.link} onPress={() => navigation.navigate("LoginEmail")}>Войдите</Text> или
+                  <Text style={LoginStyles.link} onPress={() => navigation.navigate("SignUpEmail")}> Зарегистрируйтесь</Text>{'\n'} с помощью почты.
+                </Text>
+              </View>
             </View>
           </>
         )
@@ -267,5 +274,17 @@ const LoginStyles = StyleSheet.create({
     textDecorationLine: "none",
     fontSize: 20,
     textAlign: "center"
+  },
+  textLink: {
+    color: "#424242",
+    textAlign: "center",
+    marginTop: 10,
+    fontWeight: "bold"
+  },
+  link: {
+    color: "#048f9d",
+  },
+  containerLink: {
+
   }
 })

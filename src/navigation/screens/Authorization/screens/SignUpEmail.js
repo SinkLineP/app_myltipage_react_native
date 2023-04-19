@@ -32,7 +32,7 @@ export default function SignUpEmail({navigation, changeForm}) {
           gender: "other",
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
-            changeForm("Авторизация", "Войти", "login")
+            navigation.navigate("LoginEmail");
           } else {
             setError(data.isUsedEmail);
             setTimeout(() => setError(""), 3000)
@@ -43,7 +43,7 @@ export default function SignUpEmail({navigation, changeForm}) {
       {(props) => {
         return (
           <>
-            <Text style={SignUpStyles.error}>{showError !== "" ? showError : ""}</Text>
+            <Text style={SignUpStyles.title}>Зарегистрируйтесь</Text>
             <View style={SignUpStyles.container}>
               <View style={SignUpStyles.form}>
                 {props.errors.email && props.touched.email ? (<Text style={SignUpStyles.error}>{props.errors.email}</Text>) : <Text style={SignUpStyles.error}></Text>}
@@ -63,8 +63,21 @@ export default function SignUpEmail({navigation, changeForm}) {
                 />
               </View>
 
-              <ButtonConfirm customStyles={SignUpStyles.btnSubmit} color={"white"} background={"#048f9d"} size={25} title={"Зарегистрироваться"} funcPress={props.handleSubmit} />
-              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Авторизация", "Войти", "login")} titleButton={"войти"} titleContent={"Есть учетная запись - "} />
+              <ButtonConfirm
+                color={"white"}
+                background={props.values.email !== "" && props.values.password !== "" ? "#048f9d" : "#5eb7c0"}
+                size={25}
+                title={"Зарегистрироваться"}
+                funcPress={props.handleSubmit}
+              />
+
+              <View>
+                <Text style={SignUpStyles.textLink}>
+                  <Text style={SignUpStyles.link} onPress={() => navigation.navigate("Authorization")}>Войдите</Text> с помощью телефона.
+                  <Text>{'\n'}или же{'\n'}</Text>
+                  <Text style={SignUpStyles.link} onPress={() => navigation.navigate("LoginEmail")}>Войдите</Text> с помощью почты.
+                </Text>
+              </View>
             </View>
           </>
         )
@@ -129,5 +142,21 @@ const SignUpStyles = StyleSheet.create({
   },
   image: {
     flex: 1,
-  }
+  },
+  title: {
+    textAlign: "center",
+    color: "#048f9d",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 50,
+  },
+  textLink: {
+    color: "#424242",
+    textAlign: "center",
+    marginTop: 10,
+    fontWeight: "bold"
+  },
+  link: {
+    color: "#048f9d",
+  },
 })

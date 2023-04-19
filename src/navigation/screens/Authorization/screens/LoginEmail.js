@@ -5,16 +5,15 @@ import {LoginDB} from "../../../../db/getData";
 import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {AuthSchema} from "../Schematics/Schematics";
-import {handleAuthClick} from "./Authorization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister/LinkSwitchLoginAndRegister";
+import {handleAuthClick} from "../../../../Variables/functions";
 
 
 export default function LoginEmail({changeForm, navigation}) {
   const dispatch = useDispatch();
   const [noCorrectData, setNoCorrectData] = useState("");
-  const isAuth = useSelector(state => state.users.isAuth);
 
   return (
     <Formik
@@ -69,7 +68,7 @@ export default function LoginEmail({changeForm, navigation}) {
     >
       {(props) => (
         <>
-          <Text></Text>
+          <Text style={LoginStyles.title}>Войдите</Text>
           <View style={LoginStyles.container}>
             <View style={LoginStyles.form}>
               {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}>{noCorrectData}</Text>}
@@ -89,8 +88,21 @@ export default function LoginEmail({changeForm, navigation}) {
               />
             </View>
 
-            <ButtonConfirm customStyles={LoginStyles.btnSubmit} color={"white"} background={"#048f9d"} size={25} title={"Войти"} funcPress={props.handleSubmit} />
-            <LinkSwitchLoginAndRegister changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration")} titleButton={"зарегистрироваться"} titleContent={"Нету учетной записи - "} />
+            <ButtonConfirm
+              color={"white"}
+              background={props.values.email !== "" && props.values.password !== "" ? "#048f9d" : "#5eb7c0"}
+              size={25}
+              title={"Войти"}
+              funcPress={props.handleSubmit}
+            />
+
+            <View>
+              <Text style={LoginStyles.textLink}>
+                <Text style={LoginStyles.link} onPress={() => navigation.navigate("Authorization")}>Зарегистрируйтесь</Text> с помощью телефона.
+                <Text>{'\n'}или же{'\n'}</Text>
+                <Text style={LoginStyles.link} onPress={() => navigation.navigate("SignUpEmail")}>Зарегистрируйтесь</Text> с помощью почты.
+              </Text>
+            </View>
           </View>
         </>
       )}
@@ -126,11 +138,6 @@ const LoginStyles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10
   },
-  link: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#048f9d"
-  },
   btnSubmit: {
     padding: 10,
     backgroundColor: "#048f9d",
@@ -144,5 +151,21 @@ const LoginStyles = StyleSheet.create({
     color: "#b92121",
     fontWeight: "bold",
     textAlign: "center"
-  }
+  },
+  title: {
+    textAlign: "center",
+    color: "#048f9d",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 50,
+  },
+  textLink: {
+    color: "#424242",
+    textAlign: "center",
+    marginTop: 10,
+    fontWeight: "bold"
+  },
+  link: {
+    color: "#048f9d",
+  },
 })

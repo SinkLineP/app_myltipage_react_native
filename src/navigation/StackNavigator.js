@@ -22,6 +22,8 @@ import ResponseFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages
 import Menu from "./screens/Menu/Menu";
 import Search from "./screens/Search/Search";
 import Chat from "./screens/Chat/Chat";
+import LoginEmail from "./screens/Authorization/screens/LoginEmail";
+import SignUpEmail from "./screens/Authorization/screens/SignUpEmail";
 
 
 const Stack = createStackNavigator();
@@ -44,6 +46,8 @@ const ProfileStackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", false)} />
       <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "#ebebeb", "#fff", false)} />
+      <Stack.Screen name="LoginEmail" component={LoginEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
+      <Stack.Screen name="SignUpEmail" component={SignUpEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
       {/* Settings Pages */}
       <Stack.Screen name="SettingsProfile" component={SettingsProfile} options={setOptions("Настройки", "#048f9d", "#fff", false)} />
       <Stack.Screen name="ConfidentialSettings" component={ConfidentialSettings} options={setOptions("Конфиденциальные данные", "#048f9d", "#fff", false)} />
