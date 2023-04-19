@@ -18,7 +18,7 @@ import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm"
 import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
 import { MaskedTextInput } from "react-native-mask-text";
 import {TIME_TO_DELETE_THE_SMS} from "../../../../Variables/ServerConfig";
-import {setCurrentUser, setLimitSendSMS, switchAuth} from "../../../../store/Slices/usersSlice";
+import {setCurrentUser, setDefaultPassword, setLimitSendSMS, switchAuth} from "../../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {AuthSchema, errorsMessages} from "../Schematics/Schematics";
 import {handleAuthClick} from "./Authorization";
@@ -42,6 +42,9 @@ export default function LoginPhone({navigation, changeForm}) {
   let timeout = null;
 
 
+
+
+
   return (
     <Formik
       initialValues={{
@@ -49,45 +52,63 @@ export default function LoginPhone({navigation, changeForm}) {
       }}
       onSubmit={() => {
         if (Number(valuesSMSCode) === submittedSMSCode && Number(valuesSMSCode) !== 0 && submittedSMSCode !== 0) {
-          LoginDBPhone({
-            phone: valuesPhone
-          }).then(async (data) => {
-            if (data.user !== "empty") {
-              handleAuthClick().then(r => r)
+          if (isCreatedUser === "created") {
+            LoginDBPhone({
+              phone: valuesPhone
+            }).then(async (data) => {
+              if (data.user !== "empty") {
+                handleAuthClick().then(r => r)
+                console.log(data.user)
+                try {
+                  await AsyncStorage.setItem("token", data.jwt)
+                } catch (e) {
+                  console.log(e)
+                }
 
-              console.log(data.user)
+                dispatch(setCurrentUser({
+                  id: data.user.id,
+                  username: data.user.username,
+                  mail: data.user.mail,
+                  phone: data.user.phone,
+                  lastname: data.user.lastname,
+                  firstname: data.user.firstname,
+                  surname: data.user.surname,
+                  password: data.user.password,
+                  age: data.user.age,
+                  avatar: data.user.avatar,
+                  gender: data.user.gender,
+                  created_at: data.user.created_at,
+                  updated_at: data.user.updated_at
+                }))
 
-              try {
-                await AsyncStorage.setItem("token", data.jwt)
-              } catch (e) {
-                console.log(e)
+                dispatch(switchAuth())
+                navigation.navigate(
+                  "MainProfile"
+                )
               }
-
-              dispatch(setCurrentUser({
-                id: data.user.id,
-                username: data.user.username,
-                mail: data.user.mail,
-                phone: data.user.phone,
-                lastname: data.user.lastname,
-                firstname: data.user.firstname,
-                surname: data.user.surname,
-                password: data.user.password,
-                age: data.user.age,
-                avatar: data.user.avatar,
-                gender: data.user.gender,
-                created_at: data.user.created_at,
-                updated_at: data.user.updated_at
-              }))
-
-              dispatch(switchAuth())
-              navigation.navigate(
-                "MainProfile"
-              )
-            } else {
-              setNoCorrectData(data.failure)
-              setTimeout(() => setNoCorrectData(""), 3000)
-            }
-          })
+            })
+          } else if (isCreatedUser === "uncreated") {
+            const generatePassword = rand(100000, 999999);
+            createUserWithPhone({
+              username: generateUsername(),
+              mail: "",
+              phone: valuesPhone,
+              lastname: "",
+              firstname: "",
+              surname: "",
+              password: `${generatePassword}`,
+              age: "",
+              avatar: "deleted",
+              gender: "other",
+            }).then(async (data) => {
+              if (data.isUsedPhone === "") {
+                dispatch(switchAuth())
+                navigation.navigate(
+                  "MainProfile"
+                )
+              }
+            })
+          }
         }
       }}
     >
@@ -95,14 +116,12 @@ export default function LoginPhone({navigation, changeForm}) {
         return (
           <>
             <View style={LoginStyles.container}>
+              <Text style={LoginStyles.title}>Зарегистрироваться или авторизироваться</Text>
               <View style={LoginStyles.form}>
-
                 <View>
                   {/*error show*/}
                   {showError !== "" ? (<Text style={LoginStyles.error}>{showError}</Text>) : ("")}
-                  {noCorrectData !== "" ? (<Text style={LoginStyles.error}>{noCorrectData}</Text>) : ("")}
                   {limitMessage !== "" ? (<Text style={LoginStyles.limitMessage}>{limitMessage}</Text>) : ("")}
-                  {isCreatedUser === "uncreated" ? (<Text style={LoginStyles.limitMessage}>{errorsMessages.userIsNoCreated}</Text> ) : ("")}
 
                   {props.errors.phone && props.touched.phone ? (
                     <Text style={LoginStyles.error}>{props.errors.phone}</Text>
@@ -132,7 +151,7 @@ export default function LoginPhone({navigation, changeForm}) {
                   />
 
                   <TouchableHighlight style={LoginStyles.buttonSendSMSCode} underlayColor='transparent'>
-                    {limitSendSMS !== 0 && isCreatedUser === "created" ? (
+                    {limitSendSMS !== 0 ? (
                       <View>
                         <Text style={LoginStyles.titleSendSMSCode} onPress={() => {
                           if (valuesPhone.length === 11) {
@@ -179,34 +198,35 @@ export default function LoginPhone({navigation, changeForm}) {
                     )}
                   </TouchableHighlight>
                 </View>
-                <View>
-                  {props.errors.phone && props.touched.phone ? (<Text style={LoginStyles.error}>{props.errors.phone}</Text>) : <Text style={LoginStyles.error}>{noCorrectSMS}</Text>}
-                  <MaskedTextInput
-                    mask="999-999"
-                    onChangeText={(_, sms_code) => {
-                      if (Number(sms_code) !== submittedSMSCode) {
-                        console.log(sms_code);
-                        console.log(submittedSMSCode);
-                        setNoCorrectSMS("Код не верный");
-                      } else {
-                        setNoCorrectSMS("");
-                      }
-                      setValuesSMSCode(sms_code);
-                    }}
-                    value={valuesSMSCode}
-                    style={LoginStyles.input}
-                    keyboardType="numeric"
-                    placeholder={"Введите код.."}
-                  />
-                </View>
+                {valuesPhone.length === 11 && statusCode === "OK" ? (
+                  <View>
+                    {props.errors.phone && props.touched.phone ? (<Text style={LoginStyles.error}>{props.errors.phone}</Text>) : <Text style={LoginStyles.error}>{noCorrectSMS}</Text>}
+                    <MaskedTextInput
+                      mask="999-999"
+                      onChangeText={(_, sms_code) => {
+                        if (Number(sms_code) !== submittedSMSCode) {
+                          console.log(sms_code);
+                          console.log(submittedSMSCode);
+                          setNoCorrectSMS("Код не верный");
+                        } else {
+                          setNoCorrectSMS("");
+                        }
+                        setValuesSMSCode(sms_code);
+                      }}
+                      value={valuesSMSCode}
+                      style={LoginStyles.input}
+                      keyboardType="numeric"
+                      placeholder={"Введите код.."}
+                    />
+                  </View>
+                ) : ("")}
               </View>
 
               {Number(valuesSMSCode) === submittedSMSCode && Number(valuesSMSCode) !== 0 && submittedSMSCode !== 0 ? (
-                <ButtonConfirm color={"white"} background={"#048f9d"} size={25} title={"Войти"} funcPress={props.handleSubmit} />
+                <ButtonConfirm color={"white"} background={"#048f9d"} size={25} title={isCreatedUser === "created" ? "Войти" : "Зарегистрироваться"} funcPress={props.handleSubmit} />
               ) : (
-                <ButtonConfirm color={"white"} background={"#5eb7c0"} size={25} title={"Войти"} funcPress={props.handleSubmit} />
+                <ButtonConfirm color={"white"} background={"#5eb7c0"} size={25} title={isCreatedUser === "uncreated" ? "Зарегистрироваться" : "Войти"} funcPress={props.handleSubmit} />
               )}
-              <LinkSwitchLoginAndRegister changeForm={() => changeForm("Регистрация", "Зарегистрироваться", "registration")} titleButton={"зарегистрироваться"} titleContent={"Нету учетной записи - "} />
             </View>
           </>
         )
@@ -291,5 +311,12 @@ const LoginStyles = StyleSheet.create({
   },
   titleSendSMSCode: {
     color: "#048f9d"
-  }
+  },
+  title: {
+    textAlign: "center",
+    color: "#048f9d",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 50,
+  },
 })

@@ -3,7 +3,6 @@ import {StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
 import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {StatusBar} from "expo-status-bar";
-import {generateUsername} from "../../../../../Variables/functions";
 import {ModalWindowProfile} from "../../../../../components/ModalWindow/ModalWindowProfile";
 
 
@@ -23,7 +22,7 @@ export default function ShowProfile({navigation}) {
   }
 
   useEffect(() => {
-    if (defaultPassword !== "") {
+    if (defaultPassword !== 0) {
       setModalVisible(true);
     } else {
       setModalVisible(false);

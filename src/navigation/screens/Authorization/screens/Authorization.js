@@ -21,7 +21,7 @@ export const handleAuthClick = async () => {
 }
 
 export default function Authorization({navigation}) {
-  const [title, setTitle] = useState("Регистрация");
+  const [title, setTitle] = useState("Зарегистрируйтесь или войдите");
   const [btnTitle, setBtnTitle] = useState("Зарегистрироваться");
   const [btnStatus, setBtnStatus] = useState("registration");
 
@@ -34,18 +34,17 @@ export default function Authorization({navigation}) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={AuthStyles.content}>
-        <Text style={AuthStyles.title}>{title}</Text>
-        {btnStatus !== "registration" ? (
-          <>
-            <LoginPhone changeForm={changeForm} navigation={navigation} />
-            {/*<LoginEmail navigation={navigation} btnTitle={btnTitle} changeForm={changeForm}  />*/}
-          </>
-        ) : (
-          <>
-            {/*<SignUpEmail navigation={navigation} changeForm={changeForm} />*/}
-            <SignUpPhone changeForm={changeForm} navigation={navigation} />
-          </>
-        )}
+        <LoginPhone changeForm={changeForm} navigation={navigation} />
+        {/*{btnStatus !== "registration" ? (*/}
+        {/*  <>*/}
+        {/*<LoginEmail navigation={navigation} btnTitle={btnTitle} changeForm={changeForm}  />*/}
+        {/*</>*/}
+        {/*) : (*/}
+        {/*  <>*/}
+        {/*<SignUpEmail navigation={navigation} changeForm={changeForm} />*/}
+        {/*<SignUpPhone changeForm={changeForm} navigation={navigation} />*/}
+        {/*</>*/}
+        {/*)}*/}
         <StatusBar style="auto" />
       </View>
     </TouchableWithoutFeedback>
@@ -54,13 +53,6 @@ export default function Authorization({navigation}) {
 }
 
 const AuthStyles = StyleSheet.create({
-  title: {
-    textAlign: "center",
-    color: "#048f9d",
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 50,
-  },
   content: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
