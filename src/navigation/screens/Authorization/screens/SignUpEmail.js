@@ -6,7 +6,7 @@ import {createUser} from "../../../../db/getData";
 import {handleAuthClick} from "./Authorization";
 import {generateUsernameFromEmail} from "../../../../Variables/functions";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
-import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
+import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister/LinkSwitchLoginAndRegister";
 
 export default function SignUpEmail({navigation, changeForm}) {
   const [showError, setError] = useState("");

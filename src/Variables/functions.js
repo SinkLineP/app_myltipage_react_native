@@ -1,4 +1,6 @@
 import {errorsMessages} from "../navigation/screens/Authorization/Schematics/Schematics";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {UserIsAuthed} from "../db/getData";
 
 export const rand = (min, max) => {
   min = Math.ceil(min);
@@ -49,4 +51,15 @@ export const generatePassword = () => {
   const randNumber = rand(minNumber, maxNumber);
 
   return `${randNumber}`;
+}
+
+export const handleAuthClick = async () => {
+  try {
+    const token = await AsyncStorage.getItem("token")
+    if(token !== null) {
+      UserIsAuthed(token).then(r => r)
+    }
+  } catch(e) {
+    console.log(e)
+  }
 }

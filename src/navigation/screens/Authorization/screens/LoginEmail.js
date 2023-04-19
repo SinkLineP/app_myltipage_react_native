@@ -8,7 +8,7 @@ import {AuthSchema} from "../Schematics/Schematics";
 import {handleAuthClick} from "./Authorization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
-import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
+import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister/LinkSwitchLoginAndRegister";
 
 
 export default function LoginEmail({changeForm, navigation}) {

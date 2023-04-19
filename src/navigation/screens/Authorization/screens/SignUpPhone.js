@@ -9,7 +9,7 @@ import {
 } from "../../../../Variables/functions";
 import {Text, View, StyleSheet, TouchableHighlight} from "react-native";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
-import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister";
+import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister/LinkSwitchLoginAndRegister";
 import { MaskedTextInput } from "react-native-mask-text";
 import {TIME_TO_DELETE_THE_SMS} from "../../../../Variables/ServerConfig";
 import {setDefaultPassword, setLimitSendSMS} from "../../../../store/Slices/usersSlice";
