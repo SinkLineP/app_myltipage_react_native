@@ -33,17 +33,21 @@ export default function SignUpAndLoginWithPhone({navigation}) {
       })
     }
 
+    if (phone.length < 11) {
+      setShowInputSMSCode(false);
+      setNoCorrectSMS("");
+    }
+
     setValuesPhone(phone)
   }
 
   const funcCheckValidSMSCode = (sms_code) => {
-    if (Number(sms_code) !== submittedSMSCode) {
-      console.log(sms_code);
-      console.log(submittedSMSCode);
+    if (Number(sms_code) !== submittedSMSCode && sms_code.length === 6) {
       setNoCorrectSMS("Код не верный");
     } else {
       setNoCorrectSMS("");
     }
+
     setValuesSMSCode(sms_code);
   }
 
