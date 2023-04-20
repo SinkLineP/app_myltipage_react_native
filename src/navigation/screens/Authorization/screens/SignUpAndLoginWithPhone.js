@@ -72,6 +72,8 @@ export default function SignUpAndLoginWithPhone({navigation}) {
       age: data.user.age,
       avatar: data.user.avatar,
       gender: data.user.gender,
+      is_confirmed_email: data.user.is_confirmed_email,
+      is_confirmed_phone : data.user.is_confirmed_phone,
       created_at: data.user.created_at,
       updated_at: data.user.updated_at
     }))
@@ -115,6 +117,8 @@ export default function SignUpAndLoginWithPhone({navigation}) {
               age: "",
               avatar: "deleted",
               gender: "other",
+              is_confirmed_email: "false",
+              is_confirmed_phone : "true",
             }).then(async (data) => {
               if (data.isUsedPhone === "") {
                 await funcSubmitButton(data);
@@ -155,6 +159,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
 
                     {showInputSMSCode === false ? (
                       <Text style={LoginStyles.buttonSendSMS} onPress={() => {
+                        console.log("sms clicked!")
                         dispatch(setLimitSendSMS(limitSendSMS - 1));
                         const smsCode = rand(100000, 999999);
 

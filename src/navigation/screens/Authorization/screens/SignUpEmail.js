@@ -30,6 +30,8 @@ export default function SignUpEmail({navigation, changeForm}) {
           age: "",
           avatar: "deleted",
           gender: "other",
+          is_confirmed_email: "false",
+          is_confirmed_phone : "false"
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
             navigation.navigate("LoginEmail");
