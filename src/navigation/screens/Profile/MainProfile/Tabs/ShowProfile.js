@@ -8,8 +8,7 @@ import MessageWarning from "../components/MessageWarning";
 
 
 
-export default function ShowProfile({navigation}) {
-  const currentUser = useSelector(state => state.users.currentUser);
+export default function ShowProfile({navigation, user}) {
   const defaultPassword = useSelector(state => state.users.defaultPassword);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -41,14 +40,14 @@ export default function ShowProfile({navigation}) {
         textButton={"Окей"}
       />
       <View style={stylesShowProfile.container}>
-        {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone === "false" ? <MessageWarning /> : ""}
+        {user.is_confirmed_email === "false" || user.is_confirmed_phone === "false" ? <MessageWarning navigation={navigation} /> : ""}
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>
-              <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={currentUser.avatar} />
+              <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={user.avatar} />
             </View>
             <View style={stylesShowProfile.containerAboutUser}>
-              <Text style={stylesShowProfile.names}>{currentUser.username}</Text>
+              <Text style={stylesShowProfile.names}>{user.username}</Text>
               <Text style={stylesShowProfile.country}>country</Text>
               <View style={stylesShowProfile.containerFollowAndMessage}>
                 <Text style={stylesShowProfile.followButton}>Подписаться</Text>
