@@ -49,6 +49,8 @@ export default function LoginEmail({changeForm, navigation}) {
               age: data.user.age,
               avatar: data.user.avatar,
               gender: data.user.gender,
+              is_confirmed_email: data.user.is_confirmed_email,
+              is_confirmed_phone : data.user.is_confirmed_phone,
               created_at: data.user.created_at,
               updated_at: data.user.updated_at
             }))

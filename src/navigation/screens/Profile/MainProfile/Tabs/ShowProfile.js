@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {StatusBar} from "expo-status-bar";
 import {ModalWindowProfile} from "../../../../../components/ModalWindow/ModalWindowProfile";
+import MessageWarning from "../components/MessageWarning";
 
 
 
@@ -40,6 +41,7 @@ export default function ShowProfile({navigation}) {
         textButton={"Окей"}
       />
       <View style={stylesShowProfile.container}>
+        {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone === "false" ? <MessageWarning /> : ""}
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>

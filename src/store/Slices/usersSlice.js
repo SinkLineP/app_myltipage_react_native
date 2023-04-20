@@ -24,6 +24,8 @@ const usersSlice = createSlice({
         gender: action.payload.gender,
         age: action.payload.age,
         avatar: action.payload.avatar,
+        is_confirmed_email: action.payload.is_confirmed_email,
+        is_confirmed_phone : action.payload.is_confirmed_phone,
         created_at: action.payload.created_at,
         updated_at: action.payload.updated_at
       }
