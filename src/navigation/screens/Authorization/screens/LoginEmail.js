@@ -3,11 +3,10 @@ import {StyleSheet, Text, TextInput, View} from "react-native";
 import {Formik} from "formik";
 import {LoginDB} from "../../../../db/getData";
 import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {AuthSchema} from "../Schematics/Schematics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
-import LinkSwitchLoginAndRegister from "../components/LinkSwitchLoginAndRegister/LinkSwitchLoginAndRegister";
 import {handleAuthClick} from "../../../../Variables/functions";
 
 

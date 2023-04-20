@@ -25,10 +25,6 @@ export const generateUsername = () => {
   return `Username-${randNumber}`;
 }
 
-export const stopInterval = (interval) => {
-  clearInterval(interval);
-  interval = null;
-}
 export const returnMinutesFromNumber = (number) => {
   return number * 60;
 }
@@ -43,14 +39,6 @@ export const customValidate = (value, minLength, maxLength) => {
 
 export const hourToMilliseconds = (hrs,min,sec) => {
   return (hrs*60*60+min*60+sec)*1000;
-}
-
-export const generatePassword = () => {
-  const minNumber = 100000;
-  const maxNumber = 999999;
-  const randNumber = rand(minNumber, maxNumber);
-
-  return `${randNumber}`;
 }
 
 export const handleAuthClick = async () => {

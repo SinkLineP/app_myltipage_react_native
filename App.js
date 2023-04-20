@@ -15,8 +15,6 @@ import {CLEAR_LIMIT_MESSAGE, LIMIT_SMS} from "./src/Variables/ServerConfig";
 
 
 export default function App () {
-
-
   return (
     <Provider store={store}>
       <AppWrapper />

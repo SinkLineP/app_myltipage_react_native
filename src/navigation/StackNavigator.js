@@ -1,4 +1,3 @@
-import ContactsPage from "./screens/ContactsNav/Contacts.js";
 import {createStackNavigator} from "@react-navigation/stack";
 import ReviewDetails from "./screens/ReviewDetails/reviewDetails";
 import {setOptions} from "../options/routerHeaderOptions";
