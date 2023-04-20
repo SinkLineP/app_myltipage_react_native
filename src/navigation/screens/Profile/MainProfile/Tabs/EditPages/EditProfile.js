@@ -3,7 +3,7 @@ import {View, StyleSheet, TextInput, Text, Dimensions, ScrollView} from "react-n
 import {useDispatch, useSelector} from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 import {Formik} from "formik";
-import { ButtonGroup } from '@rneui/themed'
+// import { ButtonGroup } from '@rneui/themed'
 import {EditUserSchema} from "../../Schematics/Schematics";
 import {OutputField} from "../../../../../../components/OutputField/OutputField";
 import ImageViewer from "../../../../../../components/ImageViewer/ImageViewer";
@@ -176,16 +176,16 @@ export default function EditProfile({navigation}) {
 
                 <Text></Text>
                 <OutputField stylesContent={stylesEdit.userDateTitle} content={"Ваш пол: "} field={currentUser.gender} fieldStyles={stylesEdit.userDateContent} />
-                <ButtonGroup
-                  textStyle={stylesEdit.groupButtonsText}
-                  buttons={['male', 'other', 'female']}
-                  selectedIndex={selectedIndex}
-                  onPress={(value) => {
-                    setSelectedIndex(value)
-                  }}
-                  containerStyle={stylesEdit.groupButtons}
-                  selectedButtonStyle={stylesEdit.groupButtonsSelectedButton}
-                />
+                {/*<ButtonGroup*/}
+                {/*  textStyle={stylesEdit.groupButtonsText}*/}
+                {/*  buttons={['male', 'other', 'female']}*/}
+                {/*  selectedIndex={selectedIndex}*/}
+                {/*  onPress={(value) => {*/}
+                {/*    setSelectedIndex(value)*/}
+                {/*  }}*/}
+                {/*  containerStyle={stylesEdit.groupButtons}*/}
+                {/*  selectedButtonStyle={stylesEdit.groupButtonsSelectedButton}*/}
+                {/*/>*/}
 
 
                 {props.errors.username && props.touched.username ? (<Text style={stylesEdit.error}>{props.errors.username}</Text>) : <Text></Text>}

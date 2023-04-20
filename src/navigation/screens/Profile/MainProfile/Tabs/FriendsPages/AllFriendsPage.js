@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Dimensions, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import CustomCard from "../../../../../../components/Card/CustomCard";
-import { SearchBar } from '@rneui/themed'
+// import { SearchBar } from '@rneui/themed'
 import {getAllUsers} from "../../../../../../db/getData";
 import ImageViewer from "../../../../../../components/ImageViewer/ImageViewer";
 import CardUser from "../../components/CardUser";
@@ -21,21 +21,21 @@ export default function AllFriendsPage() {
   return (
     <>
       <CustomCard>
-        <SearchBar
-          placeholder="Найти друзей..."
-          containerStyle={{
-            backgroundColor: "rgba(199,250,255,0.74)",
-            borderRadius: 5,
-          }}
-          inputStyle={{
-            color: "#4d4d4d",
-          }}
-          platform={"android"}
-          showCancel={true}
-          lightTheme={true}
-          onChangeText={setSearchValue}
-          value={searchValue}
-        />
+        {/*<SearchBar*/}
+        {/*  placeholder="Найти друзей..."*/}
+        {/*  containerStyle={{*/}
+        {/*    backgroundColor: "rgba(199,250,255,0.74)",*/}
+        {/*    borderRadius: 5,*/}
+        {/*  }}*/}
+        {/*  inputStyle={{*/}
+        {/*    color: "#4d4d4d",*/}
+        {/*  }}*/}
+        {/*  platform={"android"}*/}
+        {/*  showCancel={true}*/}
+        {/*  lightTheme={true}*/}
+        {/*  onChangeText={setSearchValue}*/}
+        {/*  value={searchValue}*/}
+        {/*/>*/}
       </CustomCard>
 
       <View style={{
