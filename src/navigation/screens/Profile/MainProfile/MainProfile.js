@@ -15,7 +15,7 @@ export default function MainProfile({navigation}) {
 
 const MainProfileStyles = StyleSheet.create({
   container: {
-    paddingTop: 40,
+    paddingTop: 30,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   }
