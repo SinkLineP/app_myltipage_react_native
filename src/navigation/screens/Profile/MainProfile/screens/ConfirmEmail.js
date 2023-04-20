@@ -1,7 +1,6 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import GoBackNavigation from "../../../Authorization/components/GoBackNavigation/GoBackNavigation";
-import CustomTextInput from "../../../Authorization/components/CustomTextInput/CustomTextInput";
 import ButtonSendCode from "../../../Authorization/components/ButtonSendCode/ButtonSendCode";
 
 const funcSendCode = () => {
