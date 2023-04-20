@@ -1,15 +1,20 @@
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import GoBackNavigation from "../../../Authorization/components/GoBackNavigation/GoBackNavigation";
+import CustomTextInput from "../../../Authorization/components/CustomTextInput/CustomTextInput";
+import ButtonSendCode from "../../../Authorization/components/ButtonSendCode/ButtonSendCode";
 
-
+const funcSendCode = () => {
+  console.log("send mail code!")
+}
 
 export default function ConfirmEmail({navigation}) {
   return (
     <View style={stylesConfirmEmail.container}>
       <GoBackNavigation navigation={navigation} title={"Вернуться"} />
-      <View>
-
+      <View style={stylesConfirmEmail.containerInput}>
+        {/*<CustomTextInput onChangeText={() => {}} placeholder={""} value={""} />*/}
+        <ButtonSendCode funcSendCode={() => funcSendCode()} />
       </View>
     </View>
   )
@@ -22,10 +27,13 @@ const stylesConfirmEmail = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     backgroundColor: "white",
-    borderRadius: 50,
+    borderRadius: 20,
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 20,
     paddingLeft: 20
+  },
+  containerInput: {
+    marginTop: 15
   }
 })
