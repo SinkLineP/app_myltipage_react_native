@@ -39,7 +39,7 @@
     "isequal.es": "^0.2.0",
     "lottie-react-native": "5.1.4",
     "react": "18.2.0",
-    "react-native": "0.71.6",
+    "react-native": "0.71.7",
     "react-native-countdown-component": "^2.7.1",
     "react-native-element-timer": "^2.1.2",
     "react-native-form": "^2.1.3",
