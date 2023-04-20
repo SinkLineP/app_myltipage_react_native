@@ -8,6 +8,7 @@ import {setCurrentUser, setLimitSendSMS, switchAuth} from "../../../../store/Sli
 import {useDispatch, useSelector} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextInputMasked from "../components/TextInputMasked/TextInputMasked";
+import ButtonSendCode from "../components/ButtonSendCode/ButtonSendCode";
 
 
 export default function SignUpAndLoginWithPhone({navigation}) {
@@ -88,6 +89,23 @@ export default function SignUpAndLoginWithPhone({navigation}) {
     );
   }
 
+  const funcSendCode = () => {
+    console.log("sms clicked!")
+    dispatch(setLimitSendSMS(limitSendSMS - 1));
+    const smsCode = rand(100000, 999999);
+
+    VerifyUserPhone(valuesPhone, smsCode).then(r => {
+      if (r.sms[valuesPhone].status === "OK") {
+        setSubmittedCode(smsCode);
+        console.log(r);
+      } else {
+        console.log("BAD")
+      }
+    });
+
+    setShowInputSMSCode(true);
+  }
+
 
   return (
     <Formik
@@ -158,22 +176,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     {props.errors.phone && props.touched.phone ? (<Text style={LoginStyles.error}>{props.errors.phone}</Text>) : <Text style={LoginStyles.error}>{noCorrectSMS}</Text>}
 
                     {showInputSMSCode === false ? (
-                      <Text style={LoginStyles.buttonSendSMS} onPress={() => {
-                        console.log("sms clicked!")
-                        dispatch(setLimitSendSMS(limitSendSMS - 1));
-                        const smsCode = rand(100000, 999999);
-
-                        VerifyUserPhone(valuesPhone, smsCode).then(r => {
-                          if (r.sms[valuesPhone].status === "OK") {
-                            setSubmittedCode(smsCode);
-                            console.log(r);
-                          } else {
-                            console.log("BAD")
-                          }
-                        });
-
-                        setShowInputSMSCode(true);
-                      }}>Отправить код</Text>
+                      <ButtonSendCode funcSendCode={() => funcSendCode()} />
                     ) : (
                       <TextInputMasked
                         mask={"999-999"}
@@ -263,22 +266,6 @@ const LoginStyles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 50,
-  },
-  buttonSendSMS: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderRadius: 50,
-    borderColor: "#048f9d",
-    width: "auto",
-    padding: 10,
-    marginBottom: 7,
-    paddingLeft: 15,
-    paddingRight: 15,
-    color: "#048f9d",
-    fontWeight: "bold",
-    textDecorationLine: "none",
-    fontSize: 20,
-    textAlign: "center"
   },
   textLink: {
     color: "#424242",
