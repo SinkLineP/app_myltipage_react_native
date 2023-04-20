@@ -1,13 +1,16 @@
 import React from "react"
 import {Dimensions, ScrollView, StyleSheet} from "react-native";
 import ShowProfile from "./Tabs/ShowProfile";
+import {useSelector} from "react-redux";
 
 
 export default function MainProfile({navigation}) {
+  const currentUser = useSelector(state => state.users.currentUser);
+
   return (
     <>
       <ScrollView style={MainProfileStyles.container}>
-        <ShowProfile navigation={navigation} />
+        <ShowProfile navigation={navigation} user={currentUser}/>
       </ScrollView>
     </>
   )

@@ -8,6 +8,8 @@ import {AuthSchema} from "../Schematics/Schematics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import {handleAuthClick} from "../../../../Variables/functions";
+import CustomTextInput from "../components/CustomTextInput/CustomTextInput";
+import LinkLoginAndSignUp from "../components/LinkLoginAndSignUp/LinkLoginAndSignUp";
 
 
 export default function LoginEmail({changeForm, navigation}) {
@@ -73,20 +75,10 @@ export default function LoginEmail({changeForm, navigation}) {
           <View style={LoginStyles.container}>
             <View style={LoginStyles.form}>
               {props.errors.email && props.touched.email ? (<Text style={LoginStyles.error}>{props.errors.email}</Text>) : <Text style={LoginStyles.error}>{noCorrectData}</Text>}
-              <TextInput
-                style={LoginStyles.input}
-                placeholder={"Введите адрес электронной почты.."}
-                onChangeText={props.handleChange("email")}
-                value={props.values.email}
-              />
+              <CustomTextInput onChangeText={props.handleChange("email")} placeholder={"Введите адрес электронной почты.."} value={props.values.email} />
 
               {props.errors.password && props.touched.password ? (<Text style={LoginStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
-              <TextInput
-                style={LoginStyles.input}
-                placeholder={"Введите пароль.."}
-                onChangeText={props.handleChange("password")}
-                value={props.values.password}
-              />
+              <CustomTextInput onChangeText={props.handleChange("password")} placeholder={"Введите пароль.."} value={props.values.password} />
             </View>
 
             <ButtonConfirm
@@ -97,13 +89,7 @@ export default function LoginEmail({changeForm, navigation}) {
               funcPress={props.handleSubmit}
             />
 
-            <View>
-              <Text style={LoginStyles.textLink}>
-                <Text style={LoginStyles.link} onPress={() => navigation.navigate("Authorization")}>Зарегистрируйтесь</Text> с помощью телефона.
-                <Text>{'\n'}или же{'\n'}</Text>
-                <Text style={LoginStyles.link} onPress={() => navigation.navigate("SignUpEmail")}>Зарегистрируйтесь</Text> с помощью почты.
-              </Text>
-            </View>
+            <LinkLoginAndSignUp navigation={navigation} titleLink={"Зарегистрируйтесь"} linkEmail={"SignUpEmail"} linkPhone={"Authorization"} />
           </View>
         </>
       )}
@@ -113,20 +99,6 @@ export default function LoginEmail({changeForm, navigation}) {
 
 
 const LoginStyles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderRadius: 50,
-    borderColor: "#048f9d",
-    width: "auto",
-    padding: 10,
-    marginBottom: 7,
-    paddingLeft: 15,
-    paddingRight: 15,
-    color: "#404040",
-    fontWeight: "bold",
-    textDecorationLine: "none"
-  },
   container: {
     width: "90%",
     marginLeft: "auto",
@@ -159,14 +131,5 @@ const LoginStyles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 50,
-  },
-  textLink: {
-    color: "#424242",
-    textAlign: "center",
-    marginTop: 10,
-    fontWeight: "bold"
-  },
-  link: {
-    color: "#048f9d",
-  },
+  }
 })
