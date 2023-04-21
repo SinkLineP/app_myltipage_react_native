@@ -217,3 +217,56 @@ export const checkCreatedUserWithPhone = async (phone) => {
   }
   return await response.json()
 }
+
+export const checkUsedEmail = async (mail) => {
+  const response = await fetch(`${BASE_URL}/check-created-user-with-mail?mail=${mail}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! checkUsedEmail.");
+  }
+  return await response.json()
+}
+
+export const sendConfirmCodeToMail = async (id, mail) => {
+  const response = await fetch(`${BASE_URL}/confirm-email`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      user: {
+        id: id,
+        mail: mail
+      }
+    })
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! sendConfirmCodeToMail");
+  }
+  return await response.json()
+}
+
+export const confirmMail = async () => {
+  const response = await fetch(`${BASE_URL}/check-created-user-with-phone`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      user: {
+        phone: phone
+      }
+    })
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! LoginPhone.");
+  }
+  return await response.json()
+}

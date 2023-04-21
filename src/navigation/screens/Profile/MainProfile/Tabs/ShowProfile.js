@@ -40,7 +40,7 @@ export default function ShowProfile({navigation, user}) {
         textButton={"Окей"}
       />
       <View style={stylesShowProfile.container}>
-        {user.is_confirmed_email === "false" || user.is_confirmed_phone === "false" ? <MessageWarning navigation={navigation} /> : ""}
+        {user.is_confirmed_email === "false" || user.is_confirmed_phone === "false" ? <MessageWarning navigation={navigation} currentUser={user} /> : ""}
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>
