@@ -8,7 +8,7 @@ import {checkUsedEmail, sendConfirmCodeToMail} from "../../../../../db/getData";
 
 
 const funcSendCode = (id, mail) => {
-
+  sendConfirmCodeToMail(id, mail).then(r => console.log(r));
 }
 
 const SwitchConfirmation = ({mail, is_confirmed_email, setValueCode, valueCode}) => {
@@ -46,7 +46,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, setValueCode, valueCode})
           <ButtonSendCode isActive={isFoundUser !== false} funcSendCode={() => {
             if (isFoundUser !== false) {
               setShowInput(true)
-              sendConfirmCodeToMail(currentUser.id, valueEmail).then(r => console.log(r));
+              funcSendCode(currentUser.id, valueEmail);
             }
           }} />
         )}
