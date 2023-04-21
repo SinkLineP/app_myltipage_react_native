@@ -176,7 +176,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     {props.errors.phone && props.touched.phone ? (<Text style={LoginStyles.error}>{props.errors.phone}</Text>) : <Text style={LoginStyles.error}>{noCorrectSMS}</Text>}
 
                     {showInputSMSCode === false ? (
-                      <ButtonSendCode funcSendCode={() => funcSendCode()} />
+                      <ButtonSendCode isActive={true} funcSendCode={() => funcSendCode()} />
                     ) : (
                       <TextInputMasked
                         mask={"999-999"}
