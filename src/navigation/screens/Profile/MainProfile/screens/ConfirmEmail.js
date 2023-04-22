@@ -47,6 +47,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
               setShowInput(false);
               setIsFoundUser(false);
             }
+
             setValueEmail(val)
           }} placeholder={"Введите почту..."} value={valueEmail} />
         ) : (
@@ -222,13 +223,12 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
 
 export default function ConfirmEmail({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
-  const [emailValue, setEmailValue] = useState("");
 
   return (
     <View style={stylesConfirmEmail.container}>
       <GoBackNavigation navigation={navigation} title={"Вернуться"} />
       <View style={stylesConfirmEmail.containerInput}>
-        <SwitchConfirmation navigation={navigation} is_confirmed_email={currentUser.is_confirmed_email} mail={currentUser.mail} value={emailValue} setValue={setEmailValue} />
+        <SwitchConfirmation navigation={navigation} is_confirmed_email={currentUser.is_confirmed_email} mail={currentUser.mail} />
       </View>
     </View>
   )
