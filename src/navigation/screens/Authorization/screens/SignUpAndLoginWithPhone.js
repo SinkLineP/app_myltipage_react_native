@@ -1,10 +1,18 @@
 import React, {useState} from "react";
 import {Formik} from "formik";
-import {checkCreatedUserWithPhone, createUserWithPhone, LoginDBPhone, VerifyUserPhone} from "../../../../db/getData";
-import {customValidate, generateUsername, handleAuthClick, rand} from "../../../../Variables/functions";
+import {createUserWithPhone, LoginDBPhone} from "../../../../db/getData";
+import {
+  customValidate,
+  funcCheckCreatedUser,
+  funcCheckValidSMSCode,
+  funcSendCode,
+  generateUsername,
+  handleAuthClick,
+  rand
+} from "../../../../Variables/functions";
 import {Text, View, StyleSheet} from "react-native";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
-import {setCurrentUser, setLimitSendSMS, switchAuth} from "../../../../store/Slices/usersSlice";
+import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
 import {useDispatch, useSelector} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextInputMasked from "../components/TextInputMasked/TextInputMasked";
@@ -16,41 +24,12 @@ export default function SignUpAndLoginWithPhone({navigation}) {
   const limitMessage = useSelector(state => state.users.limitMessage);
   const [submittedSMSCode, setSubmittedCode] = useState(0);
   const [noCorrectSMS, setNoCorrectSMS] = useState("");
-  const [valuesPhone, setValuesPhone] = useState("");
-  const [valuesSMSCode, setValuesSMSCode] = useState("");
   const [isCreatedUser, setCreatedUser] = useState("");
   const [showInputSMSCode, setShowInputSMSCode] = useState(false);
+  const [valuesPhone, setValuesPhone] = useState("");
+  const [valuesSMSCode, setValuesSMSCode] = useState("");
   const dispatch = useDispatch();
 
-
-  const funcCheckCreatedUser = (phone) => {
-    if (phone.length === 11) {
-      checkCreatedUserWithPhone(phone).then(r => {
-        if (r.checkUser === 200) {
-          setCreatedUser("created")
-        } else if (r.checkUser === 100) {
-          setCreatedUser("uncreated")
-        }
-      })
-    }
-
-    if (phone.length < 11) {
-      setShowInputSMSCode(false);
-      setNoCorrectSMS("");
-    }
-
-    setValuesPhone(phone)
-  }
-
-  const funcCheckValidSMSCode = (sms_code) => {
-    if (Number(sms_code) !== submittedSMSCode && sms_code.length === 6) {
-      setNoCorrectSMS("Код не верный");
-    } else {
-      setNoCorrectSMS("");
-    }
-
-    setValuesSMSCode(sms_code);
-  }
 
   const funcSubmitButton = async (data) => {
     handleAuthClick().then(r => r)
@@ -89,22 +68,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
     );
   }
 
-  const funcSendCode = () => {
-    console.log("sms clicked!")
-    dispatch(setLimitSendSMS(limitSendSMS - 1));
-    const smsCode = rand(100000, 999999);
 
-    VerifyUserPhone(valuesPhone, smsCode).then(r => {
-      if (r.sms[valuesPhone].status === "OK") {
-        setSubmittedCode(smsCode);
-        console.log(r);
-      } else {
-        console.log("BAD")
-      }
-    });
-
-    setShowInputSMSCode(true);
-  }
 
 
   return (
@@ -167,7 +131,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     values={valuesPhone}
                     placeholder={"+7 (___) ___ __ __"}
                     keyboardType={"numeric"}
-                    funcChangeText={(_, phone) => funcCheckCreatedUser(phone)}
+                    funcChangeText={(_, phone) => funcCheckCreatedUser(phone, setCreatedUser, setShowInputSMSCode, setNoCorrectSMS, setValuesPhone)}
                   />
                 </View>
 
@@ -176,14 +140,14 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     {props.errors.phone && props.touched.phone ? (<Text style={LoginStyles.error}>{props.errors.phone}</Text>) : <Text style={LoginStyles.error}>{noCorrectSMS}</Text>}
 
                     {showInputSMSCode === false ? (
-                      <ButtonSendCode isActive={true} funcSendCode={() => funcSendCode()} />
+                      <ButtonSendCode isActive={true} funcSendCode={() => funcSendCode(dispatch, limitSendSMS, valuesPhone, setSubmittedCode, setShowInputSMSCode, true)} />
                     ) : (
                       <TextInputMasked
                         mask={"999-999"}
                         values={valuesSMSCode}
                         placeholder={"Введите код.."}
                         keyboardType={"numeric"}
-                        funcChangeText={(_, sms_code) => funcCheckValidSMSCode(sms_code)}
+                        funcChangeText={(_, sms_code) => funcCheckValidSMSCode(sms_code, submittedSMSCode, setNoCorrectSMS, setValuesSMSCode)}
                       />
                     )}
                   </View>

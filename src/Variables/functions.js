@@ -1,6 +1,7 @@
 import {errorsMessages} from "../navigation/screens/Authorization/Schematics/Schematics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {UserIsAuthed} from "../db/getData";
+import {checkCreatedUserWithPhone, UserIsAuthed, VerifyUserPhone} from "../db/getData";
+import {setLimitSendSMS} from "../store/Slices/usersSlice";
 
 export const rand = (min, max) => {
   min = Math.ceil(min);
@@ -61,4 +62,54 @@ export const getTokenFromAsyncStorage = async (setToken) => {
   } catch (e) {
     console.log(e)
   }
+}
+
+export const funcCheckCreatedUser = (phone, setCreatedUser, setShowInputSMSCode, setNoCorrectSMS, setValuesPhone, setShowError) => {
+  if (phone.length === 11) {
+    checkCreatedUserWithPhone(phone).then(r => {
+      if (r.checkUser === 200) {
+        setCreatedUser("created")
+        setShowError("Данный номер телефона занят")
+      } else if (r.checkUser === 100) {
+        setCreatedUser("uncreated")
+        setShowError("")
+      }
+    })
+  }
+
+  if (phone.length < 11) {
+    setShowInputSMSCode(false);
+    setNoCorrectSMS("");
+  }
+
+  setValuesPhone(phone)
+}
+
+export const funcCheckValidSMSCode = (sms_code, submittedSMSCode, setNoCorrectSMS, setValuesSMSCode) => {
+  if (Number(sms_code) !== submittedSMSCode && sms_code.length === 6) {
+    setNoCorrectSMS("Код не верный");
+  } else {
+    setNoCorrectSMS("");
+  }
+
+  setValuesSMSCode(sms_code);
+}
+
+export const funcSendCode = (dispatch, limitSendSMS, valuesPhone, setSubmittedCode, setShowInputSMSCode, isUseLimitSend) => {
+  console.log("sms clicked!")
+  if (isUseLimitSend !== false) {
+    dispatch(setLimitSendSMS(limitSendSMS - 1));
+  }
+  const smsCode = rand(100000, 999999);
+
+  VerifyUserPhone(valuesPhone, smsCode).then(r => {
+    if (r.sms[valuesPhone].status === "OK") {
+      setSubmittedCode(smsCode);
+      console.log(r);
+    } else {
+      console.log("BAD")
+    }
+  });
+
+  setShowInputSMSCode(true);
 }
