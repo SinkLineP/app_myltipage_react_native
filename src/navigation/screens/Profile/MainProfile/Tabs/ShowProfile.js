@@ -8,6 +8,8 @@ import MessageWarning from "../components/MessageWarning";
 
 
 export default function ShowProfile({navigation, user}) {
+  const currentUser = useSelector(state => state.users.currentUser);
+
   const WidgetInput = ({counts, title}) => {
     return (
       <View style={stylesShowProfile.widgetInput}>
@@ -20,7 +22,7 @@ export default function ShowProfile({navigation, user}) {
   return (
     <>
       <View style={stylesShowProfile.container}>
-        <MessageWarning navigation={navigation} currentUser={user} />
+        {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone || currentUser.is_default_password ? (<MessageWarning navigation={navigation} currentUser={user} />) : ("")}
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>
