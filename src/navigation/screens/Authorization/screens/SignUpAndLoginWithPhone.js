@@ -28,6 +28,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
   const [showInputSMSCode, setShowInputSMSCode] = useState(false);
   const [valuesPhone, setValuesPhone] = useState("");
   const [valuesSMSCode, setValuesSMSCode] = useState("");
+  const [showError, setShowError] = useState("");
   const dispatch = useDispatch();
 
 
@@ -132,7 +133,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     values={valuesPhone}
                     placeholder={"+7 (___) ___ __ __"}
                     keyboardType={"numeric"}
-                    funcChangeText={(_, phone) => funcCheckCreatedUser(phone, setCreatedUser, setShowInputSMSCode, setNoCorrectSMS, setValuesPhone)}
+                    funcChangeText={(_, phone) => funcCheckCreatedUser(phone, setCreatedUser, setShowInputSMSCode, setNoCorrectSMS, setValuesPhone, setShowError)}
                   />
                 </View>
 
