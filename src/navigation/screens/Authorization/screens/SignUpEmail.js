@@ -1,15 +1,93 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, View} from "react-native";
 import {Formik} from "formik";
 import {AuthSchema} from "../Schematics/Schematics";
-import {createUser} from "../../../../db/getData";
-import {generateUsernameFromEmail} from "../../../../Variables/functions";
+import {createUser, sendConfirmCodeToMail, sendEmailSignUp, VerifyUserPhone} from "../../../../db/getData";
+import {generateUsernameFromEmail, handleAuthClick, rand, validationEmail} from "../../../../Variables/functions";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import LinkLoginAndSignUp from "../components/LinkLoginAndSignUp/LinkLoginAndSignUp";
 import CustomTextInput from "../components/CustomTextInput/CustomTextInput";
+import TextInputMasked from "../components/TextInputMasked/TextInputMasked";
+import ButtonSendCode from "../components/ButtonSendCode/ButtonSendCode";
+import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
+import {useDispatch} from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+
+const ShowButtonCode = ({valueEmail, showError, setShowErrorCode, setIsCodeSuccessfully}) => {
+  const [inputCode, setInputCode] = useState("");
+  const [isShowInputCode, setIsShowInputCode] = useState(false);
+  const [verifyCode, setVerifyCode] = useState("");
+
+
+  if (isShowInputCode === true) {
+    return (
+      <>
+        <TextInputMasked
+          mask={"999-999"}
+          values={inputCode}
+          placeholder={"Введите код.."}
+          keyboardType={"numeric"}
+          funcChangeText={(_, code) => {
+            if (code === String(verifyCode) && code.length === 6) {
+              console.log("Code Successful!")
+              setShowErrorCode("")
+              setIsCodeSuccessfully(true)
+            } else if (code !== String(verifyCode) && code.length === 6) {
+              console.log("Code Bad!")
+              setShowErrorCode("Код неверный.")
+              setIsCodeSuccessfully(false)
+            }
+
+            if (code.length < 6) {
+              setShowErrorCode("")
+              setIsCodeSuccessfully(false)
+            }
+
+            setInputCode(code)
+          }}
+        />
+      </>
+    )
+  } else {
+    return (
+      <ButtonSendCode isActive={showError !== "Данная почта уже используется."} funcSendCode={() => {
+        if (showError !== "Данная почта уже используется.") {
+          setIsShowInputCode(true)
+          sendEmailSignUp(valueEmail).then(r => {
+            console.log(r);
+            setVerifyCode(r.code);
+          })
+        }
+      }} />
+    )
+  }
+}
+
+const InputCode = ({showErrorCode, props, setIsCodeSuccessfully, setShowErrorCode, showError, SignUpStyles}) => {
+  return (
+    <>
+      {showErrorCode !== "" ? (<Text style={SignUpStyles.errorCode}>{showErrorCode}</Text>) : (<Text style={SignUpStyles.errorCode}></Text>)}
+      <ShowButtonCode setIsCodeSuccessfully={setIsCodeSuccessfully} setShowErrorCode={setShowErrorCode} valueEmail={props.values.email} showError={showError} />
+    </>
+  )
+}
+
+const InputPassword = ({props, isCenter, onChangeText, value, placeholder, SignUpStyles}) => {
+  return (
+    <>
+      {props.errors.password && props.touched.password ? (<Text style={SignUpStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
+      <CustomTextInput isCenter={isCenter} onChangeText={onChangeText} value={value} placeholder={placeholder} />
+    </>
+  )
+}
 
 export default function SignUpEmail({navigation}) {
   const [showError, setError] = useState("");
+  const [showErrorCode, setShowErrorCode] = useState("");
+  const [isCodeSuccessfully, setIsCodeSuccessfully] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <Formik
@@ -30,11 +108,42 @@ export default function SignUpEmail({navigation}) {
           age: "",
           avatar: "deleted",
           gender: "other",
-          is_confirmed_email: "false",
+          is_confirmed_email: "true",
           is_confirmed_phone : "false"
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
-            navigation.navigate("LoginEmail");
+            handleAuthClick().then(r => r)
+
+            console.log(data.user)
+
+            try {
+              await AsyncStorage.setItem("token", data.jwt)
+            } catch (e) {
+              console.log(e)
+            }
+
+            dispatch(setCurrentUser({
+              id: data.user.id,
+              username: data.user.username,
+              mail: data.user.mail,
+              phone: data.user.phone,
+              lastname: data.user.lastname,
+              firstname: data.user.firstname,
+              surname: data.user.surname,
+              password: data.user.password,
+              age: data.user.age,
+              avatar: data.user.avatar,
+              gender: data.user.gender,
+              is_confirmed_email: data.user.is_confirmed_email,
+              is_confirmed_phone : data.user.is_confirmed_phone,
+              created_at: data.user.created_at,
+              updated_at: data.user.updated_at
+            }))
+
+            dispatch(switchAuth())
+            navigation.navigate(
+              "MainProfile"
+            )
           } else {
             setError(data.isUsedEmail);
             setTimeout(() => setError(""), 3000)
@@ -43,6 +152,13 @@ export default function SignUpEmail({navigation}) {
       }}
     >
       {(props) => {
+
+        useEffect(() => {
+          if (validationEmail(props.values.email) === false) {
+            setIsCodeSuccessfully(false);
+          }
+        })
+
         return (
           <>
             <Text style={SignUpStyles.title}>Зарегистрируйтесь</Text>
@@ -50,10 +166,29 @@ export default function SignUpEmail({navigation}) {
               {showError !== "" ? (<Text style={SignUpStyles.error}>{showError}</Text>) : ""}
               <View style={SignUpStyles.form}>
                 {props.errors.email && props.touched.email ? (<Text style={SignUpStyles.error}>{props.errors.email}</Text>) : <Text style={SignUpStyles.error}></Text>}
-                <CustomTextInput onChangeText={props.handleChange("email")} value={props.values.email} placeholder={"Введите адрес электронной почты.."} />
+                <CustomTextInput isCenter={true} onChangeText={props.handleChange("email")} value={props.values.email} placeholder={"Введите адрес электронной почты.."} />
 
-                {props.errors.password && props.touched.password ? (<Text style={SignUpStyles.error}>{props.errors.password}</Text>) : <Text></Text>}
-                <CustomTextInput onChangeText={props.handleChange("password")} value={props.values.password} placeholder={"Введите пароль.."} />
+                {validationEmail(props.values.email) ? (<View>
+                  {isCodeSuccessfully !== true  ? (
+                    <InputCode
+                      setShowErrorCode={setShowErrorCode}
+                      showErrorCode={showErrorCode}
+                      showError={showError}
+                      props={props}
+                      setIsCodeSuccessfully={setIsCodeSuccessfully}
+                      SignUpStyles={SignUpStyles}
+                    />
+                  ) : (
+                    <InputPassword
+                      props={props}
+                      isCenter={true}
+                      placeholder={"Введите пароль.."}
+                      value={props.values.password}
+                      onChangeText={props.handleChange("password")}
+                      SignUpStyles={SignUpStyles}
+                    />
+                  )}
+                </View>) : ("")}
               </View>
 
               <ButtonConfirm
@@ -61,7 +196,7 @@ export default function SignUpEmail({navigation}) {
                 background={props.values.email !== "" && props.values.password !== "" ? "#048f9d" : "#5eb7c0"}
                 size={25}
                 title={"Зарегистрироваться"}
-                funcPress={props.handleSubmit}
+                funcPress={props.values.email !== "" && props.values.password !== "" ? props.handleSubmit : () => {}}
               />
 
               <LinkLoginAndSignUp navigation={navigation} titleLink={"Войдите"} linkEmail={"LoginEmail"} linkPhone={"Authorization"} />
@@ -122,5 +257,11 @@ const SignUpStyles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 50,
-  }
+  },
+  errorCode: {
+    color: "#b92121",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 3
+  },
 })

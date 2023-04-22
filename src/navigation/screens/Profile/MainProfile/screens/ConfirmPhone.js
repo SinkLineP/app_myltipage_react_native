@@ -36,6 +36,7 @@ const ConfirmComponent = ({phone, is_confirmed_phone, navigation}) => {
         {showError !== "" && valuesPhone.length === 11  ? (<Text style={stylesConfirmPhone.error}>{showError}</Text>) : (<Text style={stylesConfirmPhone.error}></Text>)}
         {showPhoneHowText === "" ? (
           <TextInputMasked
+            fontSize={""}
             mask={"+7 (999) 999 99 99"}
             values={valuesPhone}
             placeholder={"+7 (___) ___ __ __"}
@@ -76,6 +77,7 @@ const ConfirmComponent = ({phone, is_confirmed_phone, navigation}) => {
           <>
             <Text style={stylesConfirmPhone.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
             <TextInputMasked
+              fontSize={""}
               mask={"999-999"}
               values={valueCodeInput}
               placeholder={"Введите код.."}

@@ -232,6 +232,20 @@ export const checkUsedEmail = async (mail) => {
   return await response.json()
 }
 
+export const sendEmailSignUp = async (mail) => {
+  const response = await fetch(`${BASE_URL}/send-email-signup?mail=${mail}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    },
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! sendEmailSignUp.");
+  }
+  return await response.json()
+}
+
 export const sendConfirmCodeToMail = async (id, mail) => {
   const response = await fetch(`${BASE_URL}/confirm-email`, {
     method: "POST",
@@ -252,21 +266,21 @@ export const sendConfirmCodeToMail = async (id, mail) => {
   return await response.json()
 }
 
-export const confirmMail = async () => {
-  const response = await fetch(`${BASE_URL}/check-created-user-with-phone`, {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({
-      user: {
-        phone: phone
-      }
-    })
-  })
-  if (!response.ok) {
-    throw new Error("Server Error! LoginPhone.");
-  }
-  return await response.json()
-}
+// export const confirmMail = async () => {
+//   const response = await fetch(`${BASE_URL}/check-created-user-with-phone`, {
+//     method: "POST",
+//     headers: {
+//       'Content-Type': 'application/json;charset=utf-8',
+//       'Accept': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         phone: phone
+//       }
+//     })
+//   })
+//   if (!response.ok) {
+//     throw new Error("Server Error! LoginPhone.");
+//   }
+//   return await response.json()
+// }

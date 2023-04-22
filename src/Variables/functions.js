@@ -113,3 +113,8 @@ export const funcSendCode = (dispatch, limitSendSMS, valuesPhone, setSubmittedCo
 
   setShowInputSMSCode(true);
 }
+
+
+export const validationEmail = (val) => {
+  return val.includes("@") && val.includes(".com") || val.includes(".ru") || val.includes(".ua") || val.includes(".net");
+}

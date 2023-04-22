@@ -7,7 +7,7 @@ import CustomTextInput from "../../../Authorization/components/CustomTextInput/C
 import {checkUsedEmail, EditUser, sendConfirmCodeToMail} from "../../../../../db/getData";
 import TextInputMasked from "../../../Authorization/components/TextInputMasked/TextInputMasked";
 import ButtonConfirm from "../../../../../components/Profile/Buttons/ButtonConfirm";
-import {generateUsername, getTokenFromAsyncStorage} from "../../../../../Variables/functions";
+import {generateUsername, getTokenFromAsyncStorage, validationEmail} from "../../../../../Variables/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {setCurrentUser} from "../../../../../store/Slices/usersSlice";
 
@@ -31,8 +31,8 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
       <>
         {showError !== "" ? (<Text style={stylesConfirmEmail.error}>{showError}</Text>) : ("")}
         {showEmailHowText === "" ? (
-          <CustomTextInput onChangeText={(val) => {
-            if (val.includes("@") && val.includes(".com") || val.includes(".ru") || val.includes(".ua") || val.includes(".net")) {
+          <CustomTextInput isCenter={false} onChangeText={(val) => {
+            if (validationEmail(val)) {
               checkUsedEmail(val).then(r => {
                 if (r.message === "User not found.") {
                   console.log(r.message);
@@ -64,6 +64,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
           <>
             <Text style={stylesConfirmEmail.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
             <TextInputMasked
+              fontSize={""}
               mask={"999-999"}
               values={valueCodeInput}
               placeholder={"Введите код.."}
@@ -148,6 +149,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
           <>
             <Text style={stylesConfirmEmail.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
             <TextInputMasked
+              fontSize={""}
               mask={"999-999"}
               values={valueCodeInput}
               placeholder={"Введите код.."}
