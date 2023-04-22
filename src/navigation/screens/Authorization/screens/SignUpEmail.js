@@ -109,7 +109,8 @@ export default function SignUpEmail({navigation}) {
           avatar: "deleted",
           gender: "other",
           is_confirmed_email: "true",
-          is_confirmed_phone : "false"
+          is_confirmed_phone : "false",
+          is_default_password: "false"
         }).then(async (data) => {
           if (data.isUsedEmail === "") {
             handleAuthClick().then(r => r)
@@ -130,12 +131,13 @@ export default function SignUpEmail({navigation}) {
               lastname: data.user.lastname,
               firstname: data.user.firstname,
               surname: data.user.surname,
-              password: data.user.password,
+              password: data.user.password_digest,
               age: data.user.age,
               avatar: data.user.avatar,
               gender: data.user.gender,
               is_confirmed_email: data.user.is_confirmed_email,
               is_confirmed_phone : data.user.is_confirmed_phone,
+              is_default_password: data.user.is_default_password,
               created_at: data.user.created_at,
               updated_at: data.user.updated_at
             }))

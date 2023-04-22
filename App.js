@@ -6,7 +6,7 @@ import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
 import {AutoLogin} from "./src/db/getData";
-import {setCurrentUser, setLimitMessage, setLimitSendSMS, switchAuth} from "./src/store/Slices/usersSlice";
+import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
@@ -27,7 +27,6 @@ function AppWrapper() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
-  const limitSendSMS = useSelector(state => state.users.limitSendSMS);
 
   //асинхронная функция загрузки шрифтов
   useEffect(() => {
@@ -57,6 +56,9 @@ function AppWrapper() {
             age: data.user.age,
             avatar: data.user.avatar,
             gender: data.user.gender,
+            is_confirmed_email: data.user.is_confirmed_email,
+            is_confirmed_phone: data.user.is_confirmed_phone,
+            is_default_password: data.user.is_default_password,
             created_at: data.user.created_at,
             updated_at: data.user.updated_at
           }))
@@ -67,20 +69,6 @@ function AppWrapper() {
 
     fetchData().then(r => r)
   }, []);
-
-  useEffect(() => {
-    if (limitSendSMS === 0) {
-      dispatch(setLimitMessage("Лимит исчерпан вернитесть через 3 часа"));
-
-      setTimeout(() => {
-        dispatch(setLimitMessage(CLEAR_LIMIT_MESSAGE));
-        dispatch(setLimitSendSMS(LIMIT_SMS));
-        console.log("limit cleared!");
-      }, hourToMilliseconds(3, 0, 0));
-    } else {
-      dispatch(setLimitMessage(""));
-    }
-  })
 
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {

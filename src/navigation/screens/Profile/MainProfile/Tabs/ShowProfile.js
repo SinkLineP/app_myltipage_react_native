@@ -3,15 +3,11 @@ import {StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
 import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {StatusBar} from "expo-status-bar";
-import {ModalWindowProfile} from "../../../../../components/ModalWindow/ModalWindowProfile";
 import MessageWarning from "../components/MessageWarning";
 
 
 
 export default function ShowProfile({navigation, user}) {
-  const defaultPassword = useSelector(state => state.users.defaultPassword);
-  const [modalVisible, setModalVisible] = useState(false);
-
   const WidgetInput = ({counts, title}) => {
     return (
       <View style={stylesShowProfile.widgetInput}>
@@ -21,26 +17,10 @@ export default function ShowProfile({navigation, user}) {
     )
   }
 
-  useEffect(() => {
-    if (defaultPassword !== 0) {
-      setModalVisible(true);
-    } else {
-      setModalVisible(false);
-    }
-  }, [])
-
   return (
     <>
-      <ModalWindowProfile
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        contentModal={`В данный момент ваш пароль`}
-        titleModal={"Срочно измените ваш пароль!"}
-        defaultPassword={defaultPassword}
-        textButton={"Окей"}
-      />
       <View style={stylesShowProfile.container}>
-        {user.is_confirmed_email === "false" || user.is_confirmed_phone === "false" ? <MessageWarning navigation={navigation} currentUser={user} /> : ""}
+        <MessageWarning navigation={navigation} currentUser={user} />
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>

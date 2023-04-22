@@ -14,6 +14,7 @@ import {
   rand
 } from "../../../../../Variables/functions";
 import {setCurrentUser} from "../../../../../store/Slices/usersSlice";
+import {CardMessageWarning} from "../components/CardMessageWarning";
 
 
 const ConfirmComponent = ({phone, is_confirmed_phone, navigation}) => {
@@ -149,6 +150,7 @@ const ConfirmComponent = ({phone, is_confirmed_phone, navigation}) => {
                   gender: currentUser.gender,
                   is_confirmed_email: currentUser.is_confirmed_email,
                   is_confirmed_phone : r.user.is_confirmed_phone,
+                  is_default_password: currentUser.is_default_password,
                   created_at: currentUser.created_at,
                   updated_at: currentUser.updated_at
                 }))
@@ -167,31 +169,13 @@ export default function ConfirmPhone({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
 
   return (
-    <View style={stylesConfirmPhone.container}>
-      <GoBackNavigation navigation={navigation} title={"Вернуться"} />
-      <View style={stylesConfirmPhone.containerInput}>
+    <CardMessageWarning navigation={navigation}>
         <ConfirmComponent navigation={navigation} is_confirmed_phone={currentUser.is_confirmed_phone} phone={currentUser.phone} />
-      </View>
-    </View>
+    </CardMessageWarning>
   )
 }
 
 const stylesConfirmPhone = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    width: "98%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    backgroundColor: "white",
-    borderRadius: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 20,
-    paddingLeft: 20
-  },
-  containerInput: {
-    marginTop: 15
-  },
   error: {
     color: "#b92121",
     fontWeight: "bold",

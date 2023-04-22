@@ -116,6 +116,9 @@ export default function EditProfile({navigation}) {
               age: user.age,
               avatar: user.avatar,
               gender: user.gender,
+              is_confirmed_email: currentUser.is_confirmed_email,
+              is_confirmed_phone : currentUser.is_confirmed_phone,
+              is_default_password: currentUser.is_default_password,
               created_at: currentUser.created_at,
               updated_at: currentUser.updated_at
             }))

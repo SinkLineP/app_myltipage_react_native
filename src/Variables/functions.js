@@ -1,7 +1,6 @@
 import {errorsMessages} from "../navigation/screens/Authorization/Schematics/Schematics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {checkCreatedUserWithPhone, UserIsAuthed, VerifyUserPhone} from "../db/getData";
-import {setLimitSendSMS} from "../store/Slices/usersSlice";
 
 export const rand = (min, max) => {
   min = Math.ceil(min);
@@ -95,11 +94,8 @@ export const funcCheckValidSMSCode = (sms_code, submittedSMSCode, setNoCorrectSM
   setValuesSMSCode(sms_code);
 }
 
-export const funcSendCode = (dispatch, limitSendSMS, valuesPhone, setSubmittedCode, setShowInputSMSCode, isUseLimitSend) => {
+export const funcSendCode = (dispatch, valuesPhone, setSubmittedCode, setShowInputSMSCode) => {
   console.log("sms clicked!")
-  if (isUseLimitSend !== false) {
-    dispatch(setLimitSendSMS(limitSendSMS - 1));
-  }
   const smsCode = rand(100000, 999999);
 
   VerifyUserPhone(valuesPhone, smsCode).then(r => {

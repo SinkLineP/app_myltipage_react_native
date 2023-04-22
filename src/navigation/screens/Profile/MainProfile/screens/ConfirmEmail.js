@@ -10,6 +10,7 @@ import ButtonConfirm from "../../../../../components/Profile/Buttons/ButtonConfi
 import {generateUsername, getTokenFromAsyncStorage, validationEmail} from "../../../../../Variables/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {setCurrentUser} from "../../../../../store/Slices/usersSlice";
+import {CardMessageWarning} from "../components/CardMessageWarning";
 
 
 const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
@@ -128,6 +129,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
                   gender: currentUser.gender,
                   is_confirmed_email: r.user.is_confirmed_email,
                   is_confirmed_phone : currentUser.is_confirmed_phone,
+                  is_default_password: currentUser.is_default_password,
                   created_at: currentUser.created_at,
                   updated_at: currentUser.updated_at
                 }))
@@ -209,6 +211,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
                   gender: currentUser.gender,
                   is_confirmed_email: r.user.is_confirmed_email,
                   is_confirmed_phone : currentUser.is_confirmed_phone,
+                  is_default_password: currentUser.is_default_password,
                   created_at: currentUser.created_at,
                   updated_at: currentUser.updated_at
                 }))
@@ -227,31 +230,13 @@ export default function ConfirmEmail({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
 
   return (
-    <View style={stylesConfirmEmail.container}>
-      <GoBackNavigation navigation={navigation} title={"Вернуться"} />
-      <View style={stylesConfirmEmail.containerInput}>
+    <CardMessageWarning navigation={navigation}>
         <SwitchConfirmation navigation={navigation} is_confirmed_email={currentUser.is_confirmed_email} mail={currentUser.mail} />
-      </View>
-    </View>
+    </CardMessageWarning>
   )
 }
 
 const stylesConfirmEmail = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    width: "98%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    backgroundColor: "white",
-    borderRadius: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 20,
-    paddingLeft: 20
-  },
-  containerInput: {
-    marginTop: 15
-  },
   error: {
     color: "#b92121",
     fontWeight: "bold",

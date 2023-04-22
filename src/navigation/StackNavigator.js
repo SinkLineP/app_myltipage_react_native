@@ -13,7 +13,6 @@ import SettingsProfile from "./screens/Profile/MainProfile/Tabs/SettingsPages/Se
 import ConfidentialSettings from "./screens/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
 import EditProfile from "./screens/Profile/MainProfile/Tabs/EditPages/EditProfile";
 import EditEmail from "./screens/Profile/MainProfile/Tabs/EditPages/EditEmail";
-import EditPassword from "./screens/Profile/MainProfile/Tabs/EditPages/EditPassword";
 import EditPhone from "./screens/Profile/MainProfile/Tabs/EditPages/EditPhone";
 import AllFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
 import RequestFriendsPages from "./screens/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
@@ -25,6 +24,7 @@ import LoginEmail from "./screens/Authorization/screens/LoginEmail";
 import SignUpEmail from "./screens/Authorization/screens/SignUpEmail";
 import ConfirmEmail from "./screens/Profile/MainProfile/screens/ConfirmEmail";
 import ConfirmPhone from "./screens/Profile/MainProfile/screens/ConfirmPhone";
+import ChangePassword from "./screens/Profile/MainProfile/screens/ChangePassword";
 
 
 const Stack = createStackNavigator();
@@ -51,13 +51,13 @@ const ProfileStackNavigator = () => {
       <Stack.Screen name="SignUpEmail" component={SignUpEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
       <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
       <Stack.Screen name="ConfirmPhone" component={ConfirmPhone} options={setOptions("", "#ebebeb", "#fff", false)} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} options={setOptions("", "#ebebeb", "#fff", false)} />
       {/* Settings Pages */}
       <Stack.Screen name="SettingsProfile" component={SettingsProfile} options={setOptions("Настройки", "#048f9d", "#fff", false)} />
       <Stack.Screen name="ConfidentialSettings" component={ConfidentialSettings} options={setOptions("Конфиденциальные данные", "#048f9d", "#fff", false)} />
       {/* Edit Pages */}
       <Stack.Screen name="EditProfile" component={EditProfile} options={setOptions("Редактирование профиля", "#048f9d", "#fff", false)} />
       <Stack.Screen name="EditEmail" component={EditEmail} options={setOptions("Изменение почты", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="EditPassword" component={EditPassword} options={setOptions("Изменение пароля", "#048f9d", "#fff", false)} />
       <Stack.Screen name="EditPhone" component={EditPhone} options={setOptions("Изменение телефона", "#048f9d", "#fff", false)} />
       {/* Friends */}
       <Stack.Screen name="AllFriendsPage" component={AllFriendsPage} options={setOptions("Друзья", "#048f9d", "#fff", false)} />
