@@ -120,7 +120,7 @@ export const EditUser = async ({user, token}) => {
       user: user
     })
   })
-  return response.message;
+  return await response.json();
 }
 
 export const getAllUsers = async () => {

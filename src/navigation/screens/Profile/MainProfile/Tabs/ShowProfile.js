@@ -70,6 +70,8 @@ export default function ShowProfile({navigation, user}) {
         <View style={stylesShowProfile.description}>
           <ScrollView>
             <Text>Description</Text>
+            <Text>Mail: {user.mail === "" ? (<Text>Почта не указана</Text>) : (<Text>{user.mail}</Text>)}</Text>
+            <Text>Статус подтверждения почты: {user.is_confirmed_email === "true" ? (<Text>Подтверждено</Text>) : (<Text>Не подтверждено</Text>)}</Text>
           </ScrollView>
         </View>
         <View style={stylesShowProfile.feeds}>

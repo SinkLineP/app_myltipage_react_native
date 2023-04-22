@@ -51,3 +51,14 @@ export const handleAuthClick = async () => {
     console.log(e)
   }
 }
+
+export const getTokenFromAsyncStorage = async (setToken) => {
+  try {
+    const tokenStorage = await AsyncStorage.getItem("token");
+    if (tokenStorage !== null) {
+      setToken(tokenStorage)
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
