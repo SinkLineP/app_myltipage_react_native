@@ -127,6 +127,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                   )}
 
                   <TextInputMasked
+                    fontSize={""}
                     mask={"+7 (999) 999 99 99"}
                     values={valuesPhone}
                     placeholder={"+7 (___) ___ __ __"}
@@ -143,6 +144,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                       <ButtonSendCode isActive={true} funcSendCode={() => funcSendCode(dispatch, limitSendSMS, valuesPhone, setSubmittedCode, setShowInputSMSCode, true)} />
                     ) : (
                       <TextInputMasked
+                        fontSize={""}
                         mask={"999-999"}
                         values={valuesSMSCode}
                         placeholder={"Введите код.."}
