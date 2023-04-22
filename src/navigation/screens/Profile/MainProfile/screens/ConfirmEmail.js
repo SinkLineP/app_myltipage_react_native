@@ -142,14 +142,79 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
   } else if (is_confirmed_email === "false") {
     return (
       <>
+        <Text style={stylesConfirmEmail.emailTitle}>{currentUser.mail}</Text>
         {showInput === true ? (
-          <CustomTextInput onChangeText={(val) => setValueCodeInput(val)} placeholder={"Введите код..."} value={valueCodeInput} />
+          <>
+            <Text style={stylesConfirmEmail.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
+            <TextInputMasked
+              mask={"999-999"}
+              values={valueCodeInput}
+              placeholder={"Введите код.."}
+              keyboardType={"numeric"}
+              funcChangeText={(_, code) => {
+                if (code === String(codeEmailConfirm) && code.length === 6) {
+                  console.log("Code Successful!")
+                  setShowErrorCode("")
+                } else if (code !== String(codeEmailConfirm) && code.length === 6) {
+                  console.log("Code Bad!")
+                  setShowErrorCode("Код неверный.")
+                }
+
+                if (code.length < 6) {
+                  setShowErrorCode("")
+                }
+
+                setValueCodeInput(code)
+              }}
+            />
+          </>
         ) : (
-          <ButtonSendCode funcSendCode={() => {
+          <ButtonSendCode isActive={true} funcSendCode={() => {
             setShowInput(true)
-            // funcSendCode(mail)
+            sendConfirmCodeToMail(currentUser.id, currentUser.mail).then(r => {
+              setCodeEmailConfirm(r.code);
+            });
           }} />
         )}
+        {Number(valueCodeInput) === codeEmailConfirm && valueCodeInput.length === 6 ? (
+          <ButtonConfirm
+            color={"white"}
+            background={Number(valueCodeInput) === codeEmailConfirm && Number(valueCodeInput) !== 0 && codeEmailConfirm !== 0 ? "#048f9d" : "#5eb7c0"}
+            size={25}
+            title={"Подтвердить"}
+            funcPress={async () => {
+              const user = {
+                id: currentUser.id,
+                mail: currentUser.mail,
+                is_confirmed_email: "true",
+              }
+
+              await getTokenFromAsyncStorage(setToken)
+
+              EditUser({user, token}).then(r => {
+                dispatch(setCurrentUser({
+                  id: currentUser.id,
+                  username: currentUser.username,
+                  mail: currentUser.mail,
+                  phone: currentUser.phone,
+                  lastname: currentUser.lastname,
+                  firstname: currentUser.firstname,
+                  surname: currentUser.surname,
+                  password: currentUser.password,
+                  age: currentUser.age,
+                  avatar: currentUser.avatar,
+                  gender: currentUser.gender,
+                  is_confirmed_email: r.user.is_confirmed_email,
+                  is_confirmed_phone : currentUser.is_confirmed_phone,
+                  created_at: currentUser.created_at,
+                  updated_at: currentUser.updated_at
+                }))
+              })
+
+              navigation.navigate("MainProfile");
+            }}
+          />
+        ) : ("")}
       </>
     )
   }
@@ -202,6 +267,13 @@ const stylesConfirmEmail = StyleSheet.create({
     fontWeight: "normal",
     fontStyle: "italic",
     fontSize: 14
+  },
+  emailTitle: {
+    color: "#4a4848",
+    fontWeight: "normal",
+    fontStyle: "italic",
+    fontSize: 14,
+    marginBottom: 10
   },
   editButton: {
     color: "blue",
