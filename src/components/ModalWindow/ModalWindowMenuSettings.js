@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import React from "react";
+import {Alert, Modal, StyleSheet} from 'react-native';
 
 
 
-export function ModalWindowProfile({setModalVisible, modalVisible, contentModal, titleModal, defaultPassword, textButton}) {
+export function ModalWindowMenuSettings({setModalVisible, modalVisible, children}) {
   return (
     <Modal
       animationType="slide"
@@ -13,22 +13,12 @@ export function ModalWindowProfile({setModalVisible, modalVisible, contentModal,
         Alert.alert('Modal has been closed.');
         setModalVisible(!modalVisible);
       }}>
-      <View style={stylesModalWindowProfile.centeredView}>
-        <View style={stylesModalWindowProfile.modalView}>
-          <Text style={stylesModalWindowProfile.modalTitle}>{titleModal}</Text>
-          <Text style={stylesModalWindowProfile.modalText}>{contentModal} - '<Text style={stylesModalWindowProfile.passwordText}>{defaultPassword}</Text>'</Text>
-          <Pressable
-            style={[stylesModalWindowProfile.button, stylesModalWindowProfile.buttonClose]}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={stylesModalWindowProfile.textStyle}>{textButton}</Text>
-          </Pressable>
-        </View>
-      </View>
+      {children}
     </Modal>
   )
 }
 
-const stylesModalWindowProfile = StyleSheet.create({
+const stylesModalWindowMenuSettings = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
