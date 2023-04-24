@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {StyleSheet, Text, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import GoBackNavigation from "../../../Authorization/components/GoBackNavigation/GoBackNavigation";
 import {
   checkCreatedUserWithPhone, EditUser,
   VerifyUserPhone
@@ -117,6 +116,109 @@ const ConfirmComponent = ({phone, is_confirmed_phone, navigation}) => {
               });
             }
           }} />
+        )}
+
+        {Number(valueCodeInput) === codePhoneConfirm && valueCodeInput.length === 6 ? (
+          <ButtonConfirm
+            color={"white"}
+            background={Number(valueCodeInput) === codePhoneConfirm && Number(valueCodeInput) !== 0 && codePhoneConfirm !== 0 ? "#048f9d" : "#5eb7c0"}
+            size={25}
+            title={"Подтвердить"}
+            funcPress={async () => {
+              console.log("clicked submit sms code!")
+              const user = {
+                id: currentUser.id,
+                phone: valuesPhone,
+                is_confirmed_phone: "true",
+              }
+
+              await getTokenFromAsyncStorage(setToken)
+
+              EditUser({user, token}).then(r => {
+                dispatch(setCurrentUser({
+                  id: currentUser.id,
+                  username: currentUser.username,
+                  mail: currentUser.mail,
+                  phone: r.user.phone,
+                  lastname: currentUser.lastname,
+                  firstname: currentUser.firstname,
+                  surname: currentUser.surname,
+                  password: currentUser.password,
+                  age: currentUser.age,
+                  avatar: currentUser.avatar,
+                  gender: currentUser.gender,
+                  is_confirmed_email: currentUser.is_confirmed_email,
+                  is_confirmed_phone : r.user.is_confirmed_phone,
+                  is_default_password: currentUser.is_default_password,
+                  created_at: currentUser.created_at,
+                  updated_at: currentUser.updated_at
+                }))
+              })
+
+              navigation.navigate("MainProfile");
+            }}
+          />
+        ) : ("")}
+      </>
+    )
+  } else if (phone !== "" && is_confirmed_phone === "false") {
+    return (
+      <>
+        <View style={stylesConfirmPhone.containerEmailText}>
+          <Text style={stylesConfirmPhone.emailText}>+{phone}</Text>
+          <Text style={stylesConfirmPhone.editButton} onPress={() => {
+            setShowInput(false)
+            setShowPhoneHowText("")
+            setValueCodeInput("")
+            setValuesPhone("")
+          }}>изменить...</Text>
+        </View>
+        <Text></Text>
+
+        {showInput === true ? (
+          <>
+            <Text style={stylesConfirmPhone.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
+            <TextInputMasked
+              fontSize={""}
+              mask={"999-999"}
+              values={valueCodeInput}
+              placeholder={"Введите код.."}
+              keyboardType={"numeric"}
+              funcChangeText={(_, sms_code) => {
+                if (sms_code === String(codePhoneConfirm) && sms_code.length === 6) {
+                  console.log("Code Successful!")
+                  setShowErrorCode("")
+                } else if (sms_code !== String(codePhoneConfirm) && sms_code.length === 6) {
+                  console.log("Code Bad!")
+                  setShowErrorCode("Код неверный.")
+                }
+
+                if (sms_code.length < 6) {
+                  setShowErrorCode("")
+                }
+
+                setValueCodeInput(sms_code);
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Text style={stylesConfirmPhone.errorCode}></Text>
+            <ButtonSendCode isActive={true} funcSendCode={() => {
+              setShowInput(true)
+              const smsCode = rand(100000, 999999);
+
+              VerifyUserPhone(phone, smsCode).then(r => {
+                if (r.sms[phone].status === "OK") {
+                  setCodePhoneConfirm(smsCode);
+                  setShowPhoneHowText(phone);
+                  console.log(r);
+                } else {
+                  console.log("BAD")
+                }
+              });
+            }} />
+          </>
         )}
 
         {Number(valueCodeInput) === codePhoneConfirm && valueCodeInput.length === 6 ? (

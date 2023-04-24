@@ -22,6 +22,11 @@ const ConfirmedPhone = ({phone, is_confirmed_phone, navigation}) => {
     return (
       <Text style={stylesMessageWarning.title}>Пожалуйста добавьте телефон <Text style={stylesMessageWarning.link} onPress={() => navigation.navigate("ConfirmPhone")}>добавить..</Text></Text>
     )
+  } else if (phone !== "" && is_confirmed_phone === "false") {
+    console.log("3 variant");
+    return (
+      <Text style={stylesMessageWarning.title}>Подтвердите телефон <Text style={stylesMessageWarning.link} onPress={() => navigation.navigate("ConfirmPhone")}>подтвердить..</Text></Text>
+    )
   }
 }
 
@@ -39,10 +44,8 @@ export default function MessageWarning({navigation, currentUser}) {
   return (
     <View style={stylesMessageWarning.container}>
       <ConfirmedEmail navigation={navigation} is_confirmed_email={currentUser.is_confirmed_email} mail={currentUser.mail} />
-      {currentUser.is_confirmed_phone === "false" && currentUser.phone === "" ? (
-        <View style={stylesMessageWarning.containerPhone}>
-          <ConfirmedPhone navigation={navigation} is_confirmed_phone={currentUser.is_confirmed_phone} phone={currentUser.phone} />
-        </View>
+      {currentUser.is_confirmed_phone === "false" && currentUser.phone === "" || currentUser.is_confirmed_phone === "false" && currentUser.phone !== "" ? (
+      <ConfirmedPhone navigation={navigation} is_confirmed_phone={currentUser.is_confirmed_phone} phone={currentUser.phone} />
       ) : ("")}
       <ChangePassword navigation={navigation} is_default_password={currentUser.is_default_password} />
     </View>

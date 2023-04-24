@@ -22,7 +22,7 @@ export default function ShowProfile({navigation, user}) {
   return (
     <>
       <View style={stylesShowProfile.container}>
-        {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone || currentUser.is_default_password ? (<MessageWarning navigation={navigation} currentUser={user} />) : ("")}
+        {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone === "false" || currentUser.is_default_password === "true" ? (<MessageWarning navigation={navigation} currentUser={user} />) : ("")}
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>
