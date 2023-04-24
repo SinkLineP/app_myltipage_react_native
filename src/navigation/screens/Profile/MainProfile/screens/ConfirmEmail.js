@@ -10,6 +10,7 @@ import ButtonConfirm from "../../../../../components/Profile/Buttons/ButtonConfi
 import {generateUsername, getTokenFromAsyncStorage, validationEmail} from "../../../../../Variables/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {setCurrentUser} from "../../../../../store/Slices/usersSlice";
+import {CardMessageWarning} from "../components/CardMessageWarning";
 
 
 const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
@@ -51,15 +52,18 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
             setValueEmail(val)
           }} placeholder={"Введите почту..."} value={valueEmail} />
         ) : (
-          <View style={stylesConfirmEmail.containerEmailText}>
-            <Text style={stylesConfirmEmail.emailText}>{showEmailHowText !== "" ? showEmailHowText : ""}</Text>
-            <Text style={stylesConfirmEmail.editButton} onPress={() => {
-              setShowEmailHowText("")
-              setShowInput(false)
-              setValueCodeInput("")
-            }}>изменить...</Text>
-          </View>
+          <>
+            <View style={stylesConfirmEmail.containerEmailText}>
+              <Text style={stylesConfirmEmail.emailText}>{showEmailHowText !== "" ? showEmailHowText : ""}</Text>
+              <Text style={stylesConfirmEmail.editButton} onPress={() => {
+                setShowEmailHowText("")
+                setShowInput(false)
+                setValueCodeInput("")
+              }}>изменить...</Text>
+            </View>
+          </>
         )}
+
         {showInput === true ? (
           <>
             <Text style={stylesConfirmEmail.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
@@ -87,16 +91,19 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
             />
           </>
         ) : (
-          <ButtonSendCode isActive={isFoundUser !== false} funcSendCode={() => {
-            if (isFoundUser !== false) {
-              setShowInput(true)
-              sendConfirmCodeToMail(currentUser.id, valueEmail).then(r => {
-                setCodeEmailConfirm(r.code);
-                setShowEmailHowText(valueEmail);
-              });
-            }
-          }} />
+          <>
+            <ButtonSendCode isActive={isFoundUser !== false} funcSendCode={() => {
+              if (isFoundUser !== false) {
+                setShowInput(true)
+                sendConfirmCodeToMail(currentUser.id, valueEmail).then(r => {
+                  setCodeEmailConfirm(r.code);
+                  setShowEmailHowText(valueEmail);
+                });
+              }
+            }} />
+          </>
         )}
+
 
         {Number(valueCodeInput) === codeEmailConfirm && valueCodeInput.length === 6 ? (
           <ButtonConfirm
@@ -128,6 +135,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
                   gender: currentUser.gender,
                   is_confirmed_email: r.user.is_confirmed_email,
                   is_confirmed_phone : currentUser.is_confirmed_phone,
+                  is_default_password: currentUser.is_default_password,
                   created_at: currentUser.created_at,
                   updated_at: currentUser.updated_at
                 }))
@@ -137,14 +145,21 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
             }}
           />
         ) : ("")}
-
-
       </>
     )
-  } else if (is_confirmed_email === "false") {
+  } else if (mail !== "" && is_confirmed_email === "false") {
     return (
       <>
-        <Text style={stylesConfirmEmail.emailTitle}>{currentUser.mail}</Text>
+        <View style={stylesConfirmEmail.containerEmailText}>
+          <Text style={stylesConfirmEmail.emailText}>{mail}</Text>
+          <Text style={stylesConfirmEmail.editButton} onPress={() => {
+            setShowEmailHowText("")
+            setShowInput(false)
+            setValueCodeInput("")
+          }}>изменить...</Text>
+        </View>
+        <Text></Text>
+
         {showInput === true ? (
           <>
             <Text style={stylesConfirmEmail.errorCode}>{showErrorCode !== "" ? showErrorCode : ""}</Text>
@@ -172,12 +187,15 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
             />
           </>
         ) : (
-          <ButtonSendCode isActive={true} funcSendCode={() => {
-            setShowInput(true)
-            sendConfirmCodeToMail(currentUser.id, currentUser.mail).then(r => {
-              setCodeEmailConfirm(r.code);
-            });
-          }} />
+          <>
+            <Text style={stylesConfirmEmail.errorCode}></Text>
+            <ButtonSendCode isActive={true} funcSendCode={() => {
+              setShowInput(true)
+              sendConfirmCodeToMail(currentUser.id, currentUser.mail).then(r => {
+                setCodeEmailConfirm(r.code);
+              });
+            }} />
+          </>
         )}
         {Number(valueCodeInput) === codeEmailConfirm && valueCodeInput.length === 6 ? (
           <ButtonConfirm
@@ -209,6 +227,7 @@ const SwitchConfirmation = ({mail, is_confirmed_email, navigation}) => {
                   gender: currentUser.gender,
                   is_confirmed_email: r.user.is_confirmed_email,
                   is_confirmed_phone : currentUser.is_confirmed_phone,
+                  is_default_password: currentUser.is_default_password,
                   created_at: currentUser.created_at,
                   updated_at: currentUser.updated_at
                 }))
@@ -227,31 +246,13 @@ export default function ConfirmEmail({navigation}) {
   const currentUser = useSelector(state => state.users.currentUser);
 
   return (
-    <View style={stylesConfirmEmail.container}>
-      <GoBackNavigation navigation={navigation} title={"Вернуться"} />
-      <View style={stylesConfirmEmail.containerInput}>
+    <CardMessageWarning navigation={navigation}>
         <SwitchConfirmation navigation={navigation} is_confirmed_email={currentUser.is_confirmed_email} mail={currentUser.mail} />
-      </View>
-    </View>
+    </CardMessageWarning>
   )
 }
 
 const stylesConfirmEmail = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    width: "98%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    backgroundColor: "white",
-    borderRadius: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 20,
-    paddingLeft: 20
-  },
-  containerInput: {
-    marginTop: 15
-  },
   error: {
     color: "#b92121",
     fontWeight: "bold",
@@ -285,6 +286,6 @@ const stylesConfirmEmail = StyleSheet.create({
   },
   containerEmailText: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   }
 })

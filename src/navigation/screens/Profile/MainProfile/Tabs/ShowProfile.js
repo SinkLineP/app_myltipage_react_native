@@ -3,14 +3,12 @@ import {StyleSheet, View, Text, ScrollView, Dimensions} from "react-native";
 import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {StatusBar} from "expo-status-bar";
-import {ModalWindowProfile} from "../../../../../components/ModalWindow/ModalWindowProfile";
 import MessageWarning from "../components/MessageWarning";
 
 
 
 export default function ShowProfile({navigation, user}) {
-  const defaultPassword = useSelector(state => state.users.defaultPassword);
-  const [modalVisible, setModalVisible] = useState(false);
+  const currentUser = useSelector(state => state.users.currentUser);
 
   const WidgetInput = ({counts, title}) => {
     return (
@@ -21,26 +19,10 @@ export default function ShowProfile({navigation, user}) {
     )
   }
 
-  useEffect(() => {
-    if (defaultPassword !== 0) {
-      setModalVisible(true);
-    } else {
-      setModalVisible(false);
-    }
-  }, [])
-
   return (
     <>
-      <ModalWindowProfile
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        contentModal={`В данный момент ваш пароль`}
-        titleModal={"Срочно измените ваш пароль!"}
-        defaultPassword={defaultPassword}
-        textButton={"Окей"}
-      />
       <View style={stylesShowProfile.container}>
-        {user.is_confirmed_email === "false" || user.is_confirmed_phone === "false" ? <MessageWarning navigation={navigation} currentUser={user} /> : ""}
+        {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone === "false" || currentUser.is_default_password === "true" ? (<MessageWarning navigation={navigation} currentUser={user} />) : ("")}
         <View style={stylesShowProfile.containerHeader}>
           <View style={stylesShowProfile.header}>
             <View>
@@ -49,9 +31,9 @@ export default function ShowProfile({navigation, user}) {
             <View style={stylesShowProfile.containerAboutUser}>
               <Text style={stylesShowProfile.names}>{user.username}</Text>
               <Text style={stylesShowProfile.country}>country</Text>
-              <View style={stylesShowProfile.containerFollowAndMessage}>
-                <Text style={stylesShowProfile.followButton}>Подписаться</Text>
-              </View>
+              {/*<View style={stylesShowProfile.containerFollowAndMessage}>*/}
+              {/*  <Text style={stylesShowProfile.followButton}>Подписаться</Text>*/}
+              {/*</View>*/}
             </View>
             <View style={stylesShowProfile.containerAboutUser}>
               <Text onPress={() => {

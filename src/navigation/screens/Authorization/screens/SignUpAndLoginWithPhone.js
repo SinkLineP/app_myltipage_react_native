@@ -13,27 +13,26 @@ import {
 import {Text, View, StyleSheet} from "react-native";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextInputMasked from "../components/TextInputMasked/TextInputMasked";
 import ButtonSendCode from "../components/ButtonSendCode/ButtonSendCode";
 
 
 export default function SignUpAndLoginWithPhone({navigation}) {
-  const limitSendSMS = useSelector(state => state.users.limitSendSMS);
-  const limitMessage = useSelector(state => state.users.limitMessage);
   const [submittedSMSCode, setSubmittedCode] = useState(0);
   const [noCorrectSMS, setNoCorrectSMS] = useState("");
   const [isCreatedUser, setCreatedUser] = useState("");
   const [showInputSMSCode, setShowInputSMSCode] = useState(false);
   const [valuesPhone, setValuesPhone] = useState("");
   const [valuesSMSCode, setValuesSMSCode] = useState("");
+  const [showError, setShowError] = useState("");
   const dispatch = useDispatch();
 
 
   const funcSubmitButton = async (data) => {
     handleAuthClick().then(r => r)
-    console.log(data.user)
+
     try {
       await AsyncStorage.setItem("token", data.jwt)
     } catch (e) {
@@ -48,12 +47,13 @@ export default function SignUpAndLoginWithPhone({navigation}) {
       lastname: data.user.lastname,
       firstname: data.user.firstname,
       surname: data.user.surname,
-      password: data.user.password,
+      password: data.user.password_digest,
       age: data.user.age,
       avatar: data.user.avatar,
       gender: data.user.gender,
       is_confirmed_email: data.user.is_confirmed_email,
-      is_confirmed_phone : data.user.is_confirmed_phone,
+      is_confirmed_phone: data.user.is_confirmed_phone,
+      is_default_password: data.user.is_default_password,
       created_at: data.user.created_at,
       updated_at: data.user.updated_at
     }))
@@ -88,6 +88,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
             })
           } else if (isCreatedUser === "uncreated") {
             const generatePassword = rand(100000, 999999);
+            console.log(generatePassword);
             createUserWithPhone({
               username: generateUsername(),
               mail: "",
@@ -95,12 +96,13 @@ export default function SignUpAndLoginWithPhone({navigation}) {
               lastname: "",
               firstname: "",
               surname: "",
-              password: `${generatePassword}`,
+              password: String(generatePassword),
               age: "",
               avatar: "deleted",
               gender: "other",
               is_confirmed_email: "false",
-              is_confirmed_phone : "true",
+              is_confirmed_phone: "true",
+              is_default_password: "true"
             }).then(async (data) => {
               if (data.isUsedPhone === "") {
                 await funcSubmitButton(data);
@@ -117,9 +119,6 @@ export default function SignUpAndLoginWithPhone({navigation}) {
               <Text style={LoginStyles.title}>Зарегистрироваться или авторизироваться</Text>
               <View style={LoginStyles.form}>
                 <View>
-                  {/*error show*/}
-                  {limitMessage !== "" ? (<Text style={LoginStyles.limitMessage}>{limitMessage}</Text>) : ("")}
-
                   {props.errors.phone && props.touched.phone ? (
                     <Text style={LoginStyles.error}>{props.errors.phone}</Text>
                   ) : (
@@ -132,7 +131,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     values={valuesPhone}
                     placeholder={"+7 (___) ___ __ __"}
                     keyboardType={"numeric"}
-                    funcChangeText={(_, phone) => funcCheckCreatedUser(phone, setCreatedUser, setShowInputSMSCode, setNoCorrectSMS, setValuesPhone)}
+                    funcChangeText={(_, phone) => funcCheckCreatedUser(phone, setCreatedUser, setShowInputSMSCode, setNoCorrectSMS, setValuesPhone, setShowError)}
                   />
                 </View>
 
@@ -141,7 +140,7 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                     {props.errors.phone && props.touched.phone ? (<Text style={LoginStyles.error}>{props.errors.phone}</Text>) : <Text style={LoginStyles.error}>{noCorrectSMS}</Text>}
 
                     {showInputSMSCode === false ? (
-                      <ButtonSendCode isActive={true} funcSendCode={() => funcSendCode(dispatch, limitSendSMS, valuesPhone, setSubmittedCode, setShowInputSMSCode, true)} />
+                      <ButtonSendCode isActive={true} funcSendCode={() => funcSendCode(dispatch, valuesPhone, setSubmittedCode, setShowInputSMSCode)} />
                     ) : (
                       <TextInputMasked
                         fontSize={""}
@@ -191,11 +190,6 @@ const LoginStyles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 5
-  },
-  limitMessage: {
-    color: "#b92121",
-    fontWeight: "bold",
-    textAlign: "center",
   },
   text: {
     color: "#048f9d",
