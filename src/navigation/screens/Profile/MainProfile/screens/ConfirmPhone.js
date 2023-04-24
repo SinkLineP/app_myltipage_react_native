@@ -231,7 +231,7 @@ const ConfirmComponent = ({phone, is_confirmed_phone, navigation}) => {
               console.log("clicked submit sms code!")
               const user = {
                 id: currentUser.id,
-                phone: valuesPhone,
+                phone: currentUser.phone,
                 is_confirmed_phone: "true",
               }
 

@@ -80,7 +80,7 @@ export default function ChangePassword({navigation}) {
   const dispatch = useDispatch();
 
 
-  const sendSMSCode = () => {
+  const sendSMSCode = (phone) => {
     const smsCode = rand(100000, 999999);
 
     VerifyUserPhone(phone, smsCode).then(r => {
@@ -134,27 +134,31 @@ export default function ChangePassword({navigation}) {
 
   return (
     <CardMessageWarning navigation={navigation}>
-      <CustomTextInput
-        onChangeText={(password) => {
-          if (password.length >= 6) {
-            console.log(password);
-            setNewPassword(password);
-          } else {
-          }
+      {is_confirmed_phone === "true" || is_confirmed_email === "true" || is_confirmed_phone === "true" && is_confirmed_email === "true" ? (
+        <CustomTextInput
+          onChangeText={(password) => {
+            if (password.length >= 6) {
+              console.log(password);
+              setNewPassword(password);
+            }
 
-          setValuePassword(password)
-        }}
-        value={valuePassword}
-        placeholder={"Введите новый пароль.."}
-        isCenter={false}
-      />
+            setValuePassword(password)
+          }}
+          value={valuePassword}
+          placeholder={"Введите новый пароль.."}
+          isCenter={false}
+        />
+      ) : (
+        <Text style={stylesChangePassword.error}>Вы не можете изменить пароль!{'\n'}У вас не потдтверждены почта и телефон.</Text>
+      )}
+
 
 
       {newPassword !== "" ? (<View style={stylesChangePassword.containerCardsSend}>
         {is_confirmed_phone === "true" ? (
           <>
             <View style={stylesChangePassword.cardSendCode}>
-              <TouchableWithoutFeedback onPress={() => sendSMSCode()}>
+              <TouchableWithoutFeedback onPress={() => sendSMSCode(phone)}>
                 <View>
                   <Image resizeMode={"contain"} style={stylesChangePassword.cardIcon} source={require("../Images/smartphone-icon.png")} />
                   <Text style={stylesChangePassword.cardText}>Отправить SMS{'\n'} на телефон</Text>
@@ -246,5 +250,11 @@ const stylesChangePassword = StyleSheet.create({
     textAlign: "center",
     marginTop: 3,
     marginBottom: 3
-  }
+  },
+  error: {
+    color: "#b92121",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 20
+  },
 })
