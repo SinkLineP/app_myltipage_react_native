@@ -31,9 +31,9 @@ export default function ShowProfile({navigation, user}) {
             <View style={stylesShowProfile.containerAboutUser}>
               <Text style={stylesShowProfile.names}>{user.username}</Text>
               <Text style={stylesShowProfile.country}>country</Text>
-              <View style={stylesShowProfile.containerFollowAndMessage}>
-                <Text style={stylesShowProfile.followButton}>Подписаться</Text>
-              </View>
+              {/*<View style={stylesShowProfile.containerFollowAndMessage}>*/}
+              {/*  <Text style={stylesShowProfile.followButton}>Подписаться</Text>*/}
+              {/*</View>*/}
             </View>
             <View style={stylesShowProfile.containerAboutUser}>
               <Text onPress={() => {

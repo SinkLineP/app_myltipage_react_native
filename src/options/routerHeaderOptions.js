@@ -1,16 +1,21 @@
-import Header from "../shared/header";
+import Header from "../shared/Header/Header";
 
-export const setOptions = (titleText, backgroundColor, titleColor, showBar) => {
+export const setOptions = (titleText, backgroundColor, titleColor, navigationRoute, height, width, source, showButton) => {
   return {
-    headerTitle: (props) => <Header titleColor={titleColor} showBar={showBar} title={titleText} {...props} />,
+    headerTitle: (props) => <Header
+      navigationRoute={navigationRoute}
+      heightImage={height}
+      iconSource={source}
+      widthImage={width}
+      showButton={showButton}
+      titleColor={titleColor}
+      title={titleText}
+      {...props}
+    />,
     headerStyle: {
       backgroundColor: backgroundColor ? backgroundColor : "coral",
     },
-    headerTintColor: titleColor ? titleColor : "#fff",
-    headerTitleStyle: {
-      fontWeight: "bold",
-      backgroundColor: "red"
-    },
+    headerTintColor: titleColor !== "" ? titleColor : "#fff",
     drawerLabel: titleText,
   };
 }

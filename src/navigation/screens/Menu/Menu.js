@@ -1,8 +1,9 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View, Image, Pressable} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {removeCurrentUser, switchAuth} from "../../../store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import HeaderLeft from "../../../shared/HeaderLeft/HeaderLeft";
 
 
 export default function Menu({navigation}) {
@@ -22,7 +23,18 @@ export default function Menu({navigation}) {
     )
   }
 
-  console.log(isAuth)
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: (props) => (
+  //       <HeaderLeft title={"Меню"} titleColor={"black"} {...props} />
+  //     ),
+  //     headerRight: () => (
+  //       <Pressable style={stylesMenu.containerSettings} onPress={() => navigation.navigate("MenuSettings")}>
+  //         <Image style={stylesMenu.settingsIcon} source={require("./Icons/settings-icon.png")} />
+  //       </Pressable>
+  //     )
+  //   });
+  // }, [navigation]);
 
   return (
     <View style={stylesMenu.container}>
@@ -67,5 +79,12 @@ const stylesMenu = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "10%",
+  },
+  settingsIcon: {
+    width: 30,
+    height: 30
+  },
+  containerSettings: {
+    marginRight: 10
   }
 })

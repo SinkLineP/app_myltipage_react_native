@@ -25,18 +25,21 @@ import SignUpEmail from "./screens/Authorization/screens/SignUpEmail";
 import ConfirmEmail from "./screens/Profile/MainProfile/screens/ConfirmEmail";
 import ConfirmPhone from "./screens/Profile/MainProfile/screens/ConfirmPhone";
 import ChangePassword from "./screens/Profile/MainProfile/screens/ChangePassword";
+import MenuSettings from "./screens/Menu/screens/MenuSettings/MenuSettings";
 
 
 const Stack = createStackNavigator();
+
+
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="MainReviews" component={MainReviews} options={setOptions("Категории", "coral", "#fff", false)} />
-      <Stack.Screen name="Move" component={MoveReviews} options={setOptions("Фильмы", "#9e3e1b", "#fff", false)} />
-      <Stack.Screen name="Cartoon" component={CartoonReviews} options={setOptions("Мультфильмы", "#1e9dff", "#fff", false)} />
-      <Stack.Screen name="Serials" component={SerialsReviews} options={setOptions("Сериалы", "#fec260", "#fff", false)} />
-      <Stack.Screen name="Anime" component={AnimeReviews} options={setOptions("Аниме", "#ff34c7", "#fff", false)} />
-      <Stack.Screen name="CartoonSerials" component={CartoonSerials} options={setOptions("Мульт Сериалы", "#1588e2", "#fff", false)} />
+      <Stack.Screen name="MainReviews" component={MainReviews} options={setOptions("Категории", "coral", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Move" component={MoveReviews} options={setOptions("Фильмы", "#9e3e1b", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Cartoon" component={CartoonReviews} options={setOptions("Мультфильмы", "#1e9dff", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Serials" component={SerialsReviews} options={setOptions("Сериалы", "#fec260", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Anime" component={AnimeReviews} options={setOptions("Аниме", "#ff34c7", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="CartoonSerials" component={CartoonSerials} options={setOptions("Мульт Сериалы", "#1588e2", "#fff", "", 0, 0, "", false)} />
       <Stack.Screen name="ReviewDetails" component={ReviewDetails} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
     </Stack.Navigator>
   );
@@ -45,24 +48,24 @@ const MainStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "#fff", "#404040", false)} />
-      <Stack.Screen name="LoginEmail" component={LoginEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
-      <Stack.Screen name="SignUpEmail" component={SignUpEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
-      <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} options={setOptions("", "#ebebeb", "#fff", false)} />
-      <Stack.Screen name="ConfirmPhone" component={ConfirmPhone} options={setOptions("", "#ebebeb", "#fff", false)} />
-      <Stack.Screen name="ChangePassword" component={ChangePassword} options={setOptions("", "#ebebeb", "#fff", false)} />
+      <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="MainProfile" component={MainProfile} options={setOptions("Мой профиль", "#fff", "#404040", "", 0, 0, "", false)} />
+      <Stack.Screen name="LoginEmail" component={LoginEmail} options={setOptions("", "#ebebeb", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="SignUpEmail" component={SignUpEmail} options={setOptions("", "#ebebeb", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} options={setOptions("", "#ebebeb", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="ConfirmPhone" component={ConfirmPhone} options={setOptions("", "#ebebeb", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} options={setOptions("", "#ebebeb", "#fff", "", 0, 0, "", false)} />
       {/* Settings Pages */}
-      <Stack.Screen name="SettingsProfile" component={SettingsProfile} options={setOptions("Настройки", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="ConfidentialSettings" component={ConfidentialSettings} options={setOptions("Конфиденциальные данные", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="SettingsProfile" component={SettingsProfile} options={setOptions("Настройки", "#048f9d", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="ConfidentialSettings" component={ConfidentialSettings} options={setOptions("Конфиденциальные данные", "#048f9d", "#fff", "", 0, 0, "", false)} />
       {/* Edit Pages */}
-      <Stack.Screen name="EditProfile" component={EditProfile} options={setOptions("Редактирование профиля", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="EditEmail" component={EditEmail} options={setOptions("Изменение почты", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="EditPhone" component={EditPhone} options={setOptions("Изменение телефона", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="EditProfile" component={EditProfile} options={setOptions("Редактирование профиля", "#048f9d", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="EditEmail" component={EditEmail} options={setOptions("Изменение почты", "#048f9d", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="EditPhone" component={EditPhone} options={setOptions("Изменение телефона", "#048f9d", "#fff", "", 0, 0, "", false)} />
       {/* Friends */}
-      <Stack.Screen name="AllFriendsPage" component={AllFriendsPage} options={setOptions("Друзья", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="RequestFriendsPages" component={RequestFriendsPages} options={setOptions("Заявки в друзья", "#048f9d", "#fff", false)} />
-      <Stack.Screen name="ResponseFriendsPage" component={ResponseFriendsPage} options={setOptions("Запросы в друзья", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="AllFriendsPage" component={AllFriendsPage} options={setOptions("Друзья", "#048f9d", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="RequestFriendsPages" component={RequestFriendsPages} options={setOptions("Заявки в друзья", "#048f9d", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="ResponseFriendsPage" component={ResponseFriendsPage} options={setOptions("Запросы в друзья", "#048f9d", "#fff", "", 0, 0, "", false)} />
     </Stack.Navigator>
   )
 }
@@ -71,7 +74,7 @@ const ProfileStackNavigator = () => {
 const AuthorizationStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", false)} />
+      <Stack.Screen name="Authorization" component={Authorization} options={setOptions("", "#048f9d", "#fff", "", 0, 0, "", false)} />
     </Stack.Navigator>
   )
 }
@@ -79,8 +82,9 @@ const AuthorizationStackNavigator = () => {
 
 const MenuStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", "#ffffff", "#1e9dff", false)} />
+    <Stack.Navigator screenOptions={{  }}>
+      <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", "#ffffff", "#000000", "MenuSettings", 30, 30, require("./Icons/settings-icon.png"), true)} />
+      <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки меню", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
     </Stack.Navigator>
   );
 }
@@ -89,7 +93,7 @@ const MenuStackNavigator = () => {
 const SearchStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="tomato" component={Search} options={setOptions("Поиск", "#e65300", "#1e9dff", false)} />
+      <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "#e65300", "#ffffff", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }
@@ -97,7 +101,7 @@ const SearchStackNavigator = () => {
 const ChatStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Chat" component={Chat} options={setOptions("Чат", "#ff9a75", "#1e9dff", false)} />
+      <Stack.Screen name="Chat" component={Chat} options={setOptions("Чат", "#ff9a75", "#ffffff", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }
