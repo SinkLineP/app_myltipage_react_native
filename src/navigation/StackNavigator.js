@@ -84,7 +84,7 @@ const MenuStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{  }}>
       <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", "#ffffff", "#000000", "MenuSettings", 30, 30, require("./Icons/settings-icon.png"), true)} />
-      <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки меню", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки приложения", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
     </Stack.Navigator>
   );
 }
