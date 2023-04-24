@@ -1,32 +1,67 @@
 import React from "react";
-import {StyleSheet, View, Text, Image} from "react-native";
+import {StyleSheet, View, Text, Image, Pressable} from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
 
 
-const OptionsComponent = ({sourceIcon, title, dynamicContent}) => {
+const OptionsComponent = ({ sourceIcon, title, dynamicContent, navigationRoute, navigation }) => {
   return (
-    <View style={stylesMenuSettings.option}>
-      <View style={stylesMenuSettings.optionContent}>
-        <View style={stylesMenuSettings.optionContainerIcon}>
-          <Image style={stylesMenuSettings.optionIcon} source={sourceIcon} />
-        </View>
-        <View style={stylesMenuSettings.optionTextContent}>
-          <Text style={stylesMenuSettings.optionTitle}>{title}</Text>
-          <Text style={stylesMenuSettings.optionSelectedOption}>{dynamicContent}</Text>
+    <Pressable onPress={() => {
+      navigation.navigate(navigationRoute)
+    }}>
+      <View style={stylesMenuSettings.option}>
+        <View style={stylesMenuSettings.optionContent}>
+          <View style={stylesMenuSettings.optionContainerIcon}>
+            <Image style={stylesMenuSettings.optionIcon} source={sourceIcon} />
+          </View>
+          <View style={stylesMenuSettings.optionTextContent}>
+            <Text style={stylesMenuSettings.optionTitle}>{title}</Text>
+            <Text style={stylesMenuSettings.optionSelectedOption}>{dynamicContent}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
 export default function MenuSettings() {
-  return (
-    <View style={stylesMenuSettings.container}>
-      {/* настройка языка */}
-      <OptionsComponent title={"Язык"} dynamicContent={"Автоматически"} sourceIcon={require("./Icons/language-icon.png")} />
+  const navigation = useNavigation();
+  const language = useSelector(state => state.settingsApp.language);
+  const languageData = useSelector(state => state.settingsApp.languageData);
+  const themeData = useSelector(state => state.settingsApp.themeData);
+  const theme = useSelector(state => state.settingsApp.theme);
 
-      {/* настройка оформления */}
-      <OptionsComponent title={"Тема"} dynamicContent={"Автоматически"} sourceIcon={require("./Icons/theme-icon.png")} />
-    </View>
+
+  return (
+    <>
+      <View style={stylesMenuSettings.container}>
+        {/* настройка языка */}
+        <OptionsComponent
+          title={"Язык"}
+          dynamicContent={
+            languageData.map(item => {
+              if (item.value === language) return item.label;
+            })
+          }
+          sourceIcon={require("./Icons/language-icon.png")}
+          navigationRoute={"LanguageApp"}
+          navigation={navigation}
+        />
+
+        {/* настройка оформления */}
+        <OptionsComponent
+          title={"Тема"}
+          dynamicContent={
+            themeData.map(item => {
+              if (item.value === theme) return item.label;
+            })
+          }
+          sourceIcon={require("./Icons/theme-icon.png")}
+          navigationRoute={"ThemeApp"}
+          navigation={navigation}
+        />
+      </View>
+    </>
   )
 }
 

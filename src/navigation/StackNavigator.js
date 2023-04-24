@@ -26,6 +26,8 @@ import ConfirmEmail from "./screens/Profile/MainProfile/screens/ConfirmEmail";
 import ConfirmPhone from "./screens/Profile/MainProfile/screens/ConfirmPhone";
 import ChangePassword from "./screens/Profile/MainProfile/screens/ChangePassword";
 import MenuSettings from "./screens/Menu/screens/MenuSettings/MenuSettings";
+import LanguageApp from "./screens/Menu/screens/MenuSettings/screens/LanguageApp/LanguageApp";
+import ThemeApp from "./screens/Menu/screens/MenuSettings/screens/ThemeApp/ThemeApp";
 
 
 const Stack = createStackNavigator();
@@ -85,6 +87,8 @@ const MenuStackNavigator = () => {
     <Stack.Navigator screenOptions={{  }}>
       <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", "#ffffff", "#000000", "MenuSettings", 30, 30, require("./Icons/settings-icon.png"), true)} />
       <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки приложения", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="LanguageApp" component={LanguageApp} options={setOptions("Выберите язык", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="ThemeApp" component={ThemeApp} options={setOptions("Выберите тему", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
     </Stack.Navigator>
   );
 }
