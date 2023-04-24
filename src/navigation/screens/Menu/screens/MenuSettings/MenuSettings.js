@@ -1,6 +1,7 @@
 import React from "react";
 import {StyleSheet, View, Text, Image, Pressable} from "react-native";
 import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
 
 
 const OptionsComponent = ({ sourceIcon, title, dynamicContent, navigationRoute, navigation }) => {
@@ -25,6 +26,10 @@ const OptionsComponent = ({ sourceIcon, title, dynamicContent, navigationRoute, 
 
 export default function MenuSettings() {
   const navigation = useNavigation();
+  const language = useSelector(state => state.settingsApp.language);
+  const languageData = useSelector(state => state.settingsApp.languageData);
+  const themeData = useSelector(state => state.settingsApp.themeData);
+  const theme = useSelector(state => state.settingsApp.theme);
 
 
   return (
@@ -33,7 +38,11 @@ export default function MenuSettings() {
         {/* настройка языка */}
         <OptionsComponent
           title={"Язык"}
-          dynamicContent={"Автоматически"}
+          dynamicContent={
+            languageData.map(item => {
+              if (item.value === language) return item.label;
+            })
+          }
           sourceIcon={require("./Icons/language-icon.png")}
           navigationRoute={"LanguageApp"}
           navigation={navigation}
@@ -42,7 +51,11 @@ export default function MenuSettings() {
         {/* настройка оформления */}
         <OptionsComponent
           title={"Тема"}
-          dynamicContent={"Автоматически"}
+          dynamicContent={
+            themeData.map(item => {
+              if (item.value === theme) return item.label;
+            })
+          }
           sourceIcon={require("./Icons/theme-icon.png")}
           navigationRoute={"ThemeApp"}
           navigation={navigation}

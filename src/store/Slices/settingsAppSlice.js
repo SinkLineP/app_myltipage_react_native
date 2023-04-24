@@ -6,10 +6,10 @@ const settingsAppSlice = createSlice({
   initialState,
   reducers: {
     setLanguageApp(state, action) {
-      state.language = action.payload.language
+      state.language = action.payload
     },
     setThemeApp(state, action) {
-      state.themeApp = action.payload.themeApp
+      state.theme = action.payload
     }
   }
 })
