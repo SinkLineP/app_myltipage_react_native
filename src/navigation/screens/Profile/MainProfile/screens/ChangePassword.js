@@ -149,7 +149,7 @@ export default function ChangePassword({navigation}) {
           isCenter={false}
         />
       ) : (
-        <Text style={stylesChangePassword.error}>Вы не можете изменить пароль!{'\n'}У вас не потдтверждены почта и телефон.</Text>
+        <Text style={stylesChangePassword.error}>Вы не можете изменить пароль!{'\n'}У вас не подтверждена почта и телефон.</Text>
       )}
 
 
