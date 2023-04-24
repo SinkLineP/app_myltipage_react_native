@@ -1,11 +1,11 @@
 import Header from "../shared/Header/Header";
 
-export const setOptions = (titleText, backgroundColor, titleColor, navigationRoute, height, width, source, showButton) => {
+export const setOptions = (titleText, backgroundColor, titleColor, navigationRoute, height, width, sourceImage, showButton) => {
   return {
     headerTitle: (props) => <Header
       navigationRoute={navigationRoute}
       heightImage={height}
-      iconSource={source}
+      iconSource={sourceImage}
       widthImage={width}
       showButton={showButton}
       titleColor={titleColor}
