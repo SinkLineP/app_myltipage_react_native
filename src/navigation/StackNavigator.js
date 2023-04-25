@@ -103,7 +103,7 @@ const MenuStackNavigator = () => {
 const SearchStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "#e65300", "#ffffff", "", 0, 0, "", "", 0, 0, "", false)} />
+      <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }
