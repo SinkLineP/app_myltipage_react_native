@@ -266,21 +266,16 @@ export const sendConfirmCodeToMail = async (id, mail) => {
   return await response.json()
 }
 
-// export const confirmMail = async () => {
-//   const response = await fetch(`${BASE_URL}/check-created-user-with-phone`, {
-//     method: "POST",
-//     headers: {
-//       'Content-Type': 'application/json;charset=utf-8',
-//       'Accept': 'application/json'
-//     },
-//     body: JSON.stringify({
-//       user: {
-//         phone: phone
-//       }
-//     })
-//   })
-//   if (!response.ok) {
-//     throw new Error("Server Error! LoginPhone.");
-//   }
-//   return await response.json()
-// }
+export const getCategoriesSearchEstate = async () => {
+  const response = await fetch(`${BASE_URL}/get-categories`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! getCategoriesSearchEstate.");
+  }
+  return await response.json()
+}
