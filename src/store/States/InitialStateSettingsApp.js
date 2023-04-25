@@ -4,9 +4,10 @@ export const initialState = {
     {id: 0, label: "Русский", value: "russian-language"},
     {id: 1, label: "English", value: "english-language"},
   ],
-  theme: "light-theme",
+  theme: "default-theme",
   themeData: [
-    {id: 0, label: "Светлая тема", value: "light-theme"},
-    {id: 1, label: "Темная тема", value: "dark-theme"},
+    {id: 0, label: "Тема приложения", value: "default-theme"},
+    {id: 1, label: "Светлая тема", value: "light-theme"},
+    {id: 2, label: "Темная тема", value: "dark-theme"},
   ],
 }

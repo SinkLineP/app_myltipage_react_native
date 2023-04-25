@@ -9,11 +9,17 @@ import {
 import {FontAwesome} from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
 import {useSelector} from "react-redux";
+import {
+  controllerTheme_TabNavigator_BackgroundColor,
+  controllerTheme_TabNavigator_Title_Active,
+  controllerTheme_TabNavigator_Title_NotActive
+} from "../controllers/Theme/Theme";
 
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   const isAuth = useSelector(state => state.users.isAuth);
+  const theme = useSelector(state => state.settingsApp.theme);
 
   const userIsAuthed = (responseAuthorized, responseUnauthorized) => {
     return isAuth === true ? responseAuthorized : responseUnauthorized;
@@ -57,12 +63,13 @@ const BottomTabNavigator = () => {
           return <Ionicons name={icon.name} size={icon.size} color={color} />;
         }
       },
-      tabBarActiveTintColor: 'tomato',
-      tabBarInactiveTintColor: 'gray',
+      tabBarActiveTintColor: controllerTheme_TabNavigator_Title_Active(theme, "tomato"),
+      tabBarInactiveTintColor: controllerTheme_TabNavigator_Title_NotActive(theme, "gray"),
       tabBarStyle: {
         height: 60,
         paddingBottom: 10,
-        paddingTop: 10
+        paddingTop: 10,
+        backgroundColor: controllerTheme_TabNavigator_BackgroundColor(theme, "white")
       }
     })}>
       <Tab.Screen options={{title: "Главная"}} name="HomeTab" component={MainStackNavigator} />

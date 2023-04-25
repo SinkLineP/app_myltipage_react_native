@@ -14,6 +14,7 @@ export default function ThemeApp() {
   return (
     <View>
       <RadioButtons
+        theme={theme}
         items={themeData}
         activeRadio={theme}
         setActive={setThemeApp}
