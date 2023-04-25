@@ -22,16 +22,6 @@ export const controllerTheme_MenuSettings_TextContentOption = (theme, titleColor
   }
 }
 
-// export const controllerTheme_MenuSettings_IconOption = (theme, titleColor) => {
-//   if (theme === "dark-theme") {
-//     return "#fff";
-//   } else if (theme === "light-theme") {
-//     return "#000000";
-//   } else if (theme === "default-theme") {
-//     return titleColor;
-//   }
-// }
-
 export const controllerTheme_MenuSettings_BackgroundColorOption = (theme, titleColor) => {
   if (theme === "dark-theme") {
     return "#323232";
