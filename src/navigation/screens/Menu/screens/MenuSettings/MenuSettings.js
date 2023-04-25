@@ -2,21 +2,38 @@ import React from "react";
 import {StyleSheet, View, Text, Image, Pressable} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {useSelector} from "react-redux";
+import {
+  controllerTheme_MenuSettings_BackgroundColorOption, controllerTheme_MenuSettings_TextContentOption,
+  controllerTheme_MenuSettings_TitleOption
+} from "../../../../../controllers/Theme/Theme";
 
 
 const OptionsComponent = ({ sourceIcon, title, dynamicContent, navigationRoute, navigation }) => {
+  const theme = useSelector(state => state.settingsApp.theme)
   return (
     <Pressable onPress={() => {
       navigation.navigate(navigationRoute)
     }}>
-      <View style={stylesMenuSettings.option}>
+      <View style={{
+        backgroundColor: controllerTheme_MenuSettings_BackgroundColorOption(theme, "#fff"),
+        marginTop: 5,
+        marginBottom: 5,
+        paddingTop: 10,
+        paddingBottom: 10
+      }}>
         <View style={stylesMenuSettings.optionContent}>
           <View style={stylesMenuSettings.optionContainerIcon}>
             <Image style={stylesMenuSettings.optionIcon} source={sourceIcon} />
           </View>
           <View style={stylesMenuSettings.optionTextContent}>
-            <Text style={stylesMenuSettings.optionTitle}>{title}</Text>
-            <Text style={stylesMenuSettings.optionSelectedOption}>{dynamicContent}</Text>
+            <Text style={{
+              color: controllerTheme_MenuSettings_TitleOption(theme, "#4a4848"),
+              fontSize: 14
+            }}>{title}</Text>
+            <Text style={{
+              fontWeight: "bold",
+              color: controllerTheme_MenuSettings_TextContentOption(theme, "black")
+            }}>{dynamicContent}</Text>
           </View>
         </View>
       </View>
@@ -69,13 +86,6 @@ const stylesMenuSettings = StyleSheet.create({
   container: {
     paddingTop: 20,
   },
-  option: {
-    backgroundColor: "#fff",
-    marginTop: 5,
-    marginBottom: 5,
-    paddingTop: 10,
-    paddingBottom: 10
-  },
   optionContent: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -94,11 +104,4 @@ const stylesMenuSettings = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  optionTitle: {
-    color: "#4a4848",
-    fontSize: 14
-  },
-  optionSelectedOption: {
-    fontWeight: "bold"
-  }
 })

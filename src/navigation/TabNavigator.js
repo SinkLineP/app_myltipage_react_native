@@ -10,9 +10,9 @@ import {FontAwesome} from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
 import {useSelector} from "react-redux";
 import {
-  controllerTheme_TabNavigator_Background, controllerTheme_TabNavigator_BackgroundColor,
-  controllerTheme_TabNavigator_Title,
-  controllerTheme_TabNavigator_Title_Active, controllerTheme_TabNavigator_Title_NotActive
+  controllerTheme_TabNavigator_BackgroundColor,
+  controllerTheme_TabNavigator_Title_Active,
+  controllerTheme_TabNavigator_Title_NotActive
 } from "../controllers/Theme/Theme";
 
 

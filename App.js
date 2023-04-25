@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
-import {Provider, useDispatch, useSelector} from "react-redux";
+import {Provider, useDispatch} from "react-redux";
 import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
@@ -10,8 +10,6 @@ import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
-import {hourToMilliseconds} from "./src/Variables/functions";
-import {CLEAR_LIMIT_MESSAGE, LIMIT_SMS} from "./src/Variables/ServerConfig";
 
 
 export default function App () {

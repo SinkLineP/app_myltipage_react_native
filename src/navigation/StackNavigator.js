@@ -28,10 +28,14 @@ import ChangePassword from "./screens/Profile/MainProfile/screens/ChangePassword
 import MenuSettings from "./screens/Menu/screens/MenuSettings/MenuSettings";
 import LanguageApp from "./screens/Menu/screens/MenuSettings/screens/LanguageApp/LanguageApp";
 import ThemeApp from "./screens/Menu/screens/MenuSettings/screens/ThemeApp/ThemeApp";
+import {
+  controllerTheme_StackNavigator_Background,
+  controllerTheme_StackNavigator_Title
+} from "../controllers/Theme/Theme";
+import {useSelector} from "react-redux";
 
 
 const Stack = createStackNavigator();
-
 
 const MainStackNavigator = () => {
   return (
@@ -83,12 +87,14 @@ const AuthorizationStackNavigator = () => {
 
 
 const MenuStackNavigator = () => {
+  const theme = useSelector(state => state.settingsApp.theme);
+
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", "#ffffff", "#000000", "MenuSettings", 30, 30, require("./Icons/settings-icon.png"), true)} />
-      <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки приложения", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
-      <Stack.Screen name="LanguageApp" component={LanguageApp} options={setOptions("Выберите язык", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
-      <Stack.Screen name="ThemeApp" component={ThemeApp} options={setOptions("Выберите тему", "#ffffff", "#000000", "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="Menu" component={Menu} options={setOptions("Меню", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "MenuSettings", 30, 30, require("./Icons/settings-icon.png"), true)} />
+      <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки приложения", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="LanguageApp" component={LanguageApp} options={setOptions("Выберите язык", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="ThemeApp" component={ThemeApp} options={setOptions("Выберите тему", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
     </Stack.Navigator>
   );
 }
