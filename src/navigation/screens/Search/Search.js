@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, StyleSheet, TouchableOpacity, Button, Dimensions} from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import { Entypo } from '@expo/vector-icons';
 import CustomSwitch from "../../../components/CustomSwitch/CustomSwitch";
 import {getCategoriesSearchEstate} from "../../../db/getData";
@@ -33,61 +33,64 @@ const TabSwitch = ({setSelectedSwitch, option1, option2, selectedColor}) => {
   )
 }
 
-const TabCategoryEstate = ({categories, styles, modalRef}) => {
+const TabCategoryEstate = ({categories, styles}) => {
   const [activeTab, setActiveTab] = useState("");
+  const modalRef = useRef(null);
+  const [currentItem, setCurrentItem] = useState({});
+  const items = [];
+
 
 
   return (
-    <View style={styles.categoryContent}>
-      {
-        categories.map((item) => {
-          if (item.parent_id === null) {
-            return (
-              <TouchableOpacity key={item.id} style={activeTab === item.id ? [styles.categoryTab, styles.activeTab] : stylesSearch.categoryTab} onPress={() => {
-                setActiveTab(item.id)
-                modalRef.current?.open()
-              }}>
-                <View>
-                  <Text style={styles.categoryIcon}>Icon</Text>
-                  <Text style={activeTab === item.id ? styles.active : styles.categoryTitle}>{item.title}</Text>
-                </View>
-              </TouchableOpacity>
-            )
-          }
-        })
-      }
-    </View>
+    <>
+      <View style={stylesSearch.categoryContent}>
+        {
+          categories.map((item) => {
+            if (item.parent_id === null) {
+              return (
+                <TouchableOpacity key={item.category_id} style={activeTab === item.category_id ? stylesSearch.activeTab : stylesSearch.categoryTab} onPress={() => {
+                  setCurrentItem(item);
+                  setActiveTab(item.category_id)
+                  modalRef.current?.open()
+                }}>
+                  <View>
+                    <Text style={stylesSearch.categoryIcon}>Icon</Text>
+                    <Text style={activeTab === item.category_id  ? styles.active : stylesSearch.categoryTitle}>{item.title}</Text>
+                  </View>
+                </TouchableOpacity>
+              )
+            } else {
+              if (activeTab === item.parent_id && item.slug !== "kottedj") {
+                items.push(item);
+              }
+            }
+          })
+        }
+      </View>
+
+      <PortalProvider>
+        <BottomModalWindow modalRef={modalRef} currentItem={currentItem} items={items} onClose={() => {modalRef.current?.close()}} />
+      </PortalProvider>
+    </>
   )
 }
 
 export default function Search() {
   const [selectedSwitch, setSelectedSwitch] = useState("");
   const [categories, setCategories] = useState([]);
-  const modalRef = useRef(null);
 
 
   useEffect(() => {
     getCategoriesSearchEstate().then(r => setCategories(r.categories));
   }, [])
 
-  const onOpen = () => {
-    modalRef.current?.open();
-  };
-
-  const onClose = () => {
-    modalRef.current?.close();
-  };
-
-
   return (
     <View style={stylesSearch.container}>
       <TabWithIcon title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
       <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} />
-      <TabCategoryEstate categories={categories} styles={stylesSearch} modalRef={modalRef} />
+      <TabCategoryEstate categories={categories} styles={stylesSearch} />
 
-      <PortalProvider>
-        <BottomModalWindow modalRef={modalRef} onClose={onClose} />
-      </PortalProvider>
+
     </View>
   )
 }
@@ -139,6 +142,12 @@ const stylesSearch = StyleSheet.create({
     paddingTop: 20
   },
   activeTab: {
+    width: "30%",
+    borderWidth: 1,
+    borderColor: "#f4f4f4",
+    borderRadius: 10,
+    height: 90,
+    paddingTop: 20,
     backgroundColor: "tomato"
   },
   active: {

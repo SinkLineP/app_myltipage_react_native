@@ -4,28 +4,35 @@ import { Modalize } from "react-native-modalize";
 import { Dimensions, View, StyleSheet, Text, Button } from "react-native";
 
 
-const modalHeight = Dimensions.get("screen").height * 0.40;
-export const BottomModalWindow = ({modalRef, onClose, categoriesArray}) => {
-  return (
-    <Portal>
-      <Modalize ref={modalRef} adjustToContentHeight={true}>
-        <View style={stylesBottomModalWindow.content}>
-          <View style={stylesBottomModalWindow.modalTitle}>
-            <Text style={stylesBottomModalWindow.cancel} onPress={onClose}>отмена</Text>
-            <Text style={stylesBottomModalWindow.titleTypeEstate}>название категории</Text>
-            <Text style={stylesBottomModalWindow.ready}>готово</Text>
+const modalHeight = Dimensions.get("screen").height * 0.20;
+export const BottomModalWindow = ({modalRef, onClose, items, currentItem}) => {
+  if (currentItem.length !== 0) {
+    return (
+      <Portal>
+        <Modalize ref={modalRef} adjustToContentHeight={true}>
+          <View style={stylesBottomModalWindow.content}>
+            <View style={stylesBottomModalWindow.modalTitle}>
+              <Text style={stylesBottomModalWindow.cancel} onPress={onClose}>отмена</Text>
+              <Text style={stylesBottomModalWindow.titleTypeEstate}>{currentItem.title}</Text>
+              <Text style={stylesBottomModalWindow.ready}>готово</Text>
+            </View>
+            <View>
+              {items.map((item) => (
+                <Text key={item.category_id}>{item.title}</Text>
+              ))}
+            </View>
           </View>
-        </View>
-      </Modalize>
-    </Portal>
-  );
+        </Modalize>
+      </Portal>
+    )
+  }
 }
 
 const stylesBottomModalWindow = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: "space-between",
-    height: modalHeight,
+    minHeight: modalHeight,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderTopLeftRadius: 10,
