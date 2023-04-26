@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
 import {Provider, useDispatch} from "react-redux";
@@ -10,13 +10,16 @@ import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
+import {PortalProvider} from "@gorhom/portal";
 
 
 export default function App () {
   return (
     <Provider store={store}>
-      <AppWrapper />
-      <StatusBar style={"auto"} />
+      {/*<PortalProvider>*/}
+        <AppWrapper />
+        <StatusBar style={"auto"} />
+      {/*</PortalProvider>*/}
     </Provider>
   )
 }
