@@ -25,8 +25,6 @@ export const TabCategoryEstate = () => {
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
 
-  console.log(allCategories);
-
   if (mainCategory !== []) {
     return (
       <>
@@ -51,7 +49,11 @@ export const TabCategoryEstate = () => {
             }
           </View>
           <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
-
+            {allCategories.map((category) => (
+              <View style={stylesTabCategoryEstate.checkedEstatesContainer}>
+                <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
+              </View>
+            ))}
           </View>
         </View>
 
@@ -126,10 +128,32 @@ const stylesTabCategoryEstate = StyleSheet.create({
     color: "#323232"
   },
   categoryContainer: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    marginTop: 6
   },
   containerSelectedCheckBox: {
     borderTopWidth: 1,
-    borderColor: "#f2f2f2"
+    borderColor: "#f2f2f2",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+
+  },
+  checkedEstatesContainer: {
+    backgroundColor: "#f2f2f2",
+    borderRadius: 50,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    marginRight: 5,
+    marginVertical: 3
+  },
+  checkedEstatesTitle: {
+
+  },
+  checkedEstatesDeleteSelected: {
+
   }
 })
