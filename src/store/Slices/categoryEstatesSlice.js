@@ -6,7 +6,16 @@ const categoryEstatesSlice = createSlice({
   initialState,
   reducers: {
     setCategoryEstates(state, action) {
-      state.allCategories = action.payload
+      state.allCategories.push({
+        id: action.payload.id,
+        category_id: action.payload.category_id,
+        parent_id: action.payload.parent_id,
+        title: action.payload.title,
+        slug: action.payload.slug,
+        created_at: action.payload.created_at,
+        updated_at: action.payload.updated_at,
+        isActive: action.payload.isActive
+      })
     },
     setMainCategoryEstates(state, action) {
       state.mainCategories = action.payload

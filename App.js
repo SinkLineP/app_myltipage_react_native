@@ -82,7 +82,21 @@ function AppWrapper() {
     fetchData().then(r => r)
 
     getCategoriesSearchEstate().then(r => {
-      dispatch(setCategoryEstates(r.categories));
+      r.categories.map(category => {
+        if (category.parent_id !== null) {
+          dispatch(setCategoryEstates({
+            id: category.id,
+            category_id: category.category_id,
+            parent_id: category.parent_id,
+            title: category.title,
+            slug: category.slug,
+            created_at: category.created_at,
+            updated_at: category.updated_at,
+            isActive: false
+          }));
+        }
+      })
+
       dispatch(setMainCategoryEstates(r.categories.filter(category => category.parent_id === null)));
     });
 
@@ -90,6 +104,7 @@ function AppWrapper() {
       dispatch(setMainCategoryEstates(r.main_categories));
     });
   }, []);
+
 
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {

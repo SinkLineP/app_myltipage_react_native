@@ -22,7 +22,10 @@ export const TabCategoryEstate = () => {
   const [currentItem, setCurrentItem] = useState({});
   const activeTab = useSelector(state => state.categoryEstates.activeTab);
   const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
+  const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
+
+  console.log(allCategories);
 
   if (mainCategory !== []) {
     return (
@@ -47,9 +50,9 @@ export const TabCategoryEstate = () => {
               })
             }
           </View>
-          {/*<View style={stylesTabCategoryEstate.containerSelectedCheckBox}>*/}
-          {/*  <ShowSelectedCheckBoxEstates estate={setEstate} />*/}
-          {/*</View>*/}
+          <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
+
+          </View>
         </View>
 
         <PortalProvider>
