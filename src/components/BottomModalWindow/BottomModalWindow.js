@@ -3,11 +3,14 @@ import { Portal } from "@gorhom/portal";
 import { Modalize } from "react-native-modalize";
 import { Dimensions, View, StyleSheet, Text, Button } from "react-native";
 import {CheckBoxEstate} from "../SearchTabs/CheckBox/CheckBoxEstate";
+import {getCategoriesSearchEstate} from "../../db/getData";
+import {useSelector} from "react-redux";
 
 
 const modalHeight = Dimensions.get("screen").height * 0.20;
 export const BottomModalWindow = ({modalRef, currentItem}) => {
-
+  const allCategories = useSelector(state => state.categoryEstates.allCategories);
+  const activeTab = useSelector(state => state.categoryEstates.activeTab);
 
 
   if (currentItem.length !== 0) {
@@ -25,13 +28,14 @@ export const BottomModalWindow = ({modalRef, currentItem}) => {
               }}>готово</Text>
             </View>
 
-            {/*<View style={stylesBottomModalWindow.containerCheckBox}>*/}
-            {/*  {items.map((item) => (*/}
-            {/*    <View style={stylesBottomModalWindow.contentCheckBox} key={item.category_id}>*/}
-            {/*      <CheckBoxEstate item={item} setEstate={setEstate} />*/}
-            {/*    </View>*/}
-            {/*  ))}*/}
-            {/*</View>*/}
+            <View style={stylesBottomModalWindow.containerCheckBox}>
+              {allCategories.filter(element => element.parent_id === activeTab).map((item) => (
+                <View style={stylesBottomModalWindow.contentCheckBox} key={item.category_id}>
+                  <CheckBoxEstate item={item} />
+                </View>
+              ))}
+            </View>
+
           </View>
         </Modalize>
       </Portal>

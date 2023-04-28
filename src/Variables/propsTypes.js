@@ -5,3 +5,11 @@
 /**
  * @param {{parent_id:number || null}} item;
  */
+
+/**
+ * @param {{main_categories: array}} r;
+ */
+
+/**
+ * @param {{under_categories: array}} r;
+ */

@@ -2,27 +2,27 @@ import React, {useEffect, useRef, useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {PortalProvider} from "@gorhom/portal";
 import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
+import {getCategoriesSearchEstate, getUnderCategoriesSearchEstate} from "../../../../db/getData";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  setActiveTab,
+  setMainCategoryEstates,
+  setUnderCategoryEstates
+} from "../../../../store/Slices/categoryEstatesSlice";
 
 
-const ShowSelectedCheckBoxEstates = ({estate}) => {
-  console.log(estate);
-
-  if (estate.length !== 0) {
-    return (
-      <View>
-        <Text>{estate.title}</Text>
-      </View>
-    )
-  } else {
-    return (
-      <Text style={stylesTabCategoryEstate.showSelectedCategory}>Подкатегории не выбраны!</Text>
-    )
-  }
+const saveUnderCategoryFromDBToStore = (dispatch, activeTab) => {
+  getUnderCategoriesSearchEstate(activeTab).then(r => {
+    dispatch(setUnderCategoryEstates(r.under_categories))
+  });
 }
 
-export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
+export const TabCategoryEstate = () => {
   const modalRef = useRef(null);
   const [currentItem, setCurrentItem] = useState({});
+  const activeTab = useSelector(state => state.categoryEstates.activeTab);
+  const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
+  const dispatch = useDispatch();
 
   if (mainCategory !== []) {
     return (
@@ -34,8 +34,9 @@ export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
                 return (
                   <TouchableOpacity key={item.category_id} style={activeTab === item.category_id ? stylesTabCategoryEstate.activeTab : stylesTabCategoryEstate.categoryTab} onPress={() => {
                     setCurrentItem(item);
-                    setActiveTab(item.category_id)
-                    modalRef.current?.open()
+                    dispatch(setActiveTab(item.category_id));
+                    modalRef.current?.open();
+                    saveUnderCategoryFromDBToStore(dispatch, activeTab);
                   }}>
                     <View>
                       <Text style={stylesTabCategoryEstate.categoryIcon}>Icon</Text>
@@ -52,7 +53,7 @@ export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
         </View>
 
         <PortalProvider>
-          <BottomModalWindow currentItem={currentItem} modalRef={modalRef} onClose={() => {modalRef.current?.close()}} />
+          <BottomModalWindow currentItem={currentItem} modalRef={modalRef} />
         </PortalProvider>
       </>
     )

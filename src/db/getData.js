@@ -266,6 +266,8 @@ export const sendConfirmCodeToMail = async (id, mail) => {
   return await response.json()
 }
 
+// get Categories Search Estate
+
 export const getCategoriesSearchEstate = async () => {
   const response = await fetch(`${BASE_URL}/get-categories`, {
     method: "GET",
@@ -276,6 +278,34 @@ export const getCategoriesSearchEstate = async () => {
   })
   if (!response.ok) {
     throw new Error("Server Error! getCategoriesSearchEstate.");
+  }
+  return await response.json()
+}
+
+export const getMainCategoriesSearchEstate = async () => {
+  const response = await fetch(`${BASE_URL}/get-main-categories`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! getMainCategoriesSearchEstate.");
+  }
+  return await response.json()
+}
+
+export const getUnderCategoriesSearchEstate = async (category_id) => {
+  const response = await fetch(`${BASE_URL}/get-under-categories?category_id=${category_id}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Accept': 'application/json'
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Server Error! getUnderCategoriesSearchEstate.");
   }
   return await response.json()
 }
