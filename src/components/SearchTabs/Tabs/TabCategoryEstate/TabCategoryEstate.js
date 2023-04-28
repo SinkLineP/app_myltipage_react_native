@@ -1,49 +1,62 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {PortalProvider} from "@gorhom/portal";
 import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
 
 
-export const TabCategoryEstate = ({categories, styles}) => {
-  const [activeTab, setActiveTab] = useState("");
+const ShowSelectedCheckBoxEstates = ({estate}) => {
+  console.log(estate);
+
+  if (estate.length !== 0) {
+    return (
+      <View>
+        <Text>{estate.title}</Text>
+      </View>
+    )
+  } else {
+    return (
+      <Text style={stylesTabCategoryEstate.showSelectedCategory}>Подкатегории не выбраны!</Text>
+    )
+  }
+}
+
+export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
   const modalRef = useRef(null);
   const [currentItem, setCurrentItem] = useState({});
-  const items = [];
 
-
-
-  return (
-    <>
-      <View style={stylesTabCategoryEstate.categoryContent}>
-        {
-          categories.map((item) => {
-            if (item.parent_id === null) {
-              return (
-                <TouchableOpacity key={item.category_id} style={activeTab === item.category_id ? stylesTabCategoryEstate.activeTab : stylesTabCategoryEstate.categoryTab} onPress={() => {
-                  setCurrentItem(item);
-                  setActiveTab(item.category_id)
-                  modalRef.current?.open()
-                }}>
-                  <View>
-                    <Text style={stylesTabCategoryEstate.categoryIcon}>Icon</Text>
-                    <Text style={activeTab === item.category_id  ? stylesTabCategoryEstate.active : stylesTabCategoryEstate.categoryTitle}>{item.title}</Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            } else {
-              if (activeTab === item.parent_id && item.slug !== "kottedj") {
-                items.push(item);
-              }
+  if (mainCategory !== []) {
+    return (
+      <>
+        <View style={stylesTabCategoryEstate.categoryContainer}>
+          <View style={stylesTabCategoryEstate.categoryContent}>
+            {
+              mainCategory.map((item) => {
+                return (
+                  <TouchableOpacity key={item.category_id} style={activeTab === item.category_id ? stylesTabCategoryEstate.activeTab : stylesTabCategoryEstate.categoryTab} onPress={() => {
+                    setCurrentItem(item);
+                    setActiveTab(item.category_id)
+                    modalRef.current?.open()
+                  }}>
+                    <View>
+                      <Text style={stylesTabCategoryEstate.categoryIcon}>Icon</Text>
+                      <Text style={activeTab === item.category_id  ? stylesTabCategoryEstate.active : stylesTabCategoryEstate.categoryTitle}>{item.title}</Text>
+                    </View>
+                  </TouchableOpacity>
+                )
+              })
             }
-          })
-        }
-      </View>
+          </View>
+          {/*<View style={stylesTabCategoryEstate.containerSelectedCheckBox}>*/}
+          {/*  <ShowSelectedCheckBoxEstates estate={setEstate} />*/}
+          {/*</View>*/}
+        </View>
 
-      <PortalProvider>
-        <BottomModalWindow modalRef={modalRef} currentItem={currentItem} items={items} onClose={() => {modalRef.current?.close()}} />
-      </PortalProvider>
-    </>
-  )
+        <PortalProvider>
+          <BottomModalWindow currentItem={currentItem} modalRef={modalRef} onClose={() => {modalRef.current?.close()}} />
+        </PortalProvider>
+      </>
+    )
+  }
 }
 
 const stylesTabCategoryEstate = StyleSheet.create({
@@ -99,5 +112,20 @@ const stylesTabCategoryEstate = StyleSheet.create({
     backgroundColor: "#C9D6DF",
     alignItems: "center",
     justifyContent: "center",
+  },
+  showSelectedCategory: {
+    backgroundColor: "white",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#323232"
+  },
+  categoryContainer: {
+    backgroundColor: "#fff"
+  },
+  containerSelectedCheckBox: {
+    borderTopWidth: 1,
+    borderColor: "#f2f2f2"
   }
 })
