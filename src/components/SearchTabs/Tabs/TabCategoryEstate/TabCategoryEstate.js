@@ -9,6 +9,7 @@ import {
   setMainCategoryEstates,
   setUnderCategoryEstates
 } from "../../../../store/Slices/categoryEstatesSlice";
+import {Feather} from "@expo/vector-icons";
 
 
 const saveUnderCategoryFromDBToStore = (dispatch, activeTab) => {
@@ -24,6 +25,8 @@ export const TabCategoryEstate = () => {
   const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
+
+  console.log(allCategories.length);
 
   if (mainCategory !== []) {
     return (
@@ -50,8 +53,11 @@ export const TabCategoryEstate = () => {
           </View>
           <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
             {allCategories.map((category) => (
-              <View style={stylesTabCategoryEstate.checkedEstatesContainer}>
+              <View key={category.category_id} style={stylesTabCategoryEstate.checkedEstatesContainer}>
                 <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
+                <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
+                  <Feather name="delete" size={18} color="#505050" />
+                </View>
               </View>
             ))}
           </View>
@@ -140,7 +146,7 @@ const stylesTabCategoryEstate = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
-
+    paddingBottom: 20
   },
   checkedEstatesContainer: {
     backgroundColor: "#f2f2f2",
@@ -148,12 +154,13 @@ const stylesTabCategoryEstate = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     marginRight: 5,
-    marginVertical: 3
+    marginVertical: 3,
+    flexDirection: "row"
   },
   checkedEstatesTitle: {
-
+    paddingRight: 6
   },
-  checkedEstatesDeleteSelected: {
-
+  checkedEstatesDeleteIcon: {
+    marginTop: 2
   }
 })
