@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, Text} from "react-native";
+import {Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Checkbox from 'expo-checkbox';
 import {useDispatch} from "react-redux";
 import {editCategory} from "../../../store/Slices/categoryEstatesSlice";
@@ -10,32 +10,36 @@ export const CheckBoxEstate = ({item}) => {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <TouchableOpacity style={stylesCheckBox.checkboxContainer} onPress={() => {
+      dispatch(editCategory({
+        id: item.id,
+        category_id: item.category_id,
+        parent_id: item.parent_id,
+        title: item.title,
+        slug: item.slug,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+        isActive: !item.isActive
+      }))
+    }}>
       <Checkbox
         style={stylesCheckBox.checkbox}
         value={item.isActive === true ? item.isActive : isSelectedEstates}
         onValueChange={(value) => {
-          dispatch(editCategory({
-            id: item.id,
-            category_id: item.category_id,
-            parent_id: item.parent_id,
-            title: item.title,
-            slug: item.slug,
-            created_at: item.created_at,
-            updated_at: item.updated_at,
-            isActive: value
-          }))
+
           setSelectedEstates(value)
         }}
       />
       <Text style={stylesCheckBox.label}>{item.title}</Text>
-    </>
+    </TouchableOpacity>
   )
 }
 
 
 const stylesCheckBox = StyleSheet.create({
-  checkboxContainer: {},
+  checkboxContainer: {
+    flexDirection: "row"
+  },
   checkbox: {
     marginBottom: 11
   },

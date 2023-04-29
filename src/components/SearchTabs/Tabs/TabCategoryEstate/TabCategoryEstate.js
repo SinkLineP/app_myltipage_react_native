@@ -1,47 +1,36 @@
-import React, {useEffect, useRef, useState} from "react";
-import {StyleSheet, Text, TouchableOpacity, View, ViewComponent} from "react-native";
+import React, {useRef, useState} from "react";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {PortalProvider} from "@gorhom/portal";
 import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
-import {getCategoriesSearchEstate, getUnderCategoriesSearchEstate} from "../../../../db/getData";
 import {useDispatch, useSelector} from "react-redux";
 import {
   setActiveTab,
-  setMainCategoryEstates,
-  setUnderCategoryEstates
 } from "../../../../store/Slices/categoryEstatesSlice";
 import {Feather} from "@expo/vector-icons";
-import Context from "react-redux/src/components/Context";
 
-
-const saveUnderCategoryFromDBToStore = (dispatch, activeTab) => {
-  getUnderCategoriesSearchEstate(activeTab).then(r => {
-    dispatch(setUnderCategoryEstates(r.under_categories))
-  });
-}
 
 const ShowSelectedCategories = () => {
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
 
-  return allCategories.map((category) => {
-    if (category.isActive === true) {
-      return (
-        <Text key={category.category_id}>
-          <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
-          <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
-            <Feather name="delete" size={18} color="#505050" />
-          </View>
-        </Text>
-      )
-    }
-  })
 
-  // if (allCategories.filter(category => category.isActive === true).length > 0) {
-  //
-  // } else {
-  //   return (
-  //     <Text style={stylesTabCategoryEstate.categoriesEstateNotSelected}>Подкатегории не выбраны.</Text>
-  //   )
-  // }
+  if (allCategories.filter(category => category.isActive === true).length > 0) {
+    return allCategories.map((category) => {
+      if (category.isActive === true) {
+        return (
+          <View key={category.category_id}>
+            <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
+            <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
+              <Feather name="delete" size={18} color="#c74242" />
+            </View>
+          </View>
+        )
+      }
+    })
+  } else {
+    return (
+      <Text style={stylesTabCategoryEstate.categoriesEstateNotSelected}>Подкатегории не выбраны.</Text>
+    )
+  }
 }
 
 export const TabCategoryEstate = () => {
@@ -64,7 +53,6 @@ export const TabCategoryEstate = () => {
                     setCurrentItem(item);
                     dispatch(setActiveTab(item.category_id));
                     modalRef.current?.open();
-                    saveUnderCategoryFromDBToStore(dispatch, activeTab);
                   }}>
                     <View>
                       <Text style={stylesTabCategoryEstate.categoryIcon}>Icon</Text>
@@ -76,7 +64,9 @@ export const TabCategoryEstate = () => {
             }
           </View>
           <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
-            <ShowSelectedCategories allCategories={allCategories} />
+            {/*<Text>*/}
+              <ShowSelectedCategories allCategories={allCategories} />
+            {/*</Text>*/}
           </View>
         </View>
 
@@ -163,7 +153,7 @@ const stylesTabCategoryEstate = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    paddingBottom: 20
+    paddingBottom: 30
   },
   checkedEstatesContainer: {
     backgroundColor: "#f2f2f2",
@@ -183,6 +173,6 @@ const stylesTabCategoryEstate = StyleSheet.create({
   categoriesEstateNotSelected: {
     color: "#323232",
     fontWeight: "bold",
-    paddingLeft: 75
+    paddingLeft: 75,
   }
 })
