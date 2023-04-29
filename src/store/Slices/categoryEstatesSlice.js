@@ -26,20 +26,7 @@ const categoryEstatesSlice = createSlice({
     setActiveTab(state, action) {
       state.activeTab = action.payload
     },
-    // setActiveCheckBoxTab(state, action) {
-    //   state.allCategories = state.allCategories.map(item => {
-    //     if (item.category_id !== action.payload.item.category_id) {
-    //       return item;
-    //     } else {
-    //       return {
-    //         ...item,
-    //         ...action.payload.item
-    //       }
-    //     }
-    //   })
-    // }
     editCategory(state, action) {
-      console.log(action.payload);
       const editCategory = state.allCategories.find(item => item.id === action.payload.id);
 
       editCategory.title = action.payload.title;
@@ -51,9 +38,21 @@ const categoryEstatesSlice = createSlice({
       editCategory.created_at = action.payload.created_at;
       editCategory.updated_at = action.payload.updated_at;
       editCategory.isActive = action.payload.isActive;
+    },
+    setDefaultActiveForHomeCategory(state, action) {
+      state.allCategories.filter(category => category.isActive === true && category.parent_id === 1).map(item => {
+        return item.isActive = false;
+      });
     }
   }
 })
 
-export const {setCategoryEstates, setMainCategoryEstates, setUnderCategoryEstates, setActiveTab, editCategory} = categoryEstatesSlice.actions;
+export const {
+  setCategoryEstates,
+  setMainCategoryEstates,
+  setUnderCategoryEstates,
+  setActiveTab,
+  editCategory,
+  setDefaultActiveForHomeCategory
+} = categoryEstatesSlice.actions;
 export default categoryEstatesSlice.reducer;

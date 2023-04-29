@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { Portal } from "@gorhom/portal";
 import { Modalize } from "react-native-modalize";
-import { Dimensions, View, StyleSheet, Text, Button } from "react-native";
+import {Dimensions, View, StyleSheet, Text} from "react-native";
 import {CheckBoxEstate} from "../SearchTabs/CheckBox/CheckBoxEstate";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { Switch } from 'react-native-switch';
+import {setDefaultActiveForHomeCategory} from "../../store/Slices/categoryEstatesSlice";
 
 
 const modalHeight = Dimensions.get("screen").height * 0.20;
@@ -36,6 +38,7 @@ const IsСottageVillage = ({currentItem, isCottage}) => {
 
 export const BottomModalWindow = ({currentItem, modalRef}) => {
   const [isCottage, setIsCottage] = useState(false);
+  const dispatch = useDispatch();
 
 
   if (currentItem.length !== 0) {
@@ -49,8 +52,22 @@ export const BottomModalWindow = ({currentItem, modalRef}) => {
 
             {currentItem.category_id === 1 ? (
               <View style={stylesBottomModalWindow.cottageSwitchContainer}>
-                <Text>Коттеджный посёлок</Text>
-                <Text onPress={() => {setIsCottage(!isCottage)}}>{isCottage ? "ON" : "OFF"}</Text>
+                <Text style={stylesBottomModalWindow.cottageSwitchLabel}>Коттеджный посёлок</Text>
+                <Switch
+                  value={isCottage}
+                  onValueChange={() => {
+                    if (isCottage === true) {
+                      dispatch(setDefaultActiveForHomeCategory(isCottage))
+                    } else {
+                      dispatch(setDefaultActiveForHomeCategory(isCottage))
+                    }
+
+                    setIsCottage(!isCottage)
+                  }}
+                  disabled={false}
+                  renderActiveText={false}
+                  renderInActiveText={false} barHeight={20} circleSize={20}
+                />
               </View>
             ) : ("")}
 
@@ -111,7 +128,7 @@ const stylesBottomModalWindow = StyleSheet.create({
     gap: 10
   },
   contentCheckBox: {
-    flexDirection: "row",
+    // flexDirection: "row",
     borderBottomWidth: 1,
     borderColor: "lightgray",
   },
@@ -122,5 +139,9 @@ const stylesBottomModalWindow = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderColor: "#bcbcbc",
     justifyContent: "space-between"
+  },
+  cottageSwitchLabel: {
+    fontSize: 14,
+    // marginTop: 8
   }
 })

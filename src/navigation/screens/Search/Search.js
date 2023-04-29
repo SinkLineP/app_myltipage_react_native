@@ -17,7 +17,7 @@ export default function Search() {
     <View style={stylesSearch.container}>
       <ScrollView style={stylesSearch.scrollViewContainer}>
         <TabWithIcon title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
-        <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} />
+        <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} isCottage={false} />
         <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRef} />
       </ScrollView>
       <PortalProvider>

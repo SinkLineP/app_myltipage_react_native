@@ -1,12 +1,28 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import CustomSwitch from "../../../CustomSwitch/CustomSwitch";
 
 
-export const TabSwitch = ({setSelectedSwitch, option1, option2, selectedColor}) => {
+export const TabSwitch = ({setSelectedSwitch, option1, option2, selectedColor, isCottage}) => {
   return (
-    <View style={stylesTabSwitch.tab}>
-      <View style={stylesTabSwitch.placeholderForSwitch}>
+    <View style={{
+      backgroundColor: "#fff",
+      paddingTop: 10,
+      paddingBottom: 10,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 5,
+      marginBottom: 5
+    }}>
+      <View style={{
+        width: "90%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        padding: 2,
+        paddingLeft: 2,
+        paddingRight: 2,
+        borderRadius: 20,
+      }}>
         <CustomSwitch
           selectionMode={1}
           roundCorner={true}
@@ -19,25 +35,3 @@ export const TabSwitch = ({setSelectedSwitch, option1, option2, selectedColor}) 
     </View>
   )
 }
-
-
-const stylesTabSwitch = StyleSheet.create({
-  tab: {
-    backgroundColor: "#fff",
-    paddingTop: 10,
-    paddingBottom: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 5,
-    marginBottom: 5
-  },
-  placeholderForSwitch: {
-    width: "90%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    padding: 2,
-    paddingLeft: 2,
-    paddingRight: 2,
-    borderRadius: 20,
-  },
-})
