@@ -17,12 +17,18 @@ const ShowSelectedCategories = () => {
     return allCategories.map((category) => {
       if (category.isActive === true) {
         return (
-          <View key={category.category_id}>
-            <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
-            <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
-              <Feather name="delete" size={18} color="#c74242" />
+          <Text key={category.id}>
+            <View style={{paddingHorizontal: 1.5, paddingVertical:1.5}}>
+             <View style={{flexDirection: "row", width: "auto", backgroundColor: "#f2f2f2", borderRadius: 50, paddingHorizontal: 10, paddingVertical:3, borderColor: "#bcbcbc", borderWidth: 0.5}}>
+               <View>
+                 <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
+               </View>
+               <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
+                 <Feather name="delete" size={18} color="#c74242" />
+               </View>
+             </View>
             </View>
-          </View>
+          </Text>
         )
       }
     })
@@ -64,9 +70,7 @@ export const TabCategoryEstate = () => {
             }
           </View>
           <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
-            {/*<Text>*/}
-              <ShowSelectedCategories allCategories={allCategories} />
-            {/*</Text>*/}
+            <ShowSelectedCategories />
           </View>
         </View>
 
@@ -149,17 +153,16 @@ const stylesTabCategoryEstate = StyleSheet.create({
     borderColor: "#f2f2f2",
     paddingVertical: 10,
     paddingHorizontal: 12,
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    paddingBottom: 30
   },
   checkedEstatesContainer: {
     backgroundColor: "#f2f2f2",
     borderRadius: 50,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    // paddingHorizontal: 10,
+    // paddingVertical: 6,
     marginRight: 5,
     marginVertical: 3,
     flexDirection: "row"

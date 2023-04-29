@@ -24,11 +24,17 @@ export const CheckBoxEstate = ({item}) => {
     }}>
       <Checkbox
         style={stylesCheckBox.checkbox}
-        value={item.isActive === true ? item.isActive : isSelectedEstates}
-        onValueChange={(value) => {
-
-          setSelectedEstates(value)
-        }}
+        value={item.isActive}
+        onValueChange={(value) => dispatch(editCategory({
+          id: item.id,
+          category_id: item.category_id,
+          parent_id: item.parent_id,
+          title: item.title,
+          slug: item.slug,
+          created_at: item.created_at,
+          updated_at: item.updated_at,
+          isActive: value
+        }))}
       />
       <Text style={stylesCheckBox.label}>{item.title}</Text>
     </TouchableOpacity>
