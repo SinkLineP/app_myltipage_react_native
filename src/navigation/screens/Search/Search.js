@@ -11,11 +11,11 @@ export default function Search() {
 
 
   return (
-    <ScrollView style={stylesSearch.container}>
+    <View style={stylesSearch.container}>
       <TabWithIcon title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
       <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} />
       <TabCategoryEstate />
-    </ScrollView>
+    </View>
   )
 }
 

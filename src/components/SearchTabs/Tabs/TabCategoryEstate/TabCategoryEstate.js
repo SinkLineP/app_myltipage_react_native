@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, ViewComponent} from "react-native";
 import {PortalProvider} from "@gorhom/portal";
 import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
 import {getCategoriesSearchEstate, getUnderCategoriesSearchEstate} from "../../../../db/getData";
@@ -10,12 +10,38 @@ import {
   setUnderCategoryEstates
 } from "../../../../store/Slices/categoryEstatesSlice";
 import {Feather} from "@expo/vector-icons";
+import Context from "react-redux/src/components/Context";
 
 
 const saveUnderCategoryFromDBToStore = (dispatch, activeTab) => {
   getUnderCategoriesSearchEstate(activeTab).then(r => {
     dispatch(setUnderCategoryEstates(r.under_categories))
   });
+}
+
+const ShowSelectedCategories = () => {
+  const allCategories = useSelector(state => state.categoryEstates.allCategories);
+
+  return allCategories.map((category) => {
+    if (category.isActive === true) {
+      return (
+        <Text key={category.category_id}>
+          <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
+          <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
+            <Feather name="delete" size={18} color="#505050" />
+          </View>
+        </Text>
+      )
+    }
+  })
+
+  // if (allCategories.filter(category => category.isActive === true).length > 0) {
+  //
+  // } else {
+  //   return (
+  //     <Text style={stylesTabCategoryEstate.categoriesEstateNotSelected}>Подкатегории не выбраны.</Text>
+  //   )
+  // }
 }
 
 export const TabCategoryEstate = () => {
@@ -25,8 +51,6 @@ export const TabCategoryEstate = () => {
   const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
-
-  console.log(allCategories.length);
 
   if (mainCategory !== []) {
     return (
@@ -52,14 +76,7 @@ export const TabCategoryEstate = () => {
             }
           </View>
           <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
-            {allCategories.map((category) => (
-              <View key={category.category_id} style={stylesTabCategoryEstate.checkedEstatesContainer}>
-                <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
-                <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
-                  <Feather name="delete" size={18} color="#505050" />
-                </View>
-              </View>
-            ))}
+            <ShowSelectedCategories allCategories={allCategories} />
           </View>
         </View>
 
@@ -162,5 +179,10 @@ const stylesTabCategoryEstate = StyleSheet.create({
   },
   checkedEstatesDeleteIcon: {
     marginTop: 2
+  },
+  categoriesEstateNotSelected: {
+    color: "#323232",
+    fontWeight: "bold",
+    paddingLeft: 75
   }
 })
