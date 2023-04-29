@@ -26,6 +26,7 @@
     "expo": "^48.0.0",
     "expo-application": "~5.1.1",
     "expo-auth-session": "~4.0.3",
+    "expo-checkbox": "~2.3.1",
     "expo-crypto": "~12.2.1",
     "expo-font": "~11.1.1",
     "expo-image-picker": "~14.1.1",
@@ -40,6 +41,7 @@
     "lottie-react-native": "5.1.4",
     "nodemailer-react": "^1.0.2",
     "react": "18.2.0",
+    "react-addons-update": "^15.6.3",
     "react-native": "0.71.6",
     "react-native-countdown-component": "^2.7.1",
     "react-native-element-timer": "^2.1.2",
@@ -58,8 +60,7 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
     "redux-api-middleware": "^3.2.1",
-    "yup": "^1.0.2",
-    "expo-checkbox": "~2.3.1"
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

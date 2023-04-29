@@ -1,16 +1,26 @@
 import React, {useEffect, useRef, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
-import {Provider, useDispatch} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
-import {AutoLogin} from "./src/db/getData";
+import {
+  AutoLogin,
+  getCategoriesSearchEstate,
+  getMainCategoriesSearchEstate,
+  getUnderCategoriesSearchEstate
+} from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
 import {PortalProvider} from "@gorhom/portal";
+import {
+  setCategoryEstates,
+  setMainCategoryEstates,
+  setUnderCategoryEstates
+} from "./src/store/Slices/categoryEstatesSlice";
 
 
 export default function App () {
@@ -28,6 +38,7 @@ function AppWrapper() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
+  const activeTab = useSelector(state => state.categoryEstates.activeTab);
 
   //асинхронная функция загрузки шрифтов
   useEffect(() => {
@@ -69,7 +80,31 @@ function AppWrapper() {
     }
 
     fetchData().then(r => r)
+
+    getCategoriesSearchEstate().then(r => {
+      r.categories.map(category => {
+        if (category.parent_id !== null) {
+          dispatch(setCategoryEstates({
+            id: category.id,
+            category_id: category.category_id,
+            parent_id: category.parent_id,
+            title: category.title,
+            slug: category.slug,
+            created_at: category.created_at,
+            updated_at: category.updated_at,
+            isActive: false
+          }));
+        }
+      })
+
+      dispatch(setMainCategoryEstates(r.categories.filter(category => category.parent_id === null)));
+    });
+
+    getMainCategoriesSearchEstate().then(r => {
+      dispatch(setMainCategoryEstates(r.main_categories));
+    });
   }, []);
+
 
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {

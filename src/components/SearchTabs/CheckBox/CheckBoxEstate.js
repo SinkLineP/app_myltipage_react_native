@@ -1,41 +1,32 @@
 import React, {useState} from "react";
 import {StyleSheet, Text} from "react-native";
 import Checkbox from 'expo-checkbox';
+import {useDispatch} from "react-redux";
+import {editCategory} from "../../../store/Slices/categoryEstatesSlice";
 
 
-export const CheckBoxEstate = ({item, setEstate}) => {
+export const CheckBoxEstate = ({item}) => {
   const [isSelectedEstates, setSelectedEstates] = useState(false);
-
-  const containObjIntoArray = (array, obj) => {
-    if (array !== undefined) {
-      array.map((element) => {
-        if (element.category_id !== obj.category_id) {
-          return ([...array, {
-            id: obj.id,
-            category_id: obj.category_id,
-            parent_id: obj.parent_id,
-            title: obj.title,
-            slug: obj.slug,
-            created_at: obj.created_at,
-            updated_at: obj.updated_at
-          }])
-        } else {
-          console.log("this obj contained!")
-        }
-      })
-    }
-  }
+  const dispatch = useDispatch();
 
   return (
     <>
       <Checkbox
         style={stylesCheckBox.checkbox}
-        value={isSelectedEstates}
+        value={item.isActive === true ? item.isActive : isSelectedEstates}
         onValueChange={(value) => {
+          dispatch(editCategory({
+            id: item.id,
+            category_id: item.category_id,
+            parent_id: item.parent_id,
+            title: item.title,
+            slug: item.slug,
+            created_at: item.created_at,
+            updated_at: item.updated_at,
+            isActive: value
+          }))
           setSelectedEstates(value)
-          setEstate(item);
         }}
-        color={isSelectedEstates ? '#4630EB' : undefined}
       />
       <Text style={stylesCheckBox.label}>{item.title}</Text>
     </>

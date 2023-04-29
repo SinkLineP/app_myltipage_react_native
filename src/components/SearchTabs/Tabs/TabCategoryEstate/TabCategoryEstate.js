@@ -1,28 +1,56 @@
 import React, {useEffect, useRef, useState} from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, ViewComponent} from "react-native";
 import {PortalProvider} from "@gorhom/portal";
 import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
+import {getCategoriesSearchEstate, getUnderCategoriesSearchEstate} from "../../../../db/getData";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  setActiveTab,
+  setMainCategoryEstates,
+  setUnderCategoryEstates
+} from "../../../../store/Slices/categoryEstatesSlice";
+import {Feather} from "@expo/vector-icons";
+import Context from "react-redux/src/components/Context";
 
 
-const ShowSelectedCheckBoxEstates = ({estate}) => {
-  console.log(estate);
-
-  if (estate.length !== 0) {
-    return (
-      <View>
-        <Text>{estate.title}</Text>
-      </View>
-    )
-  } else {
-    return (
-      <Text style={stylesTabCategoryEstate.showSelectedCategory}>Подкатегории не выбраны!</Text>
-    )
-  }
+const saveUnderCategoryFromDBToStore = (dispatch, activeTab) => {
+  getUnderCategoriesSearchEstate(activeTab).then(r => {
+    dispatch(setUnderCategoryEstates(r.under_categories))
+  });
 }
 
-export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
+const ShowSelectedCategories = () => {
+  const allCategories = useSelector(state => state.categoryEstates.allCategories);
+
+  return allCategories.map((category) => {
+    if (category.isActive === true) {
+      return (
+        <Text key={category.category_id}>
+          <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
+          <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
+            <Feather name="delete" size={18} color="#505050" />
+          </View>
+        </Text>
+      )
+    }
+  })
+
+  // if (allCategories.filter(category => category.isActive === true).length > 0) {
+  //
+  // } else {
+  //   return (
+  //     <Text style={stylesTabCategoryEstate.categoriesEstateNotSelected}>Подкатегории не выбраны.</Text>
+  //   )
+  // }
+}
+
+export const TabCategoryEstate = () => {
   const modalRef = useRef(null);
   const [currentItem, setCurrentItem] = useState({});
+  const activeTab = useSelector(state => state.categoryEstates.activeTab);
+  const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
+  const allCategories = useSelector(state => state.categoryEstates.allCategories);
+  const dispatch = useDispatch();
 
   if (mainCategory !== []) {
     return (
@@ -34,8 +62,9 @@ export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
                 return (
                   <TouchableOpacity key={item.category_id} style={activeTab === item.category_id ? stylesTabCategoryEstate.activeTab : stylesTabCategoryEstate.categoryTab} onPress={() => {
                     setCurrentItem(item);
-                    setActiveTab(item.category_id)
-                    modalRef.current?.open()
+                    dispatch(setActiveTab(item.category_id));
+                    modalRef.current?.open();
+                    saveUnderCategoryFromDBToStore(dispatch, activeTab);
                   }}>
                     <View>
                       <Text style={stylesTabCategoryEstate.categoryIcon}>Icon</Text>
@@ -46,13 +75,13 @@ export const TabCategoryEstate = ({mainCategory, setActiveTab, activeTab}) => {
               })
             }
           </View>
-          {/*<View style={stylesTabCategoryEstate.containerSelectedCheckBox}>*/}
-          {/*  <ShowSelectedCheckBoxEstates estate={setEstate} />*/}
-          {/*</View>*/}
+          <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
+            <ShowSelectedCategories allCategories={allCategories} />
+          </View>
         </View>
 
         <PortalProvider>
-          <BottomModalWindow currentItem={currentItem} modalRef={modalRef} onClose={() => {modalRef.current?.close()}} />
+          <BottomModalWindow currentItem={currentItem} modalRef={modalRef} />
         </PortalProvider>
       </>
     )
@@ -122,10 +151,38 @@ const stylesTabCategoryEstate = StyleSheet.create({
     color: "#323232"
   },
   categoryContainer: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    marginTop: 6
   },
   containerSelectedCheckBox: {
     borderTopWidth: 1,
-    borderColor: "#f2f2f2"
+    borderColor: "#f2f2f2",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    paddingBottom: 20
+  },
+  checkedEstatesContainer: {
+    backgroundColor: "#f2f2f2",
+    borderRadius: 50,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    marginRight: 5,
+    marginVertical: 3,
+    flexDirection: "row"
+  },
+  checkedEstatesTitle: {
+    paddingRight: 6
+  },
+  checkedEstatesDeleteIcon: {
+    marginTop: 2
+  },
+  categoriesEstateNotSelected: {
+    color: "#323232",
+    fontWeight: "bold",
+    paddingLeft: 75
   }
 })
