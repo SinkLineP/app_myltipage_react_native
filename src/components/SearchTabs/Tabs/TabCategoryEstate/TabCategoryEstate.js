@@ -1,9 +1,10 @@
 import React, {useRef, useState} from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import {PortalProvider} from "@gorhom/portal";
 import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
 import {useDispatch, useSelector} from "react-redux";
 import {
+  editCategory,
   setActiveTab,
 } from "../../../../store/Slices/categoryEstatesSlice";
 import {Feather} from "@expo/vector-icons";
@@ -11,6 +12,7 @@ import {Feather} from "@expo/vector-icons";
 
 const ShowSelectedCategories = () => {
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
+  const dispatch = useDispatch();
 
 
   if (allCategories.filter(category => category.isActive === true).length > 0) {
@@ -23,9 +25,20 @@ const ShowSelectedCategories = () => {
                <View>
                  <Text style={stylesTabCategoryEstate.checkedEstatesTitle}>{category.title}</Text>
                </View>
-               <View style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
-                 <Feather name="delete" size={18} color="#c74242" />
-               </View>
+               <TouchableWithoutFeedback onPress={() => {
+                 dispatch(editCategory({
+                   id: category.id,
+                   category_id: category.category_id,
+                   parent_id: category.parent_id,
+                   title: category.title,
+                   slug: category.slug,
+                   created_at: category.created_at,
+                   updated_at: category.updated_at,
+                   isActive: false
+                 }))
+               }} style={stylesTabCategoryEstate.checkedEstatesDeleteIcon}>
+                 <Feather name="delete" size={22} color="#c74242" />
+               </TouchableWithoutFeedback>
              </View>
             </View>
           </Text>
@@ -39,12 +52,9 @@ const ShowSelectedCategories = () => {
   }
 }
 
-export const TabCategoryEstate = () => {
-  const modalRef = useRef(null);
-  const [currentItem, setCurrentItem] = useState({});
+export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
   const activeTab = useSelector(state => state.categoryEstates.activeTab);
   const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
-  const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
 
   if (mainCategory !== []) {
@@ -73,10 +83,6 @@ export const TabCategoryEstate = () => {
             <ShowSelectedCategories />
           </View>
         </View>
-
-        <PortalProvider>
-          <BottomModalWindow currentItem={currentItem} modalRef={modalRef} />
-        </PortalProvider>
       </>
     )
   }
