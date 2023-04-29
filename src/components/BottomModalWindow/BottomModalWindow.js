@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 
 
 const modalHeight = Dimensions.get("screen").height * 0.20;
-export const BottomModalWindow = ({modalRef, currentItem}) => {
+export const BottomModalWindow = ({currentItem, modalRef}) => {
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const activeTab = useSelector(state => state.categoryEstates.activeTab);
 

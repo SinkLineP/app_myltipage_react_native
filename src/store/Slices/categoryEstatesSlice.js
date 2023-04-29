@@ -39,6 +39,7 @@ const categoryEstatesSlice = createSlice({
     //   })
     // }
     editCategory(state, action) {
+      console.log(action.payload);
       const editCategory = state.allCategories.find(item => item.id === action.payload.id);
 
       editCategory.title = action.payload.title;
