@@ -8,10 +8,10 @@ import {
   setActiveTab,
 } from "../../../../store/Slices/categoryEstatesSlice";
 import {Feather} from "@expo/vector-icons";
+import {all} from "axios";
 
 
-const ShowSelectedCategories = () => {
-  const allCategories = useSelector(state => state.categoryEstates.allCategories);
+const ShowSelectedCategories = ({allCategories}) => {
   const dispatch = useDispatch();
 
 
@@ -52,9 +52,42 @@ const ShowSelectedCategories = () => {
   }
 }
 
+const UpdatedShowSelectedCategories = ({allCategories, dispatch}) => {
+  const filteredCategory = allCategories.filter(category => category.isActive === true);
+
+  if (filteredCategory.length > 0) {
+    return (
+      <>
+        <View style={stylesTabCategoryEstate.buttonClearCategories}>
+          <Text style={stylesTabCategoryEstate.buttonClearCategoriesTitle} onPress={() => {
+            filteredCategory.map(category => {
+              dispatch(editCategory({
+                id: category.id,
+                category_id: category.category_id,
+                parent_id: category.parent_id,
+                title: category.title,
+                slug: category.slug,
+                created_at: category.created_at,
+                updated_at: category.updated_at,
+                isActive: false
+              }))
+            })
+          }}>Очистить</Text>
+        </View>
+        <ShowSelectedCategories allCategories={allCategories} />
+      </>
+    )
+  } else {
+    return (
+      <ShowSelectedCategories allCategories={allCategories} />
+    )
+  }
+}
+
 export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
   const activeTab = useSelector(state => state.categoryEstates.activeTab);
   const mainCategory = useSelector(state => state.categoryEstates.mainCategories);
+  const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
 
   if (mainCategory !== []) {
@@ -80,7 +113,7 @@ export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
             }
           </View>
           <View style={stylesTabCategoryEstate.containerSelectedCheckBox}>
-            <ShowSelectedCategories />
+            <UpdatedShowSelectedCategories dispatch={dispatch} allCategories={allCategories} />
           </View>
         </View>
       </>
@@ -182,6 +215,19 @@ const stylesTabCategoryEstate = StyleSheet.create({
   categoriesEstateNotSelected: {
     color: "#323232",
     fontWeight: "bold",
-    paddingLeft: 75,
+    paddingLeft: 75
+  },
+  buttonClearCategories: {
+    width: "100%",
+    borderColor: "#f2f2f2",
+    borderBottomWidth: 1,
+    marginBottom: 10
+  },
+  buttonClearCategoriesTitle: {
+    textAlign: "right",
+    fontWeight: "bold",
+    color: "#c74242",
+    fontSize: 16,
+    textTransform: "uppercase"
   }
 })
