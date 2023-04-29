@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
-import {getCategoriesSearchEstate} from "../../../db/getData";
+import React, {useRef, useState} from "react";
+import {View, StyleSheet, ScrollView} from "react-native";
 import {TabWithIcon} from "../../../components/SearchTabs/Tabs/TabWithIcon/TabWithIcon";
 import {TabSwitch} from "../../../components/SearchTabs/Tabs/TabSwitch/TabSwitch";
 import {TabCategoryEstate} from "../../../components/SearchTabs/Tabs/TabCategoryEstate/TabCategoryEstate";
@@ -30,12 +29,9 @@ export default function Search() {
 
 const stylesSearch = StyleSheet.create({
   container: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
     paddingLeft: 5,
     paddingRight: 5,
     height: "100%",
   },
-  scrollViewContainer: {
-  }
+  scrollViewContainer: {}
 })
