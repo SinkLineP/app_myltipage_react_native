@@ -3,7 +3,6 @@ import { Portal } from "@gorhom/portal";
 import { Modalize } from "react-native-modalize";
 import { Dimensions, View, StyleSheet, Text, Button } from "react-native";
 import {CheckBoxEstate} from "../SearchTabs/CheckBox/CheckBoxEstate";
-import {getCategoriesSearchEstate} from "../../db/getData";
 import {useSelector} from "react-redux";
 
 
@@ -19,13 +18,7 @@ export const BottomModalWindow = ({modalRef, currentItem}) => {
         <Modalize ref={modalRef} adjustToContentHeight={true}>
           <View style={stylesBottomModalWindow.content}>
             <View style={stylesBottomModalWindow.modalTitle}>
-              <Text style={stylesBottomModalWindow.cancel} onPress={() => {
-                modalRef.current?.close()
-              }}>отмена</Text>
               <Text style={stylesBottomModalWindow.titleTypeEstate}>{currentItem.title}</Text>
-              <Text style={stylesBottomModalWindow.ready} onPress={() => {
-                modalRef.current?.close()
-              }}>готово</Text>
             </View>
 
             <View style={stylesBottomModalWindow.containerCheckBox}>
@@ -79,7 +72,9 @@ const stylesBottomModalWindow = StyleSheet.create({
   titleTypeEstate: {
     color: "#323232",
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 16,
+    textAlign: "center",
+    width: "100%"
   },
   containerCheckBox: {
     paddingVertical: 10,
