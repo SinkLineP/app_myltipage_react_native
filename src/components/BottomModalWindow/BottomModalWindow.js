@@ -7,9 +7,35 @@ import {useSelector} from "react-redux";
 
 
 const modalHeight = Dimensions.get("screen").height * 0.20;
-export const BottomModalWindow = ({currentItem, modalRef}) => {
+
+const IsСottageVillage = ({currentItem, isCottage}) => {
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const activeTab = useSelector(state => state.categoryEstates.activeTab);
+
+
+  if (isCottage === true && currentItem.category_id === 1) {
+    return allCategories.filter(element => element.parent_id === activeTab && element.slug === "kottedj").map((item) => (
+      <View style={stylesBottomModalWindow.contentCheckBox} key={item.category_id}>
+        <CheckBoxEstate item={item} />
+      </View>
+    ))
+  } else if (isCottage === false && currentItem.category_id === 1) {
+    return allCategories.filter(element => element.parent_id === activeTab && element.slug !== "kottedj").map((item) => (
+      <View style={stylesBottomModalWindow.contentCheckBox} key={item.category_id}>
+        <CheckBoxEstate item={item} />
+      </View>
+    ))
+  } else {
+    return allCategories.filter(element => element.parent_id === activeTab).map((item) => (
+      <View style={stylesBottomModalWindow.contentCheckBox} key={item.category_id}>
+        <CheckBoxEstate item={item} />
+      </View>
+    ))
+  }
+}
+
+export const BottomModalWindow = ({currentItem, modalRef}) => {
+  const [isCottage, setIsCottage] = useState(false);
 
 
   if (currentItem.length !== 0) {
@@ -21,14 +47,19 @@ export const BottomModalWindow = ({currentItem, modalRef}) => {
               <Text style={stylesBottomModalWindow.titleTypeEstate}>{currentItem.title}</Text>
             </View>
 
-            <View style={stylesBottomModalWindow.containerCheckBox}>
-              {allCategories.filter(element => element.parent_id === activeTab).map((item) => (
-                <View style={stylesBottomModalWindow.contentCheckBox} key={item.category_id}>
-                  <CheckBoxEstate item={item} />
-                </View>
-              ))}
-            </View>
+            {currentItem.category_id === 1 ? (
+              <View style={stylesBottomModalWindow.cottageSwitchContainer}>
+                <Text>Коттеджный посёлок</Text>
+                <Text onPress={() => {setIsCottage(!isCottage)}}>{isCottage ? "ON" : "OFF"}</Text>
+              </View>
+            ) : ("")}
 
+            <View style={stylesBottomModalWindow.containerCheckBox}>
+              <IsСottageVillage
+                currentItem={currentItem}
+                isCottage={isCottage}
+              />
+            </View>
           </View>
         </Modalize>
       </Portal>
@@ -56,7 +87,6 @@ const stylesBottomModalWindow = StyleSheet.create({
   modalTitle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // verticalAlign: "bottom",
     borderBottomWidth: 1,
     borderColor: "lightgray",
     paddingBottom: 15
@@ -84,5 +114,13 @@ const stylesBottomModalWindow = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderColor: "lightgray",
+  },
+  cottageSwitchContainer: {
+    flexDirection: "row",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderBottomWidth: 0.5,
+    borderColor: "#bcbcbc",
+    justifyContent: "space-between"
   }
 })

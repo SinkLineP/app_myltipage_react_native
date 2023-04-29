@@ -26,7 +26,6 @@ export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
                       dispatch(setActiveTab(item.category_id));
                       modalRef.current?.open();
                       setCurrentItem(item);
-
                     }}
                   >
                     <View>
