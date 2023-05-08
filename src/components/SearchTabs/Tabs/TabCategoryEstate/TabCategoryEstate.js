@@ -60,9 +60,6 @@ export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
                       activeIcon={<Entypo name="shop"  size={24} color="white" />}
                       notActiveIcon={<Entypo name="shop"  size={24} color="#323232" />}
                     />
-                    {/*{activeTab === item.category_id && item.category_id === 1 ? (<Ionicons name="home-outline" size={22} color="white" />) : (<Ionicons name="home-outline" size={22} color="black" />)}*/}
-                    {/*{activeTab === item.category_id && item.category_id === 2 ? (<Ionicons name="home-outline" size={22} color="white" />) : (<Ionicons name="home-outline" size={22} color="black" />)}*/}
-                    {/*{activeTab === item.category_id && item.category_id === 3 ? (<Ionicons name="home-outline" size={22} color="white" />) : (<Ionicons name="home-outline" size={22} color="black" />)}*/}
                     <Text style={activeTab === item.category_id  ? stylesTabCategoryEstate.active : stylesTabCategoryEstate.categoryTitle}>{item.title}</Text>
                   </TouchableOpacity>
                 )
@@ -90,7 +87,7 @@ const stylesTabCategoryEstate = StyleSheet.create({
     marginBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
-
+/**/
   },
   containerModal: {
     flex: 1,
