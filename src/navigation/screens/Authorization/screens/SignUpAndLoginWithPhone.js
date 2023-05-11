@@ -10,13 +10,14 @@ import {
   handleAuthClick,
   rand
 } from "../../../../Variables/functions";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, Button} from "react-native";
 import ButtonConfirm from "../../../../components/Profile/Buttons/ButtonConfirm";
 import {setCurrentUser, switchAuth} from "../../../../store/Slices/usersSlice";
 import {useDispatch} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TextInputMasked from "../components/TextInputMasked/TextInputMasked";
 import ButtonSendCode from "../components/ButtonSendCode/ButtonSendCode";
+import SocialMediaGroup from "../components/SocialMediaGroup/SocialMediaGroup";
 
 
 export default function SignUpAndLoginWithPhone({navigation}) {
@@ -67,8 +68,6 @@ export default function SignUpAndLoginWithPhone({navigation}) {
       "MainProfile"
     );
   }
-
-
 
 
   return (
@@ -169,6 +168,8 @@ export default function SignUpAndLoginWithPhone({navigation}) {
                   <Text style={LoginStyles.link} onPress={() => navigation.navigate("SignUpEmail")}> Зарегистрируйтесь</Text>{'\n'} с помощью почты.
                 </Text>
               </View>
+
+              {/*<SocialMediaGroup />*/}
             </View>
           </>
         )
@@ -236,7 +237,5 @@ const LoginStyles = StyleSheet.create({
   link: {
     color: "#048f9d",
   },
-  containerLink: {
 
-  }
 })

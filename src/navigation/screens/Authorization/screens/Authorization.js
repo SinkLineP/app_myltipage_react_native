@@ -1,5 +1,5 @@
 import React from "react";
-import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, Dimensions} from "react-native";
+import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, Dimensions, Text} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import SignUpAndLoginWithPhone from "./SignUpAndLoginWithPhone";
 
