@@ -8,7 +8,6 @@ import {useSelector} from "react-redux";
 export default function TabSearchMap({modalRef}) {
   const currentAddress = useSelector(state => state.searchMap.currentAddress);
 
-
   return (
     <Pressable onPress={() => {modalRef.current?.open()}}>
       <ContainerTab>

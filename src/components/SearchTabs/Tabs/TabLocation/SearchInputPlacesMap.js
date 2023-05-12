@@ -3,11 +3,14 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
-import {FlatList, StyleSheet, Text, TextInput, View} from "react-native";
+import {FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {saveAddress, setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import {FontAwesome} from "@expo/vector-icons";
+import GetMyLocation from "./GetMyLocation";
+import {API_KEY_GeoAPIFY} from "../../../../Variables/ServerConfig";
 
 export default function SearchInputPlacesMap() {
   const dispatch = useDispatch();
@@ -31,19 +34,9 @@ export default function SearchInputPlacesMap() {
         <View style={{width: "100%"}}>
           <View>
             <TextInput
-              style={{
-                paddingLeft: 10,
-                borderColor: "#d2d2d2",
-                borderWidth: 1,
-                width: "95%",
-                marginLeft: "auto",
-                marginRight: "auto",
-                borderRadius: 5,
-                color: "black",
-                backgroundColor: "white"
-              }}
+              style={stylesSearchInputPlacesMap.textInput}
               onChangeText={(text) => {
-                fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=ffe0f9b432ea48b8867daf6dd245c94b&type=${TYPE}`, {
+                fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${API_KEY_GeoAPIFY}&type=${TYPE}`, {
                   method: 'GET'
                 })
                   .then(response => response.json())
@@ -64,13 +57,18 @@ export default function SearchInputPlacesMap() {
               placeholder={"Поиск.."}
             />
           </View>
-          <View>
-            {arrayPlaces.map((item, index) => (
-              <View key={item.properties.place_id} style={stylesSearchInputPlacesMap.itemSearch}>
-                <Text onPress={() => pressedPlaceOnSearch(item)}>{item.properties.formatted}</Text>
-              </View>
-            ))}
-          </View>
+          {
+            arrayPlaces.length !== 0 ? (
+              <ScrollView persistentScrollbar={true} style={stylesSearchInputPlacesMap.scrollableContentAutocomplete}>
+                {arrayPlaces.map((item, index) => (
+                  <View key={item.properties.place_id} style={stylesSearchInputPlacesMap.itemSearch}>
+                    <Text onPress={() => pressedPlaceOnSearch(item)}>{item.properties.formatted}</Text>
+                  </View>
+                ))}
+              </ScrollView>
+            ) : ("")
+          }
+          <GetMyLocation />
         </View>
       </ContainerTab>
 
@@ -83,11 +81,26 @@ const stylesSearchInputPlacesMap = StyleSheet.create({
     height: 100
   },
   itemSearch: {
-    // paddingLeft: 10,
     paddingHorizontal: 19,
     paddingVertical: 5,
     borderBottomWidth: 1,
     borderColor: "#d2d2d2",
     color: "#323232"
-  }
+  },
+
+  textInput: {
+    paddingLeft: 10,
+    borderColor: "#d2d2d2",
+    borderWidth: 1,
+    width: "95%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 5,
+    color: "black",
+    backgroundColor: "white"
+  },
+  scrollableContentAutocomplete: {
+    height: 100,
+  },
+
 })

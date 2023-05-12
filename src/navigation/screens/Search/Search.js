@@ -50,6 +50,6 @@ const stylesSearch = StyleSheet.create({
   scrollViewContainer: {},
   containerMap: {
     paddingHorizontal: 5.5,
-    marginBottom: 15
+    marginBottom: 15,
   }
 })

@@ -1,4 +1,4 @@
-import {API_ID_SMS, BASE_URL, TIME_TO_DELETE_THE_SMS, API_KEY_YANDEX} from "../Variables/ServerConfig";
+import {API_ID_SMS, API_KEY_YANDEX, BASE_URL, TIME_TO_DELETE_THE_SMS} from "../Variables/ServerConfig";
 
 export const getCategoriesReviews = async () => {
   const response = await fetch(`${BASE_URL}/api/category`);
@@ -310,17 +310,3 @@ export const getUnderCategoriesSearchEstate = async (category_id) => {
   return await response.json()
 }
 
-export const getPlacesFromMap = async () => {
-  const response = await fetch(`https://search-maps.yandex.ru/v1/?text=Mascow&type=geo&lang=en_US&apikey=${API_KEY_YANDEX}`, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      'Accept': 'application/json'
-    }
-  })
-  // if (!response.ok) {
-  //   throw new Error("Server Error! getPlacesFromMap.");
-  // }
-  console.log(response);
-  return await response.json()
-}

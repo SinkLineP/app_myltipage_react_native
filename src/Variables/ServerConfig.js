@@ -8,3 +8,4 @@ export const TIME_TO_DELETE_THE_SMS = returnMinutesFromNumber(5);
 export const CLEAR_LIMIT_MESSAGE = "";
 export const LIMIT_SMS = 5;
 export const API_KEY_YANDEX = "96aa085f-dd9f-451b-b76a-ad3c94f5632a";
+export const API_KEY_GeoAPIFY = "ffe0f9b432ea48b8867daf6dd245c94b";

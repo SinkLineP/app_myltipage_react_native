@@ -13,3 +13,7 @@
 /**
  * @param {{under_categories: array}} r;
  */
+
+/**
+ * @param {{formatted: string}} r;
+ */
