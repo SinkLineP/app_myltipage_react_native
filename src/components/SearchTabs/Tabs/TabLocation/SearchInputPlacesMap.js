@@ -53,6 +53,10 @@ export default function SearchInputPlacesMap() {
                         setArrayPlaces(result.features);
                       }
                     }
+
+                    if (result.features === undefined || result.features.length === 0) {
+                      setArrayPlaces([]);
+                    }
                   })
                 setValuePlaces(text)
               }}
