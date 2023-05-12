@@ -9,7 +9,6 @@ import TabInputCodeEstate from "../../../components/SearchTabs/Tabs/TabInputCode
 import SearchInputPlacesMap from "../../../components/SearchTabs/Tabs/TabLocation/SearchInputPlacesMap";
 import CategoriesContent from "./components/CategoriesContent/CategoriesContent";
 import TabSearchMap from "../../../components/SearchTabs/Tabs/TabSearchMap/TabSearchMap";
-import {useSelector} from "react-redux";
 
 
 export default function Search() {
