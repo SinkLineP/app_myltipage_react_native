@@ -2,16 +2,12 @@ import React, {useState} from "react";
 import {Dimensions, StyleSheet, TextInput, View} from "react-native";
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import MapView, {Animated} from 'react-native-maps';
-import SearchInputPlacesMap from "./SearchInputPlacesMap";
 import {useSelector} from "react-redux";
-// import {PlaceKit} from "@placekit/autocomplete-react";
-// import '@placekit/autocomplete-js/dist/placekit-autocomplete.css';
 
 
 export const TabLocation = () => {
   const coordinateStore = useSelector(state => state.searchMap.currentCoordinate);
 
-  console.log(coordinateStore);
 
   return (
     <ContainerTab>
@@ -28,15 +24,7 @@ export const TabLocation = () => {
             height: Dimensions.get("window").height / 2,
             marginLeft: 7.5
           }}
-          // initialRegion={{
-          //   latitude: coordinateStore.lat,
-          //   longitude: coordinateStore.lon,
-          //   latitudeDelta: 0.0922,
-          //   longitudeDelta: 0.0421,
-          // }}
         />
-
-          {/*<SearchInputPlacesMap />*/}
       </View>
     </ContainerTab>
   )

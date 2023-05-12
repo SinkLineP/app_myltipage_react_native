@@ -6,12 +6,14 @@ const searchMapSlice = createSlice({
   initialState,
   reducers: {
     setCoordinates(state, action) {
-      console.log(action);
       state.currentCoordinate.lat = action.payload.lat;
       state.currentCoordinate.lon = action.payload.lon;
     },
+    saveAddress(state, action) {
+      state.currentAddress = action.payload.address;
+    }
   }
 })
 
-export const {setCoordinates} = searchMapSlice.actions;
+export const {setCoordinates, saveAddress} = searchMapSlice.actions;
 export default searchMapSlice.reducer;

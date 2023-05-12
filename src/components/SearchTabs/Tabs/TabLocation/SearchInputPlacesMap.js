@@ -6,16 +6,13 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import {FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import React, {useState} from "react";
-import Translator, {TranslatorProvider, useTranslator} from "react-native-translator";
 import {useDispatch} from "react-redux";
-import {setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import {saveAddress, setCoordinates} from "../../../../store/Slices/searchMapSlice";
 
 export default function SearchInputPlacesMap() {
   const dispatch = useDispatch();
   const [valuePlaces, setValuePlaces] = useState("");
   const [arrayPlaces, setArrayPlaces] = useState([]);
-  const {translate} = useTranslator();
-  const [result, setResult] = useState('');
   const TYPE = "city";
 
 
@@ -23,6 +20,9 @@ export default function SearchInputPlacesMap() {
     dispatch(setCoordinates({
       lat: Number(value.properties.lat),
       lon: Number(value.properties.lon),
+    }))
+    dispatch(saveAddress({
+      address: value.properties.formatted
     }))
   };
 

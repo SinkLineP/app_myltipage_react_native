@@ -8,6 +8,8 @@ import {PortalProvider} from "@gorhom/portal";
 import TabInputCodeEstate from "../../../components/SearchTabs/Tabs/TabInputCodeEstate/TabInputCodeEstate";
 import SearchInputPlacesMap from "../../../components/SearchTabs/Tabs/TabLocation/SearchInputPlacesMap";
 import CategoriesContent from "./components/CategoriesContent/CategoriesContent";
+import TabSearchMap from "../../../components/SearchTabs/Tabs/TabSearchMap/TabSearchMap";
+import {useSelector} from "react-redux";
 
 
 export default function Search() {
@@ -20,11 +22,7 @@ export default function Search() {
   return (
     <View style={stylesSearch.container}>
       <ScrollView style={stylesSearch.scrollViewContainer}>
-        <SearchInputPlacesMap />
-        <Text onPress={() => {
-          modalRefSearchLocation.current?.open()
-        }}>Open modal</Text>
-        <TabLocation title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
+        <TabSearchMap modalRef={modalRefSearchLocation} />
         <TabInputCodeEstate />
         <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} isCottage={false} />
         <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRefCategories} />
@@ -34,10 +32,10 @@ export default function Search() {
           {currentItem.length !== 0 ? (<CategoriesContent currentItem={currentItem} />) : ("") }
         </BottomModalWindow>
         <BottomModalWindow modalRef={modalRefSearchLocation}>
-          <Text>Hello</Text>
-          <Text onPress={() => {
-            modalRefSearchLocation.current?.close()
-          }}>Close Modal</Text>
+          <SearchInputPlacesMap />
+          <View style={stylesSearch.containerMap}>
+            <TabLocation title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
+          </View>
         </BottomModalWindow>
       </PortalProvider>
     </View>
@@ -51,5 +49,8 @@ const stylesSearch = StyleSheet.create({
     height: "100%",
   },
   scrollViewContainer: {},
-
+  containerMap: {
+    paddingHorizontal: 5.5,
+    marginBottom: 15
+  }
 })
