@@ -83,8 +83,8 @@ const stylesSearchInputPlacesMap = StyleSheet.create({
     height: 100
   },
   itemSearch: {
-    paddingLeft: 10,
-    backgroundColor: "red",
+    // paddingLeft: 10,
+    paddingHorizontal: 19,
     paddingVertical: 5,
     borderBottomWidth: 1,
     borderColor: "#d2d2d2",
