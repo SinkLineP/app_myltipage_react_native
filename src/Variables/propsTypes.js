@@ -17,3 +17,7 @@
 /**
  * @param {{formatted: string}} r;
  */
+
+/**
+ * @param {{mapType: string}} r;
+ */

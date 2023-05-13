@@ -12,7 +12,7 @@ import {FontAwesome} from "@expo/vector-icons";
 import GetMyLocation from "./GetMyLocation";
 import {API_KEY_GeoAPIFY} from "../../../../Variables/ServerConfig";
 
-export default function SearchInputPlacesMap() {
+export default function SearchInputPlacesMap({getCoordinate}) {
   const dispatch = useDispatch();
   const [valuePlaces, setValuePlaces] = useState("");
   const [arrayPlaces, setArrayPlaces] = useState([]);
@@ -20,58 +20,68 @@ export default function SearchInputPlacesMap() {
 
 
   const pressedPlaceOnSearch = (value) => {
-    dispatch(setCoordinates({
-      lat: Number(value.properties.lat),
-      lon: Number(value.properties.lon),
-    }))
-    dispatch(saveAddress({
-      address: value.properties.formatted
-    }))
+    setValuePlaces(value.properties.formatted);
+    setArrayPlaces([]);
+    getCoordinate(value);
   };
 
   return (
-      <ContainerTab>
-        <View style={{width: "100%"}}>
-          <View>
-            <TextInput
-              style={stylesSearchInputPlacesMap.textInput}
-              onChangeText={(text) => {
-                fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${API_KEY_GeoAPIFY}&type=${TYPE}`, {
-                  method: 'GET'
-                })
-                  .then(response => response.json())
-                  .then(result => {
-                    if (result.features !== undefined && result.features !== []) {
-                      if (result.features.length !== 0) {
-                        setArrayPlaces(result.features);
-                      }
-                    }
+    // <ContainerTab>
+    <View style={{
+      position: "absolute",
+      marginBottom: 30,
+      width: "80%",
+      marginTop: 16,
+      marginLeft: 10
+    }}>
+      <View>
+        <TextInput
+          style={stylesSearchInputPlacesMap.textInput}
+          onChangeText={(text) => {
+            fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${API_KEY_GeoAPIFY}&type=${TYPE}`, {
+              method: 'GET'
+            })
+              .then(response => response.json())
+              .then(result => {
+                if (result.features !== undefined && result.features !== []) {
+                  if (result.features.length !== 0) {
+                    setArrayPlaces(result.features);
+                  }
+                }
 
-                    if (result.features === undefined || result.features.length === 0) {
-                      setArrayPlaces([]);
-                    }
-                  })
-                setValuePlaces(text)
-              }}
-              value={valuePlaces}
-              placeholder={"Поиск.."}
-            />
-          </View>
-          {
-            arrayPlaces.length !== 0 ? (
-              <ScrollView persistentScrollbar={true} style={stylesSearchInputPlacesMap.scrollableContentAutocomplete}>
-                {arrayPlaces.map((item, index) => (
-                  <View key={item.properties.place_id} style={stylesSearchInputPlacesMap.itemSearch}>
+                if (result.features === undefined || result.features.length === 0) {
+                  setArrayPlaces([]);
+                }
+              })
+            setValuePlaces(text)
+          }}
+          value={valuePlaces}
+          placeholder={"Поиск.."}
+        />
+      </View>
+      {
+        arrayPlaces.length !== 0 ? (
+          <View style={stylesSearchInputPlacesMap.autocompleteContainer}>
+            <ScrollView persistentScrollbar={true} style={stylesSearchInputPlacesMap.scrollableContentAutocomplete}>
+              {arrayPlaces.map((item, index) => {
+                return (
+                  <View key={item.properties.place_id} style={{
+                    paddingHorizontal: 19,
+                    paddingVertical: 5,
+                    borderBottomWidth: index + 1 === arrayPlaces.length ? 0 : 1,
+                    borderColor: "#d2d2d2",
+                    color: "#323232"
+                  }}>
                     <Text onPress={() => pressedPlaceOnSearch(item)}>{item.properties.formatted}</Text>
                   </View>
-                ))}
-              </ScrollView>
-            ) : ("")
-          }
-          <GetMyLocation />
-        </View>
-      </ContainerTab>
-
+                )
+              })}
+            </ScrollView>
+          </View>
+        ) : ("")
+      }
+    </View>
+    // </ContainerTab>
   )
 };
 
@@ -87,9 +97,8 @@ const stylesSearchInputPlacesMap = StyleSheet.create({
     borderColor: "#d2d2d2",
     color: "#323232"
   },
-
   textInput: {
-    paddingLeft: 10,
+    paddingHorizontal: 10,
     borderColor: "#d2d2d2",
     borderWidth: 1,
     width: "95%",
@@ -100,7 +109,12 @@ const stylesSearchInputPlacesMap = StyleSheet.create({
     backgroundColor: "white"
   },
   scrollableContentAutocomplete: {
-    height: 100,
   },
-
+  autocompleteContainer: {
+    minHeight: 10,
+    backgroundColor: "white",
+    marginTop: 6,
+    borderRadius: 5,
+    maxHeight: 100,
+  }
 })

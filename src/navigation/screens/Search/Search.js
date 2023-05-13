@@ -31,7 +31,6 @@ export default function Search() {
           {currentItem.length !== 0 ? (<CategoriesContent currentItem={currentItem} />) : ("") }
         </BottomModalWindow>
         <BottomModalWindow modalRef={modalRefSearchLocation}>
-          <SearchInputPlacesMap />
           <View style={stylesSearch.containerMap}>
             <TabLocation title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
           </View>
