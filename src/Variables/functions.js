@@ -114,3 +114,31 @@ export const funcSendCode = (dispatch, valuesPhone, setSubmittedCode, setShowInp
 export const validationEmail = (val) => {
   return val.includes("@") && val.includes(".com") || val.includes(".ru") || val.includes(".ua") || val.includes(".net");
 }
+
+export const formattedResultPlaces = (result) => {
+  const {address_line1, county, state, country, district} = result.results[0];
+  return `${address_line1}, ${county !== undefined ? county : district}, ${state}, ${country}`;
+}
+
+export const formattedResultPlacesItem = (item) => {
+  const {address_line1, county, state, country, district} = item.properties;
+  return `${address_line1}, ${county !== undefined ? county : district}, ${state}, ${country}`;
+}
+
+export const translateText = async (toLanguage, text) => {
+  // const res = await fetch("https://libretranslate.com/translate", {
+  //   method: "POST",
+  //   body: JSON.stringify({
+  //     q: text,
+  //     source: "auto",
+  //     target: toLanguage,
+  //     format: "text",
+  //     api_key: ""
+  //   }),
+  //   headers: { "Content-Type": "application/json" }
+  // });
+  //
+  // console.log(res)
+  return text;
+  // return await res.json();
+}

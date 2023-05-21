@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {View, StyleSheet, ScrollView, Text} from "react-native";
+import {View, StyleSheet, ScrollView, Text, TextInput} from "react-native";
 import {TabLocation} from "../../../components/SearchTabs/Tabs/TabLocation/TabLocation";
 import {TabSwitch} from "../../../components/SearchTabs/Tabs/TabSwitch/TabSwitch";
 import {TabCategoryEstate} from "../../../components/SearchTabs/Tabs/TabCategoryEstate/TabCategoryEstate";
@@ -33,6 +33,7 @@ export default function Search() {
         <BottomModalWindow modalRef={modalRefSearchLocation}>
           <View style={stylesSearch.containerMap}>
             <TabLocation title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
+            {/*<NewTabLocation />*/}
           </View>
         </BottomModalWindow>
       </PortalProvider>

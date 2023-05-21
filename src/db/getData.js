@@ -1,4 +1,11 @@
-import {API_ID_SMS, API_KEY_YANDEX, BASE_URL, TIME_TO_DELETE_THE_SMS} from "../Variables/ServerConfig";
+import {
+  API_ID_SMS,
+  API_KEY_GeoAPIFY,
+  BASE_URL,
+  TIME_TO_DELETE_THE_SMS
+} from "../Variables/ServerConfig";
+import {useState} from "react";
+import {formattedResultPlaces, translateText} from "../Variables/functions";
 
 export const getCategoriesReviews = async () => {
   const response = await fetch(`${BASE_URL}/api/category`);
@@ -310,3 +317,16 @@ export const getUnderCategoriesSearchEstate = async (category_id) => {
   return await response.json()
 }
 
+export const showGeocodingPlaces = (region) => {
+  const [city, setCity] = useState("");
+
+  fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${region.latitude}&lon=${region.longitude}&type=city&format=json&apiKey=${API_KEY_GeoAPIFY}`)
+    .then(response => response.json())
+    .then(async result => {
+      setCity(await translateText("", formattedResultPlaces(result)))
+    })
+
+  if (city !== "") {
+    return city;
+  }
+}

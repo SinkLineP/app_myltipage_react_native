@@ -21,3 +21,11 @@
 /**
  * @param {{mapType: string}} r;
  */
+
+/**
+ * @param {{allotments: string}} r;
+ */
+
+/**
+ * @param {{components: string}} r;
+ */

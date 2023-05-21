@@ -1,16 +1,8 @@
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import useOnclickOutside from "react-cool-onclickoutside";
-import {FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
-import ContainerTab from "../../ContainerTab/ContainerTab";
+import {ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {saveAddress, setCoordinates} from "../../../../store/Slices/searchMapSlice";
-import {FontAwesome} from "@expo/vector-icons";
-import GetMyLocation from "./GetMyLocation";
 import {API_KEY_GeoAPIFY} from "../../../../Variables/ServerConfig";
+import {formattedResultPlacesItem, translateText} from "../../../../Variables/functions";
 
 export default function SearchInputPlacesMap({getCoordinate}) {
   const dispatch = useDispatch();
@@ -38,7 +30,7 @@ export default function SearchInputPlacesMap({getCoordinate}) {
         <TextInput
           style={stylesSearchInputPlacesMap.textInput}
           onChangeText={(text) => {
-            fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${API_KEY_GeoAPIFY}&type=${TYPE}`, {
+            fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&limit=100&apiKey=${API_KEY_GeoAPIFY}&type=${TYPE}`, {
               method: 'GET'
             })
               .then(response => response.json())
@@ -72,7 +64,7 @@ export default function SearchInputPlacesMap({getCoordinate}) {
                     borderColor: "#d2d2d2",
                     color: "#323232"
                   }}>
-                    <Text onPress={() => pressedPlaceOnSearch(item)}>{item.properties.formatted}</Text>
+                    <Text onPress={() => pressedPlaceOnSearch(item)}>{translateText( "", formattedResultPlacesItem(item))}</Text>
                   </View>
                 )
               })}

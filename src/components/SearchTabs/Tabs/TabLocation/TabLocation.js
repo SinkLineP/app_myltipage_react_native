@@ -3,9 +3,11 @@ import {Button, Dimensions, ScrollView, StyleSheet, Text, View} from "react-nati
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import {Animated, Marker} from 'react-native-maps';
 import {useDispatch, useSelector} from "react-redux";
-import {API_KEY_GeoAPIFY} from "../../../../Variables/ServerConfig";
 import SearchInputPlacesMap from "./SearchInputPlacesMap";
 import {saveAddress, setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import {showGeocodingPlaces} from "../../../../db/getData";
+import * as opencage from "opencage-api-client";
+import {API_KEY_OpenCage} from "../../../../Variables/ServerConfig";
 
 
 export const TabLocation = () => {
@@ -18,22 +20,20 @@ export const TabLocation = () => {
     latitudeDelta: 0.1022,
     longitudeDelta: 0.0621,
   })
-  const [mapType, setMapType] = useState("");
-  const [item, setItem] = useState({});
+  const [currentPosition, setCurrentPosition] = useState({
+    latitude: region.latitude,
+    longitude: region.longitude,
+    address: "",
+  });
 
-  const GeocodingPlaces = () => {
-    const [city, setCity] = useState("");
-
-    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${region.latitude}&lon=${region.longitude}&type=city&format=json&apiKey=${API_KEY_GeoAPIFY}`)
-      .then(response => response.json())
-      .then(result => {
-        setCity(result.results[0].formatted)
-      })
-
-    if (city !== "") {
-      return city;
-    }
+  const reverseGeocode = () => {
+    const key = API_KEY_OpenCage;
+    return opencage.geocode({ key, q: `${currentPosition.latitude},${currentPosition.longitude}`}).then(response => {
+      console.log(response.results[0])
+      return typeof response.results[0].components.allotments !== "undefined" ? `${response.results[0].components.allotments}, ${response.results[0].formatted}` : response.results[0].formatted;
+    });
   }
+
 
   return (
     <ContainerTab>
@@ -56,6 +56,10 @@ export const TabLocation = () => {
               latitudeDelta: region.latitudeDelta,
               longitudeDelta: region.longitudeDelta,
             })
+            setCurrentPosition({
+              latitude: region.latitude,
+              longitude: region.longitude,
+            })
           }}
         >
           <Marker
@@ -65,43 +69,22 @@ export const TabLocation = () => {
           </Marker>
         </Animated>
 
-        <SearchInputPlacesMap getCoordinate={(value) => {
-          setItem(value);
-        }} />
-
         <View style={{paddingTop: 30}}>
           <Button
             title={"Сохранить"}
             onPress={() => {
               dispatch(setCoordinates({
-                lat: Number(item.properties.lat),
-                lon: Number(item.properties.lon),
+                lat: Number(currentPosition.latitude),
+                lon: Number(currentPosition.longitude),
               }))
-              dispatch(saveAddress({
-                address: item.properties.formatted
-              }))
+              reverseGeocode().then(address => {
+                dispatch(saveAddress({
+                  address: address,
+                }))
+              });
             }}
             color={"#58955a"} />
         </View>
-
-        <View style={{
-          backgroundColor: "white",
-          height: 100,
-          width: "65%",
-          position: "absolute",
-          paddingHorizontal: 10,
-          paddingVertical: 10,
-          borderRadius: 10,
-          bottom: 72,
-          marginLeft: Dimensions.get("window").width / 6,
-        }}>
-          <ScrollView>
-            <Text style={{}}>Lat: {region.latitude} {'\n'}Lon: {region.longitude}</Text>
-            <Text>City: <GeocodingPlaces /></Text>
-            <Text>City Store: {addressStore}</Text>
-          </ScrollView>
-        </View>
-
       </View>
     </ContainerTab>
   )
