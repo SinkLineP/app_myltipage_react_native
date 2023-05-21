@@ -26,10 +26,29 @@ export const TabLocation = () => {
     address: "",
   });
 
+  const [estates, setEstates] = useState([{
+    id: 0,
+    address: "карла маркса 1",
+    price: "100.000 р",
+    coords: {
+      latitude: 46.716390928360745,
+      longitude: 38.27924375108283,
+    },
+    type: "квартира"
+  },{
+    id: 1,
+    address: "парк поддубного",
+    price: "100.000.000 р",
+    coords: {
+      latitude: 46.7040401076462,
+      longitude: 38.26096159038479,
+    },
+    type: "парк"
+  }])
+
   const reverseGeocode = () => {
     const key = API_KEY_OpenCage;
     return opencage.geocode({ key, q: `${currentPosition.latitude},${currentPosition.longitude}`}).then(response => {
-      console.log(response.results[0])
       return typeof response.results[0].components.allotments !== "undefined" ? `${response.results[0].components.allotments}, ${response.results[0].formatted}` : response.results[0].formatted;
     });
   }
@@ -62,11 +81,22 @@ export const TabLocation = () => {
             })
           }}
         >
-          <Marker
-            pinColor="tomato"
-            coordinate={{latitude: region.latitude, longitude: region.longitude}}
-          >
-          </Marker>
+          {
+            estates.map(estate => {
+              return (
+                <Marker
+                  pinColor="tomato"
+                  coordinate={{latitude: estate.coords.latitude, longitude: estate.coords.longitude}}
+                >
+                  <View style={stylesTabWithIcon.customMarker}>
+                    <Text>Адрес: {estate.address}</Text>
+                    <Text>Цена: {estate.price}</Text>
+                  </View>
+                </Marker>
+              )
+            })
+          }
+
         </Animated>
 
         <View style={{paddingTop: 30}}>
@@ -116,5 +146,8 @@ const stylesTabWithIcon = StyleSheet.create({
   },
   content: {
     width: "100%"
+  },
+  customMarker: {
+    backgroundColor: "tomato",
   }
 })

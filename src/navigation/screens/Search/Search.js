@@ -33,7 +33,6 @@ export default function Search() {
         <BottomModalWindow modalRef={modalRefSearchLocation}>
           <View style={stylesSearch.containerMap}>
             <TabLocation title={"location"} iconColor={"tomato"} iconName={"location"} iconSize={24} />
-            {/*<NewTabLocation />*/}
           </View>
         </BottomModalWindow>
       </PortalProvider>

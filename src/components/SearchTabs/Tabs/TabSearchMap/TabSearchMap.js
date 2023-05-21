@@ -1,12 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import {Entypo} from "@expo/vector-icons";
 import {useSelector} from "react-redux";
+import {translateText} from "../../../../Variables/functions";
 
 
 export default function TabSearchMap({modalRef}) {
   const currentAddress = useSelector(state => state.searchMap.currentAddress);
+
+  useEffect(() => {
+    translateText("ru", "hello").then(r => {
+      console.log(r)
+    });
+  })
 
   return (
     <Pressable onPress={() => {modalRef.current?.open()}}>
@@ -28,7 +35,7 @@ const stylesTabSearchMap = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    paddingTop: 3,
+    // paddingTop: 3,
     paddingLeft: 10,
     fontWeight: "bold",
     color: "#323232"

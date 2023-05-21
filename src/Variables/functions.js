@@ -126,19 +126,19 @@ export const formattedResultPlacesItem = (item) => {
 }
 
 export const translateText = async (toLanguage, text) => {
-  // const res = await fetch("https://libretranslate.com/translate", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     q: text,
-  //     source: "auto",
-  //     target: toLanguage,
-  //     format: "text",
-  //     api_key: ""
-  //   }),
-  //   headers: { "Content-Type": "application/json" }
-  // });
-  //
-  // console.log(res)
-  return text;
+  const res = await fetch("https://libretranslate.com/translate", {
+    method: "POST",
+    body: JSON.stringify({
+      q: "hello",
+      source: "auto",
+      target: "ru",
+      format: "text",
+    }),
+    headers: { "Content-Type": "application/json" }
+  });
+
+  console.log(await res.json())
+  // console.log(`LOG: to language - ${toLanguage}, text - ${text}`);
+  // return text;
   // return await res.json();
 }
