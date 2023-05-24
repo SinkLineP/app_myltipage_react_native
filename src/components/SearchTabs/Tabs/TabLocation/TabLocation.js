@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Dimensions, ScrollView, StyleSheet, View} from "react-native";
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import {Animated, Marker} from 'react-native-maps';
 import {useDispatch, useSelector} from "react-redux";
-import {saveAddress, setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import {saveAddress, setActiveTab, setCoordinates} from "../../../../store/Slices/searchMapSlice";
 import * as opencage from "opencage-api-client";
 import {API_KEY_OpenCage} from "../../../../Variables/ServerConfig";
 import {CustomMarkerMap} from "../../../CustomMarkerMap/CustomMarkerMap";
@@ -19,6 +19,7 @@ export const TabLocation = () => {
     latitudeDelta: 0.1022,
     longitudeDelta: 0.0621
   });
+  const flatListRef = useRef(null);
 
   const [estates, setEstates] = useState([{
     id: 0,
@@ -54,7 +55,19 @@ export const TabLocation = () => {
   }
 
   const currentMarker = (estate) => {
-    console.log(estate);
+    estates.map((item, index) => {
+      if (item.id === estate.id) {
+        dispatch(setActiveTab(index));
+        flatListRef?.current.scrollToIndex({animated: true, index: index})
+      }
+    })
+
+    setRegion({
+      latitude: estate.coords.latitude,
+      longitude: estate.coords.longitude,
+      latitudeDelta: estate.coords.latitudeDelta,
+      longitudeDelta: estate.coords.longitudeDelta
+    })
   }
 
   return (
@@ -69,21 +82,6 @@ export const TabLocation = () => {
           width: Dimensions.get("window").width - 15,
           height: Dimensions.get("window").height / 2,
           marginLeft: 7.5
-        }}
-        onRegionChangeComplete={(region) => {
-          setRegion({
-            latitude: region.latitude,
-            longitude: region.longitude,
-            latitudeDelta: region.latitudeDelta,
-            longitudeDelta: region.longitudeDelta
-          })
-
-          dispatch(setCoordinates({// 0.0016842505834304689 | 0.0023378804326057434
-            lat: region.latitude,
-            lon: region.longitude,
-            lat_d: region.latitudeDelta,
-            lon_d: region.longitudeDelta
-          }))
         }}
       >
         <>
@@ -108,7 +106,7 @@ export const TabLocation = () => {
         paddingHorizontal: 10,
         marginVertical: 10
       }}>
-        <CarouselItems region={region} setRegion={setRegion} data={estates} />
+        <CarouselItems flatListRef={flatListRef} setRegion={setRegion} data={estates} />
       </View>
 
       <View style={{paddingTop: 30}}>
@@ -116,8 +114,10 @@ export const TabLocation = () => {
           title={"Сохранить"}
           onPress={() => {
             dispatch(setCoordinates({
-              lat: Number(coordinateStore.lat),
-              lon: Number(coordinateStore.lon),
+              lat: region.latitude,
+              lon: region.longitude,
+              lat_d: region.latitudeDelta,
+              lon_d: region.longitudeDelta
             }))
             reverseGeocode().then(address => {
               dispatch(saveAddress({

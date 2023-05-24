@@ -5,5 +5,6 @@ export const initialState = {
     lat_d: 0,
     lon_d: 0
   },
-  currentAddress: ""
+  currentAddress: "",
+  activeTab: 0
 }

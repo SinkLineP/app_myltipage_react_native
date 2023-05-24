@@ -1,14 +1,13 @@
 import React, {useCallback, useRef, useState} from "react";
 import {FlatList, View, Text, Pressable, Dimensions, StyleSheet} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import {setCoordinates} from "../../../store/Slices/searchMapSlice";
+import {setActiveTab, setCoordinates} from "../../../store/Slices/searchMapSlice";
+import RenderItem from "./RenderItem";
 
 
-export default function CarouselItems({ data, region, setRegion }) {
-  const [activeTab, setActiveTab] = useState(0);
-  const flatListRef = useRef(null);
+export default function CarouselItems({ data, setRegion, flatListRef }) {
   const dispatch = useDispatch();
-  const coordinateStore = useSelector(state => state.searchMap.currentCoordinate);
+  const activeTab = useSelector(state => state.searchMap.activeTab);
 
   const [widthContainer, setWidthContainer] = useState({
     width: 0,
@@ -23,7 +22,7 @@ export default function CarouselItems({ data, region, setRegion }) {
       const item = viewableItems[0].item;
       const index = viewableItems[0].index;
 
-      setActiveTab(index);
+      dispatch(setActiveTab(index));
 
       setRegion({
         latitude: item.coords.latitude,
@@ -89,33 +88,7 @@ export default function CarouselItems({ data, region, setRegion }) {
           viewabilityConfigCallbackPairs={viewAbilityConfigCallbackPairs.current}
           horizontal={true}
           data={data}
-          renderItem={({ item, index }) => {
-            return (
-              <View
-                key={item.id}
-                style={{
-                  width: widthContainer.width,
-                }}
-              >
-                <View
-                  style={{
-                    paddingHorizontal: "auto",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    backgroundColor: "white",
-                    padding: 15,
-                    borderRadius: 10,
-                    borderColor: "#d2d2d2",
-                    borderWidth: 1,
-                    alignItems: "center",
-                    width: widthContainer.width - 10
-                  }}
-                  key={index}>
-                  <Text>{item.address}</Text>
-                </View>
-              </View>
-            )
-          }}
+          renderItem={({ item, index }) => (<RenderItem index={index} item={item} width={widthContainer.width} />)}
         />
 
         <ArrowComponent title={'>'} funcPress={nextPress} />

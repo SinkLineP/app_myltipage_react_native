@@ -13,9 +13,12 @@ const searchMapSlice = createSlice({
     },
     saveAddress(state, action) {
       state.currentAddress = action.payload.address;
+    },
+    setActiveTab(state, action) {
+      state.activeTab = action.payload;
     }
   }
 })
 
-export const {setCoordinates, saveAddress} = searchMapSlice.actions;
+export const {setCoordinates, saveAddress, setActiveTab} = searchMapSlice.actions;
 export default searchMapSlice.reducer;
