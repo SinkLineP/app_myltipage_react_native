@@ -10,9 +10,12 @@ const settingsAppSlice = createSlice({
     },
     setThemeApp(state, action) {
       state.theme = action.payload
+    },
+    setCountryApp(state, action) {
+      state.country = action.payload
     }
   }
 })
 
-export const {setLanguageApp, setThemeApp} = settingsAppSlice.actions;
+export const {setLanguageApp, setThemeApp, setCountryApp} = settingsAppSlice.actions;
 export default settingsAppSlice.reducer;

@@ -18,6 +18,7 @@ import {
   setCategoryEstates,
   setMainCategoryEstates,
 } from "./src/store/Slices/categoryEstatesSlice";
+import {setCoordinates} from "./src/store/Slices/searchMapSlice";
 
 
 export default function App () {
@@ -98,8 +99,6 @@ function AppWrapper() {
     getMainCategoriesSearchEstate().then(r => {
       dispatch(setMainCategoryEstates(r.main_categories));
     });
-
-    // YaMap.init("c3962005-ff06-4b07-865c-c8757ba1afad");
   }, []);
 
 

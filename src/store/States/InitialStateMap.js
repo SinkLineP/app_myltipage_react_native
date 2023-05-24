@@ -1,7 +1,9 @@
 export const initialState = {
   currentCoordinate: {
-    lat: 46.7114346,
-    lon: 38.2738027,
+    lat: 0,
+    lon: 0,
+    lat_d: 0,
+    lon_d: 0
   },
   currentAddress: ""
 }

@@ -1,28 +1,23 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import ContainerTab from "../../ContainerTab/ContainerTab";
 import {Entypo} from "@expo/vector-icons";
 import {useSelector} from "react-redux";
-import {translateText} from "../../../../Variables/functions";
 
 
-export default function TabSearchMap({modalRef}) {
+export default function TabSearchMap({ navigation }) {
   const currentAddress = useSelector(state => state.searchMap.currentAddress);
 
-  useEffect(() => {
-    translateText("ru", "hello").then(r => {
-      console.log(r)
-    });
-  })
-
   return (
-    <Pressable onPress={() => {modalRef.current?.open()}}>
+    <Pressable onPress={() => {
+      navigation.navigate("TabLocation")
+    }}>
       <ContainerTab>
         <View style={stylesTabSearchMap.containerLocationButton}>
           <View>
             <Entypo name="location-pin" size={24} color="tomato" />
           </View>
-          <Text style={stylesTabSearchMap.title}>{currentAddress === "" ? ("Выберите местоположение..") : currentAddress}</Text>
+          <Text style={stylesTabSearchMap.title}>Быстрый поиск по карте..</Text>
         </View>
       </ContainerTab>
     </Pressable>
@@ -35,7 +30,7 @@ const stylesTabSearchMap = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    // paddingTop: 3,
+    paddingTop: 2,
     paddingLeft: 10,
     fontWeight: "bold",
     color: "#323232"

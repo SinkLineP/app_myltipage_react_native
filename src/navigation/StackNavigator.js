@@ -33,6 +33,8 @@ import {
   controllerTheme_StackNavigator_Title
 } from "../controllers/Theme/Theme";
 import {useSelector} from "react-redux";
+import {TabLocation} from "../components/SearchTabs/Tabs/TabLocation/TabLocation";
+import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/CountryApp";
 
 
 const Stack = createStackNavigator();
@@ -95,6 +97,7 @@ const MenuStackNavigator = () => {
       <Stack.Screen name="MenuSettings" component={MenuSettings} options={setOptions("Настройки приложения", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
       <Stack.Screen name="LanguageApp" component={LanguageApp} options={setOptions("Выберите язык", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
       <Stack.Screen name="ThemeApp" component={ThemeApp} options={setOptions("Выберите тему", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
+      <Stack.Screen name="CountryApp" component={CountryApp} options={setOptions("Выберите страну", controllerTheme_StackNavigator_Background(theme, "#ffffff"), controllerTheme_StackNavigator_Title(theme, "#000000"), "", 30, 30, require("./Icons/settings-icon.png"), false)} />
     </Stack.Navigator>
   );
 }
@@ -104,6 +107,7 @@ const SearchStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
+      <Stack.Screen name="TabLocation" component={TabLocation} options={setOptions("Быстрый поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }

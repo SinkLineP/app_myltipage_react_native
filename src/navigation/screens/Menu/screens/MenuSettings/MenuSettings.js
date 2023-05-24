@@ -47,6 +47,8 @@ export default function MenuSettings() {
   const languageData = useSelector(state => state.settingsApp.languageData);
   const themeData = useSelector(state => state.settingsApp.themeData);
   const theme = useSelector(state => state.settingsApp.theme);
+  const countryData = useSelector(state => state.settingsApp.countryData);
+  const country = useSelector(state => state.settingsApp.country);
 
 
   return (
@@ -75,6 +77,19 @@ export default function MenuSettings() {
           }
           sourceIcon={require("./Icons/theme-icon.png")}
           navigationRoute={"ThemeApp"}
+          navigation={navigation}
+        />
+
+        {/* настройка страны */}
+        <OptionsComponent
+          title={"Ваша страна"}
+          dynamicContent={
+            countryData.map(item => {
+              if (item.value === country) return item.label;
+            })
+          }
+          sourceIcon={require("./Icons/country-icon.png")}
+          navigationRoute={"CountryApp"}
           navigation={navigation}
         />
       </View>
