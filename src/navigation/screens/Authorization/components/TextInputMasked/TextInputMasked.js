@@ -2,7 +2,7 @@ import {MaskedTextInput} from "react-native-mask-text";
 import React from "react";
 
 
-export default function TextInputMasked({funcChangeText, mask, values, placeholder, keyboardType, fontSize}) {
+export default function TextInputMasked({funcChangeText, mask, values, placeholder, keyboardType, fontSize, colorBorder}) {
   return (
     <MaskedTextInput
       mask={mask}
@@ -12,7 +12,7 @@ export default function TextInputMasked({funcChangeText, mask, values, placehold
         borderWidth: 1,
         borderStyle: "solid",
         borderRadius: 50,
-        borderColor: "#048f9d",
+        borderColor: colorBorder !== "" && colorBorder !== undefined ? colorBorder : "#048f9d",
         width: "auto",
         padding: 10,
         marginBottom: 7,

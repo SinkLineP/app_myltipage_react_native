@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
 import {Provider, useDispatch, useSelector} from "react-redux";
@@ -9,27 +9,23 @@ import {
   AutoLogin,
   getCategoriesSearchEstate,
   getMainCategoriesSearchEstate,
-  getUnderCategoriesSearchEstate
 } from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StatusBar} from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
-import {PortalProvider} from "@gorhom/portal";
 import {
   setCategoryEstates,
   setMainCategoryEstates,
-  setUnderCategoryEstates
 } from "./src/store/Slices/categoryEstatesSlice";
+import {setCoordinates} from "./src/store/Slices/searchMapSlice";
 
 
 export default function App () {
   return (
     <Provider store={store}>
-      {/*<PortalProvider>*/}
-        <AppWrapper />
-        <StatusBar style={"auto"} />
-      {/*</PortalProvider>*/}
+      <AppWrapper />
+      <StatusBar style={"auto"} />
     </Provider>
   )
 }
@@ -38,7 +34,7 @@ function AppWrapper() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
-  const activeTab = useSelector(state => state.categoryEstates.activeTab);
+  // const activeTab = useSelector(state => state.categoryEstates.activeTab);
 
   //асинхронная функция загрузки шрифтов
   useEffect(() => {

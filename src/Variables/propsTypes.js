@@ -13,3 +13,19 @@
 /**
  * @param {{under_categories: array}} r;
  */
+
+/**
+ * @param {{formatted: string}} r;
+ */
+
+/**
+ * @param {{mapType: string}} r;
+ */
+
+/**
+ * @param {{allotments: string}} r;
+ */
+
+/**
+ * @param {{components: string}} r;
+ */

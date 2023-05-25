@@ -41,13 +41,13 @@ const stylesUpdatedShowSelectedCategories = StyleSheet.create({
     width: "100%",
     borderColor: "#f2f2f2",
     borderBottomWidth: 1,
-    marginBottom: 10
+    marginBottom: 10,
   },
   buttonClearCategoriesTitle: {
     textAlign: "right",
     fontWeight: "bold",
     color: "#c74242",
     fontSize: 16,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   }
 })

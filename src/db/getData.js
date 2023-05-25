@@ -1,4 +1,11 @@
-import {API_ID_SMS, BASE_URL, TIME_TO_DELETE_THE_SMS} from "../Variables/ServerConfig";
+import {
+  API_ID_SMS,
+  API_KEY_GeoAPIFY,
+  BASE_URL,
+  TIME_TO_DELETE_THE_SMS
+} from "../Variables/ServerConfig";
+import {useState} from "react";
+import {formattedResultPlaces, translateText} from "../Variables/functions";
 
 export const getCategoriesReviews = async () => {
   const response = await fetch(`${BASE_URL}/api/category`);
@@ -151,7 +158,7 @@ export const VerifyUserPhone = async (phone, smsCode) => {
     }
   }
 
-  const response = await fetch(`https://sms.ru/sms/send?api_id=${API_ID_SMS}&to=${phone}&msg=Код+подтверждения:+${smsCode}&json=1&ttl=${TIME_TO_DELETE_THE_SMS}${developerMode(true)}`, {
+  const response = await fetch(`https://sms.ru/sms/send?api_id=${API_ID_SMS}&to=${phone}&msg=Код+подтверждения:+${smsCode}&json=1&ttl=${TIME_TO_DELETE_THE_SMS}${developerMode(false)}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -308,4 +315,18 @@ export const getUnderCategoriesSearchEstate = async (category_id) => {
     throw new Error("Server Error! getUnderCategoriesSearchEstate.");
   }
   return await response.json()
+}
+
+export const showGeocodingPlaces = (region) => {
+  const [city, setCity] = useState("");
+
+  fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${region.latitude}&lon=${region.longitude}&type=city&format=json&apiKey=${API_KEY_GeoAPIFY}`)
+    .then(response => response.json())
+    .then(async result => {
+      setCity(await translateText("", formattedResultPlaces(result)))
+    })
+
+  if (city !== "") {
+    return city;
+  }
 }

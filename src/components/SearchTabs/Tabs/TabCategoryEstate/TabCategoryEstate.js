@@ -1,9 +1,18 @@
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {UpdatedShowSelectedCategories} from "./components/UpdatedShowSelectedCategories";
 import {setActiveTab} from "../../../../store/Slices/categoryEstatesSlice";
+import {Entypo, Ionicons, MaterialIcons} from "@expo/vector-icons";
 
+
+const ShowIconForMenuCategory = ({activeTab, item, categoryID, activeIcon, notActiveIcon}) => {
+  if (activeTab === item.category_id && item.category_id === categoryID) {
+    return activeIcon;
+  } else if (activeTab !== item.category_id && item.category_id === categoryID) {
+    return notActiveIcon
+  }
+}
 
 export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
   const activeTab = useSelector(state => state.categoryEstates.activeTab);
@@ -28,10 +37,30 @@ export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
                       setCurrentItem(item);
                     }}
                   >
-                    <View>
-                      <Text style={stylesTabCategoryEstate.categoryIcon}>Icon</Text>
-                      <Text style={activeTab === item.category_id  ? stylesTabCategoryEstate.active : stylesTabCategoryEstate.categoryTitle}>{item.title}</Text>
-                    </View>
+                    <ShowIconForMenuCategory
+                      categoryID={1}
+                      item={item}
+                      activeTab={activeTab}
+                      activeIcon={<Ionicons name="home" size={24} color="white" />}
+                      notActiveIcon={<Ionicons name="home" size={24} color="#323232" />}
+                    />
+
+                    <ShowIconForMenuCategory
+                      categoryID={2}
+                      item={item}
+                      activeTab={activeTab}
+                      activeIcon={<MaterialIcons name="apartment" size={25} color="white" />}
+                      notActiveIcon={<MaterialIcons name="apartment" size={25} color="#323232" />}
+                    />
+
+                    <ShowIconForMenuCategory
+                      categoryID={3}
+                      item={item}
+                      activeTab={activeTab}
+                      activeIcon={<Entypo name="shop"  size={24} color="white" />}
+                      notActiveIcon={<Entypo name="shop"  size={24} color="#323232" />}
+                    />
+                    <Text style={activeTab === item.category_id  ? stylesTabCategoryEstate.active : stylesTabCategoryEstate.categoryTitle}>{item.title}</Text>
                   </TouchableOpacity>
                 )
               })
@@ -58,7 +87,7 @@ const stylesTabCategoryEstate = StyleSheet.create({
     marginBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
-
+/**/
   },
   containerModal: {
     flex: 1,
@@ -100,8 +129,9 @@ const stylesTabCategoryEstate = StyleSheet.create({
     borderColor: "#f4f4f4",
     borderRadius: 10,
     height: 90,
-    paddingTop: 20,
-    backgroundColor: "tomato"
+    paddingTop: 10,
+    backgroundColor: "tomato",
+    alignItems: "center"
   },
   categoryTab: {
     width: "30%",
@@ -110,7 +140,8 @@ const stylesTabCategoryEstate = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     borderRadius: 10,
     height: 90,
-    paddingTop: 20
+    paddingTop: 10,
+    alignItems: "center"
   },
   categoryIcon: {
     textAlign: "center"
