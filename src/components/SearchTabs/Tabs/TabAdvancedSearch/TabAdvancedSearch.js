@@ -4,7 +4,7 @@ import {TabSwitch} from "../TabSwitch/TabSwitch";
 import {TabCategoryEstate} from "../TabCategoryEstate/TabCategoryEstate";
 
 
-export default function TabAdvancedSearch({ setCurrentItem, modalRef }) {
+export default function TabAdvancedSearch() {
   const [selectedSwitch, setSelectedSwitch] = useState("");
 
 
@@ -12,7 +12,7 @@ export default function TabAdvancedSearch({ setCurrentItem, modalRef }) {
     <>
       <TabInputCodeEstate />
       <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} isCottage={false} />
-      <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRef} />
+      {/*<TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRef} />*/}
     </>
   )
 }
