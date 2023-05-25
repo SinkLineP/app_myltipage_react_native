@@ -1,7 +1,7 @@
 import React, {useCallback, useRef, useState} from "react";
 import {FlatList, View, Text, Pressable, Dimensions, StyleSheet} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import {setActiveTab, setCoordinates} from "../../../store/Slices/searchMapSlice";
+import {saveAddress, setActiveTab, setCoordinates} from "../../../store/Slices/searchMapSlice";
 import RenderItem from "./RenderItem";
 
 
@@ -51,6 +51,7 @@ export default function CarouselItems({ data, setRegion, flatListRef }) {
     } else {
       flatListRef?.current.scrollToIndex({animated: true, index: 0})
     }
+    dispatch(saveAddress({address: ""}))
   };
 
   const backPress = () => {
@@ -62,6 +63,7 @@ export default function CarouselItems({ data, setRegion, flatListRef }) {
     } else {
       flatListRef?.current.scrollToIndex({animated: true, index: data.length - 1})
     }
+    dispatch(saveAddress({address: ""}))
   };
 
   const ArrowComponent = ({title, funcPress}) => {

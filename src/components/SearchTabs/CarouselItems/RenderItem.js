@@ -1,9 +1,9 @@
-import React from "react";
-import {Text, View} from "react-native";
+import React, {useState} from "react";
+import {Text, View, Image} from "react-native";
 
 
 export default function RenderItem({ item, width, index }) {
-
+  const [widthItem, setWidthItem] = useState(0);
 
   return (
     <View
@@ -13,6 +13,7 @@ export default function RenderItem({ item, width, index }) {
       }}
     >
       <View
+        onLayout={(event) => {setWidthItem(event.nativeEvent.layout.width)}}
         style={{
           paddingHorizontal: "auto",
           marginLeft: "auto",
@@ -26,7 +27,16 @@ export default function RenderItem({ item, width, index }) {
           width: width - 10
         }}
         key={index}>
-        <Text>{item.address}</Text>
+        {
+          item.images.map((img, index) => {
+            return (
+              <Image key={index} source={{uri: img}} resizeMode={"contain"} style={{width: widthItem - 10, height: 150}} />
+            )
+          })
+        }
+        <Text>Адресс: {item.address}</Text>
+        <Text>Тип строения: {item.type}</Text>
+        <Text>Цена: {item.price}</Text>
       </View>
     </View>
   )

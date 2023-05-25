@@ -13,6 +13,7 @@ import CarouselItems from "../../CarouselItems/CarouselItems";
 export const TabLocation = () => {
   const dispatch = useDispatch();
   const coordinateStore = useSelector(state => state.searchMap.currentCoordinate);
+  // const currentAddress = useSelector(state => state.searchMap.currentAddress);
   const [region, setRegion] = useState({
     latitude: 46.7114346,
     longitude: 38.2738027,
@@ -20,11 +21,12 @@ export const TabLocation = () => {
     longitudeDelta: 0.0621
   });
   const flatListRef = useRef(null);
+  const [currentAddress, setCurrentAddress] = useState("");
 
   const [estates, setEstates] = useState([{
     id: 0,
     images: ["https://i.postimg.cc/ZWYbdm14/01.jpg"],
-    address: "карла маркса 1",
+    address: "улица Карла Маркса 1",
     price: "100.000 р",
     coords: {
       latitude: 46.716390928360745,
@@ -36,7 +38,7 @@ export const TabLocation = () => {
   },{
     id: 1,
     images: ["https://i.postimg.cc/WhwpzzY5/02.jpg"],
-    address: "парк поддубного",
+    address: "Парк поддубного",
     price: "100.000.000 р",
     coords: {
       latitude: 46.7040401076462,
@@ -47,10 +49,14 @@ export const TabLocation = () => {
     type: "парк"
   }])
 
-  const reverseGeocode = () => {
+  const reverseGeocode = (latitude, longitude) => {
+    console.log(latitude);
+    console.log(longitude);
+
     const key = API_KEY_OpenCage;
-    return opencage.geocode({ key, q: `${coordinateStore.lat},${coordinateStore.lon}`}).then(response => {
-      return typeof response.results[0].components.allotments !== "undefined" ? `${response.results[0].components.allotments}, ${response.results[0].formatted}` : response.results[0].formatted;
+    opencage.geocode({ key, q: `${latitude},${longitude}`}).then(response => {
+      console.log({address: response.results[0].formatted})
+      dispatch(saveAddress({address: response.results[0].formatted}))
     });
   }
 
@@ -71,7 +77,7 @@ export const TabLocation = () => {
   }
 
   return (
-    <View style={stylesTabWithIcon.content}>
+    <ScrollView style={stylesTabWithIcon.content}>
       <Animated
         toolbarEnabled={false}
         zoomControlEnabled={true}
@@ -119,15 +125,12 @@ export const TabLocation = () => {
               lat_d: region.latitudeDelta,
               lon_d: region.longitudeDelta
             }))
-            reverseGeocode().then(address => {
-              dispatch(saveAddress({
-                address: address,
-              }))
-            });
+
+            reverseGeocode(region.latitude, region.longitude);
           }}
           color={"#58955a"} />
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -156,7 +159,8 @@ const stylesTabWithIcon = StyleSheet.create({
     width: "90%"
   },
   content: {
-    width: "100%"
+    width: "100%",
+    // marginVertical: 20
   },
 
 })
