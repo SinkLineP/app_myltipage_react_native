@@ -17,7 +17,7 @@ export default function TabLink({ navigation, route, title, iconName, typeIcon }
     <Pressable onPress={() => {
       navigation.navigate(route)
     }}>
-      <ContainerTab>
+      <ContainerTab isShowRow={true}>
         <View style={stylesTabLink.containerLocationButton}>
           <View>
             <ShowIcon typeIcon={typeIcon} iconName={iconName} />

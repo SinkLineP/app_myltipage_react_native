@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, Dimensions, ScrollView, StyleSheet, View} from "react-native";
-import ContainerTab from "../../ContainerTab/ContainerTab";
 import {Animated, Marker} from 'react-native-maps';
 import {useDispatch, useSelector} from "react-redux";
 import {saveAddress, setActiveTab, setCoordinates} from "../../../../store/Slices/searchMapSlice";
@@ -10,10 +9,8 @@ import {CustomMarkerMap} from "../../../CustomMarkerMap/CustomMarkerMap";
 import CarouselItems from "../../CarouselItems/CarouselItems";
 
 
-export const TabLocation = () => {
+export const TabLocation = ({ navigation }) => {
   const dispatch = useDispatch();
-  const coordinateStore = useSelector(state => state.searchMap.currentCoordinate);
-  // const currentAddress = useSelector(state => state.searchMap.currentAddress);
   const [region, setRegion] = useState({
     latitude: 46.7114346,
     longitude: 38.2738027,
@@ -21,7 +18,7 @@ export const TabLocation = () => {
     longitudeDelta: 0.0621
   });
   const flatListRef = useRef(null);
-  const [currentAddress, setCurrentAddress] = useState("");
+  const [currentEstate, setCurrentEstate] = useState(null);
 
   const [estates, setEstates] = useState([{
     id: 0,
@@ -50,12 +47,8 @@ export const TabLocation = () => {
   }])
 
   const reverseGeocode = (latitude, longitude) => {
-    console.log(latitude);
-    console.log(longitude);
-
     const key = API_KEY_OpenCage;
     opencage.geocode({ key, q: `${latitude},${longitude}`}).then(response => {
-      console.log({address: response.results[0].formatted})
       dispatch(saveAddress({address: response.results[0].formatted}))
     });
   }
@@ -112,12 +105,12 @@ export const TabLocation = () => {
         paddingHorizontal: 10,
         marginVertical: 10
       }}>
-        <CarouselItems flatListRef={flatListRef} setRegion={setRegion} data={estates} />
+        <CarouselItems flatListRef={flatListRef} setRegion={setRegion} data={estates} setCurrentEstate={setCurrentEstate} />
       </View>
 
       <View style={{paddingTop: 30}}>
         <Button
-          title={"Сохранить"}
+          title={"Открыть объявление"}
           onPress={() => {
             dispatch(setCoordinates({
               lat: region.latitude,
@@ -127,6 +120,8 @@ export const TabLocation = () => {
             }))
 
             reverseGeocode(region.latitude, region.longitude);
+
+            navigation.navigate("ShowAdvertisement", {estate: currentEstate})
           }}
           color={"#58955a"} />
       </View>

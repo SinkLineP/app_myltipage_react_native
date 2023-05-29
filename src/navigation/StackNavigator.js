@@ -36,6 +36,7 @@ import {useSelector} from "react-redux";
 import {TabLocation} from "../components/SearchTabs/Tabs/TabLocation/TabLocation";
 import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/CountryApp";
 import TabAdvancedSearch from "../components/SearchTabs/Tabs/TabAdvancedSearch/TabAdvancedSearch";
+import ShowAdvertisement from "./screens/Menu/screens/ShowAdvertisement/ShowAdvertisement";
 
 
 const Stack = createStackNavigator();
@@ -110,6 +111,7 @@ const SearchStackNavigator = () => {
       <Stack.Screen name="Search" component={Search} options={setOptions("Поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="TabLocation" component={TabLocation} options={setOptions("Быстрый поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="TabAdvancedSearch" component={TabAdvancedSearch} options={setOptions("Расширенный поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
+      <Stack.Screen name="ShowAdvertisement" component={ShowAdvertisement} options={setOptions("Осмотреть", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }
