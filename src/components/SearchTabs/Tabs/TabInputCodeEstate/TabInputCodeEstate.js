@@ -7,19 +7,17 @@ export default function TabInputCodeEstate() {
   const [codeValues, setCodeValues] = useState();
 
   return (
-    <ContainerTab>
-      <View style={stylesTabInputCodeEstate.content}>
-        <Text style={stylesTabInputCodeEstate.label}>Введите код объекта: </Text>
-        <TextInputMasked
-          mask={"999-999-999"}
-          values={codeValues}
-          fontSize={16}
-          funcChangeText={(noParseText, parsedText) => setCodeValues(parsedText)}
-          keyboardType={"numeric"}
-          placeholder={"Пример кода: 999-999-999"}
-          colorBorder={"tomato"}
-        />
-      </View>
+    <ContainerTab isShowRow={true}>
+      <Text style={stylesTabInputCodeEstate.label}>Введите код объекта: </Text>
+      <TextInputMasked
+        mask={"999-999-999"}
+        values={codeValues}
+        fontSize={16}
+        funcChangeText={(noParseText, parsedText) => setCodeValues(parsedText)}
+        keyboardType={"numeric"}
+        placeholder={"Пример кода: 999-999-999"}
+        colorBorder={"tomato"}
+      />
     </ContainerTab>
   )
 }

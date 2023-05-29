@@ -5,7 +5,7 @@ import {saveAddress, setActiveTab, setCoordinates} from "../../../store/Slices/s
 import RenderItem from "./RenderItem";
 
 
-export default function CarouselItems({ data, setRegion, flatListRef }) {
+export default function CarouselItems({ data, setRegion, flatListRef, setCurrentEstate }) {
   const dispatch = useDispatch();
   const activeTab = useSelector(state => state.searchMap.activeTab);
 
@@ -21,6 +21,8 @@ export default function CarouselItems({ data, setRegion, flatListRef }) {
     if (viewableItems.length !== 0) {
       const item = viewableItems[0].item;
       const index = viewableItems[0].index;
+
+      setCurrentEstate(item);
 
       dispatch(setActiveTab(index));
 

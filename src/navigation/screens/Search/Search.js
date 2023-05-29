@@ -8,21 +8,12 @@ import TabLink from "../../../components/SearchTabs/Tabs/TabLink/TabLink";
 
 
 export default function Search({ navigation }) {
-  const [currentItem, setCurrentItem] = useState({});
-  const modalRefCategories = useRef(null);
-
-
   return (
     <View style={stylesSearch.container}>
       <ScrollView style={stylesSearch.scrollViewContainer}>
         <TabLink navigation={navigation} title={"Быстрый поиск по карте.."} iconName={"location-pin"} typeIcon={"entypo"} route={"TabLocation"} />
-        <TabLink navigation={navigation} title={"Расширенный поиск"} iconName={"home-search-outline"} typeIcon={"material"} route={"TabLocation"} />
+        <TabLink navigation={navigation} title={"Расширенный поиск"} iconName={"home-search-outline"} typeIcon={"material"} route={"TabAdvancedSearch"} />
       </ScrollView>
-      <PortalProvider>
-        <BottomModalWindow modalRef={modalRefCategories}>
-          {currentItem.length !== 0 ? (<CategoriesContent currentItem={currentItem} />) : ("") }
-        </BottomModalWindow>
-      </PortalProvider>
     </View>
   )
 }
