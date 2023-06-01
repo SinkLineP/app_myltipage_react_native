@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
-import ContainerTab from "../../ContainerTab/ContainerTab";
-import TextInputMasked from "../../../../navigation/screens/Authorization/components/TextInputMasked/TextInputMasked";
+import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
+import TextInputMasked from "../../screens/Authorization/components/TextInputMasked/TextInputMasked";
 
 export default function TabInputCodeEstate() {
   const [codeValues, setCodeValues] = useState();

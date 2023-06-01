@@ -1,8 +1,8 @@
 import React, {useRef, useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
-import ContainerTab from "../../ContainerTab/ContainerTab";
+import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import {Switch} from "react-native-switch";
-import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
+import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
 import {PortalProvider} from "@gorhom/portal";
 import Slider from "@react-native-community/slider";
 

@@ -1,10 +1,6 @@
-import React, {useRef, useState} from "react";
-import {View, StyleSheet, ScrollView, Text, TextInput, Pressable} from "react-native";
-import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
-import {PortalProvider} from "@gorhom/portal";
-import CategoriesContent from "./components/CategoriesContent/CategoriesContent";
-import TabAdvancedSearch from "../../../components/SearchTabs/Tabs/TabAdvancedSearch/TabAdvancedSearch";
-import TabLink from "../../../components/SearchTabs/Tabs/TabLink/TabLink";
+import React from "react";
+import {View, StyleSheet, ScrollView} from "react-native";
+import TabLink from "../../tabs/TabLink/TabLink";
 
 
 export default function Search({ navigation }) {

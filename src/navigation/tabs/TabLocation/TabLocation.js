@@ -1,12 +1,14 @@
 import React, {useRef, useState} from "react";
-import {Button, Dimensions, ScrollView, StyleSheet, View} from "react-native";
+import {Button, Dimensions, FlatList, ScrollView, StyleSheet, TextInput, View, Text, Pressable} from "react-native";
 import {Animated, Marker} from 'react-native-maps';
-import {useDispatch, useSelector} from "react-redux";
-import {saveAddress, setActiveTab, setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import {useDispatch} from "react-redux";
+import {saveAddress, setActiveTab, setCoordinates} from "../../../store/Slices/searchMapSlice";
 import * as opencage from "opencage-api-client";
-import {API_KEY_OpenCage} from "../../../../Variables/ServerConfig";
-import {CustomMarkerMap} from "../../../CustomMarkerMap/CustomMarkerMap";
-import CarouselItems from "../../CarouselItems/CarouselItems";
+import {API_KEY_OpenCage} from "../../../Variables/ServerConfig";
+import {CustomMarkerMap} from "../../../components/CustomMarkerMap/CustomMarkerMap";
+import CarouselItems from "../../../components/SearchTabs/CarouselItems/CarouselItems";
+import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
+import {InnerScreen} from "react-native-screens";
 
 
 export const TabLocation = ({ navigation }) => {
@@ -69,8 +71,103 @@ export const TabLocation = ({ navigation }) => {
     })
   }
 
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const limitResulItems = 5;
+  const [activeLocation, setActiveLocation] = useState({});
+
+  const autoSuggestions = (query) => {
+    const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+    const token = "900a2e145ea5b6e72207aa3fe72d2df99e3b7a7d";
+
+    const options = {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Token " + token
+      },
+      body: JSON.stringify({query: query})
+    }
+
+    fetch(url, options)
+      .then(response => response.json())
+      .then(result => setSearchResult(result.suggestions.slice(0, limitResulItems)))
+      .catch(error => console.log("error", error));
+  }
+
+  const RenderItemAutoSuggestions = () => {
+    return searchResult.map((item, index) => {
+      return (
+        <Pressable onPress={() => {
+          setActiveLocation(item);
+          setSearchInput(item.value)
+        }} style={{
+          paddingVertical: 5,
+          borderBottomWidth: 1,
+          borderTopWidth: index === 0 ? 1 : 0,
+          borderColor: "#d2d2d2",
+        }} key={index}>
+          <Text style={{
+            color: "#323232",
+          }}>{item.value}</Text>
+        </Pressable>
+      )
+    })
+  }
+
+  const ShowAndHide = ({children}) => {
+    if (searchResult.length !== 0) {
+      if (JSON.stringify(activeLocation) === "{}") {
+        return children;
+      } else {
+        console.log();
+        if (activeLocation.value.length !== searchInput.length) {
+          return children;
+        }
+      }
+    }
+  }
+
   return (
     <ScrollView style={stylesTabWithIcon.content}>
+
+      <ContainerTab>
+        <View style={stylesTabWithIcon.containerSearchInput}>
+          <TextInput
+            style={stylesTabWithIcon.searchInput}
+            value={searchInput}
+            onChangeText={(val) => {
+              if (val.length === 0) {
+                setActiveLocation({})
+              }
+
+              autoSuggestions(val)
+              setSearchInput(val)
+            }}
+            placeholder={"Введите адрес.."}
+          />
+          <Text style={stylesTabWithIcon.clearSearchInput} onPress={() => {
+            setSearchInput("")
+            setSearchResult([])
+            setActiveLocation({})
+          }}>{searchInput !== "" ? "x" : ""}</Text>
+        </View>
+      </ContainerTab>
+
+      {/*{searchResult.length !== 0 && () ? (*/}
+
+      {/*) : ("")}*/}
+
+      <ShowAndHide>
+        <ContainerTab>
+          <View style={stylesTabWithIcon.containerResultSearch}>
+            <RenderItemAutoSuggestions />
+          </View>
+        </ContainerTab>
+      </ShowAndHide>
+
       <Animated
         toolbarEnabled={false}
         zoomControlEnabled={true}
@@ -143,19 +240,27 @@ const stylesTabWithIcon = StyleSheet.create({
     textAlign: "center"
   },
   searchInput: {
-    borderWidth: 1,
-    borderColor: "#323232",
-    marginTop: 10,
-    height: 30,
-    lineHeight: 10,
-    paddingLeft: 20,
-    marginLeft: "auto",
-    marginRight: "auto",
-    width: "90%"
+    height: 50,
+    width: "90%",
+    fontSize: 16
   },
   content: {
     width: "100%",
-    // marginVertical: 20
   },
+  containerResultSearch: {
 
+  },
+  clearSearchInput: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "tomato",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    bottom: 3,
+  },
+  containerSearchInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
 })

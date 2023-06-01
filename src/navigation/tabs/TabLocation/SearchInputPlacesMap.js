@@ -1,8 +1,8 @@
 import {ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {API_KEY_GeoAPIFY} from "../../../../Variables/ServerConfig";
-import {formattedResultPlacesItem, translateText} from "../../../../Variables/functions";
+import {API_KEY_GeoAPIFY} from "../../../Variables/ServerConfig";
+import {formattedResultPlacesItem, translateText} from "../../../Variables/functions";
 
 export default function SearchInputPlacesMap({getCoordinate}) {
   const dispatch = useDispatch();

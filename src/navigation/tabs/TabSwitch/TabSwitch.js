@@ -1,7 +1,7 @@
 import React from "react";
 import {View} from "react-native";
-import CustomSwitch from "../../../CustomSwitch/CustomSwitch";
-import ContainerTab from "../../ContainerTab/ContainerTab";
+import CustomSwitch from "../../../components/CustomSwitch/CustomSwitch";
+import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 
 
 export const TabSwitch = ({setSelectedSwitch, option1, option2, selectedColor, isCottage}) => {

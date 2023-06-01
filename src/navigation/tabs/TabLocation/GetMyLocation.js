@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 import * as Location from 'expo-location';
 import {FontAwesome} from "@expo/vector-icons";
-import {API_KEY_GeoAPIFY} from "../../../../Variables/ServerConfig";
+import {API_KEY_GeoAPIFY} from "../../../Variables/ServerConfig";
 import {useDispatch} from "react-redux";
-import {saveAddress, setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import {saveAddress, setCoordinates} from "../../../store/Slices/searchMapSlice";
 
 
 

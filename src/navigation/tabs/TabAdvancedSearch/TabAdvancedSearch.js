@@ -2,13 +2,13 @@ import React, {useRef, useState} from "react";
 import TabInputCodeEstate from "../TabInputCodeEstate/TabInputCodeEstate";
 import {TabSwitch} from "../TabSwitch/TabSwitch";
 import {TabCategoryEstate} from "../TabCategoryEstate/TabCategoryEstate";
-import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
-import CategoriesContent from "../../../../navigation/screens/Search/components/CategoriesContent/CategoriesContent";
 import {PortalProvider} from "@gorhom/portal";
 import TabPrice from "../TabPrice/TabPrice";
 import {Dimensions, ScrollView, StyleSheet, Text, View} from "react-native";
 import {Switch} from "react-native-switch";
 import Slider from "@react-native-community/slider";
+import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
+import CategoriesContent from "../../screens/Search/components/CategoriesContent/CategoriesContent";
 
 
 export default function TabAdvancedSearch() {

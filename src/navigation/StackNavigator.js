@@ -33,10 +33,10 @@ import {
   controllerTheme_StackNavigator_Title
 } from "../controllers/Theme/Theme";
 import {useSelector} from "react-redux";
-import {TabLocation} from "../components/SearchTabs/Tabs/TabLocation/TabLocation";
+import {TabLocation} from "./tabs/TabLocation/TabLocation";
 import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/CountryApp";
-import TabAdvancedSearch from "../components/SearchTabs/Tabs/TabAdvancedSearch/TabAdvancedSearch";
 import ShowAdvertisement from "./screens/Menu/screens/ShowAdvertisement/ShowAdvertisement";
+import TabAdvancedSearch from "./tabs/TabAdvancedSearch/TabAdvancedSearch";
 
 
 const Stack = createStackNavigator();

@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 import {Text, TouchableWithoutFeedback, View, StyleSheet} from "react-native";
-import {editCategory} from "../../../../../store/Slices/categoryEstatesSlice";
+import {editCategory} from "../../../../store/Slices/categoryEstatesSlice";
 import {Feather} from "@expo/vector-icons";
 
 
