@@ -11,21 +11,31 @@ import CarouselItems from "../../../components/SearchTabs/CarouselItems/Carousel
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import {InnerScreen} from "react-native-screens";
 import ShowAndHide from "../../../components/SearchTabs/ShowAndHide/ShowAndHide";
+import RenderItemAutoSuggestions
+  from "../../../components/SearchTabs/RenderItemAutoSuggestions/RenderItemAutoSuggestions";
+import SearchInput from "../../../components/SearchTabs/SearchInput/SearchInput";
 
 
 export const TabLocation = ({ navigation }) => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const limitResulItems = 5;
   const [activeLocation, setActiveLocation] = useState({});
   const flatListRef = useRef(null);
   const [currentEstate, setCurrentEstate] = useState(null);
+  const map = useRef(null);
+  const [currentZoom, setCurrentZoom] = useState(12.66288948059082);
+
   const [region, setRegion] = useState({
     latitude: 46.7114346,
     longitude: 38.2738027,
     latitudeDelta: 0.1022,
     longitudeDelta: 0.0621
+  });
+
+  const [currentDelta, setCurrentDelta] = useState({
+    latitudeDelta: region.longitudeDelta,
+    longitudeDelta: region.longitudeDelta
   });
 
   const [estates, setEstates] = useState([{
@@ -77,101 +87,18 @@ export const TabLocation = ({ navigation }) => {
     })
   }
 
-  const autoSuggestions = (query) => {
-    const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
-    const token = "900a2e145ea5b6e72207aa3fe72d2df99e3b7a7d";
-
-    const options = {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Token " + token
-      },
-      body: JSON.stringify({query: query})
-    }
-
-    fetch(url, options)
-      .then(response => response.json())
-      .then(result => setSearchResult(result.suggestions.slice(0, limitResulItems)))
-      .catch(error => console.log("error", error));
-  }//
-
-  const RenderItemAutoSuggestions = () => {
-    return searchResult.map((item, index) => {
-      return (
-        <Pressable onPress={() => {
-          const latitude = item.data.geo_lat;
-          const longitude = item.data.geo_lon;
-
-          if (latitude !== null && longitude !== null) {
-            setRegion({
-              latitude: Number(latitude),
-              longitude: Number(longitude),
-              latitudeDelta: 0.09,
-              longitudeDelta: 0.09,
-            })
-
-            setActiveLocation(item);
-            setSearchInput(item.value);
-          }
-
-          setSearchInput(item.value);
-        }} style={{
-          paddingVertical: 5,
-          borderBottomWidth: 1,
-          borderTopWidth: index === 0 ? 1 : 0,
-          borderColor: "#d2d2d2",
-        }} key={index}>
-          <Text style={{
-            color: "#323232",
-          }}>{item.value}</Text>
-        </Pressable>
-      )
-    })
-  }
-
-  const map = useRef(null);
-  const [currentZoom, setCurrentZoom] = useState(12.66288948059082);
-  const [currentDelta, setCurrentDelta] = useState({
-    latitudeDelta: region.longitudeDelta,
-    longitudeDelta: region.longitudeDelta
-  });
 
   return (
     <ScrollView style={stylesTabWithIcon.content}>
-
-      <ContainerTab>
-        <View style={stylesTabWithIcon.containerSearchInput}>
-          <TextInput
-            style={stylesTabWithIcon.searchInput}
-            value={searchInput}
-            onChangeText={(val) => {
-              if (val.length === 0) {
-                setActiveLocation({})
-              }
-
-              autoSuggestions(val)
-              setSearchInput(val)
-            }}
-            placeholder={"Введите адрес.."}
-          />
-          <Text style={stylesTabWithIcon.clearSearchInput} onPress={() => {
-            setSearchInput("")
-            setSearchResult([])
-            setActiveLocation({})
-          }}>{searchInput !== "" ? "x" : ""}</Text>
-        </View>
-      </ContainerTab>
-
-      <ShowAndHide activeLocation={activeLocation} searchInput={searchInput} searchResult={searchResult}>
-        <ContainerTab>
-          <View style={stylesTabWithIcon.containerResultSearch}>
-            <RenderItemAutoSuggestions />
-          </View>
-        </ContainerTab>
-      </ShowAndHide>
+      <SearchInput
+        activeLocation={activeLocation}
+        setRegion={setRegion}
+        searchResult={searchResult}
+        setSearchInput={setSearchInput}
+        searchInput={searchInput}
+        setActiveLocation={setActiveLocation}
+        setSearchResult={setSearchResult}
+      />
 
       <Animated
         ref={map}
@@ -254,28 +181,7 @@ const stylesTabWithIcon = StyleSheet.create({
     width: "20%",
     textAlign: "center"
   },
-  searchInput: {
-    height: 50,
-    width: "90%",
-    fontSize: 16
-  },
   content: {
     width: "100%",
-  },
-  containerResultSearch: {
-
-  },
-  clearSearchInput: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "tomato",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    bottom: 3,
-  },
-  containerSearchInput: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
   },
 })
