@@ -1,6 +1,7 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Dimensions, FlatList, ScrollView, StyleSheet, TextInput, View, Text, Pressable} from "react-native";
-import {Animated, Marker} from 'react-native-maps';
+import MapView, {Animated, Marker} from 'react-native-maps';
+
 import {useDispatch} from "react-redux";
 import {saveAddress, setActiveTab, setCoordinates} from "../../../store/Slices/searchMapSlice";
 import * as opencage from "opencage-api-client";
@@ -104,8 +105,6 @@ export const TabLocation = ({ navigation }) => {
           const latitude = item.data.geo_lat;
           const longitude = item.data.geo_lon;
 
-          console.log(item);
-
           if (latitude !== null && longitude !== null) {
             setRegion({
               latitude: Number(latitude),
@@ -132,6 +131,13 @@ export const TabLocation = ({ navigation }) => {
       )
     })
   }
+
+  const map = useRef(null);
+  const [currentZoom, setCurrentZoom] = useState(12.66288948059082);
+  const [currentDelta, setCurrentDelta] = useState({
+    latitudeDelta: region.longitudeDelta,
+    longitudeDelta: region.longitudeDelta
+  });
 
   return (
     <ScrollView style={stylesTabWithIcon.content}>
@@ -168,6 +174,7 @@ export const TabLocation = ({ navigation }) => {
       </ShowAndHide>
 
       <Animated
+        ref={map}
         toolbarEnabled={false}
         zoomControlEnabled={true}
         region={region}
@@ -177,6 +184,15 @@ export const TabLocation = ({ navigation }) => {
           width: Dimensions.get("window").width - 15,
           height: Dimensions.get("window").height / 2,
           marginLeft: 7.5
+        }}
+        onRegionChange={(region) => {
+          setCurrentDelta({
+            latitudeDelta: region.latitudeDelta,
+            longitudeDelta: region.longitudeDelta
+          })
+          // map?.current?.getCamera().then((cam) => {
+          //   console.log(cam.zoom);
+          // })
         }}
       >
         <>
@@ -189,7 +205,7 @@ export const TabLocation = ({ navigation }) => {
                   pinColor="tomato"
                   coordinate={{latitude: estate.coords.latitude, longitude: estate.coords.longitude}}
                 >
-                  <CustomMarkerMap estate={estate} />
+                  <CustomMarkerMap delta={currentDelta} />
                 </Marker>
               )
             })
