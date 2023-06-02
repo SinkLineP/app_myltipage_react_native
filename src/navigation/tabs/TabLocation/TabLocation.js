@@ -9,18 +9,23 @@ import {CustomMarkerMap} from "../../../components/CustomMarkerMap/CustomMarkerM
 import CarouselItems from "../../../components/SearchTabs/CarouselItems/CarouselItems";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import {InnerScreen} from "react-native-screens";
+import ShowAndHide from "../../../components/SearchTabs/ShowAndHide/ShowAndHide";
 
 
 export const TabLocation = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const limitResulItems = 5;
+  const [activeLocation, setActiveLocation] = useState({});
+  const flatListRef = useRef(null);
+  const [currentEstate, setCurrentEstate] = useState(null);
   const [region, setRegion] = useState({
     latitude: 46.7114346,
     longitude: 38.2738027,
     latitudeDelta: 0.1022,
     longitudeDelta: 0.0621
   });
-  const flatListRef = useRef(null);
-  const [currentEstate, setCurrentEstate] = useState(null);
 
   const [estates, setEstates] = useState([{
     id: 0,
@@ -71,11 +76,6 @@ export const TabLocation = ({ navigation }) => {
     })
   }
 
-  const [searchInput, setSearchInput] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const limitResulItems = 5;
-  const [activeLocation, setActiveLocation] = useState({});
-
   const autoSuggestions = (query) => {
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
     const token = "900a2e145ea5b6e72207aa3fe72d2df99e3b7a7d";
@@ -95,14 +95,30 @@ export const TabLocation = ({ navigation }) => {
       .then(response => response.json())
       .then(result => setSearchResult(result.suggestions.slice(0, limitResulItems)))
       .catch(error => console.log("error", error));
-  }
+  }//
 
   const RenderItemAutoSuggestions = () => {
     return searchResult.map((item, index) => {
       return (
         <Pressable onPress={() => {
-          setActiveLocation(item);
-          setSearchInput(item.value)
+          const latitude = item.data.geo_lat;
+          const longitude = item.data.geo_lon;
+
+          console.log(item);
+
+          if (latitude !== null && longitude !== null) {
+            setRegion({
+              latitude: Number(latitude),
+              longitude: Number(longitude),
+              latitudeDelta: 0.09,
+              longitudeDelta: 0.09,
+            })
+
+            setActiveLocation(item);
+            setSearchInput(item.value);
+          }
+
+          setSearchInput(item.value);
         }} style={{
           paddingVertical: 5,
           borderBottomWidth: 1,
@@ -115,19 +131,6 @@ export const TabLocation = ({ navigation }) => {
         </Pressable>
       )
     })
-  }
-
-  const ShowAndHide = ({children}) => {
-    if (searchResult.length !== 0) {
-      if (JSON.stringify(activeLocation) === "{}") {
-        return children;
-      } else {
-        console.log();
-        if (activeLocation.value.length !== searchInput.length) {
-          return children;
-        }
-      }
-    }
   }
 
   return (
@@ -156,11 +159,7 @@ export const TabLocation = ({ navigation }) => {
         </View>
       </ContainerTab>
 
-      {/*{searchResult.length !== 0 && () ? (*/}
-
-      {/*) : ("")}*/}
-
-      <ShowAndHide>
+      <ShowAndHide activeLocation={activeLocation} searchInput={searchInput} searchResult={searchResult}>
         <ContainerTab>
           <View style={stylesTabWithIcon.containerResultSearch}>
             <RenderItemAutoSuggestions />

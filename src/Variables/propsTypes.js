@@ -29,3 +29,11 @@
 /**
  * @param {{components: string}} r;
  */
+
+/**
+ * @param {{geo_lat: number}} r;
+ */
+
+/**
+ * @param {{geo_lon: number}} r;
+ */
