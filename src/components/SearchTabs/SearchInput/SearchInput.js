@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../ContainerTab/ContainerTab";
 import RenderItemAutoSuggestions from "../RenderItemAutoSuggestions/RenderItemAutoSuggestions";
@@ -7,14 +7,14 @@ import ShowAndHide from "../ShowAndHide/ShowAndHide";
 
 export default function SearchInput({
   searchInput,
-  setActiveLocation,
   setSearchInput,
-  setSearchResult,
-  activeLocation,
-  searchResult,
   setRegion
 }) {
   const limitResulItems = 5;
+  const [activeLocation, setActiveLocation] = useState({});
+  const [searchResult, setSearchResult] = useState([]);
+
+
 
   const autoSuggestions = (query) => {
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";

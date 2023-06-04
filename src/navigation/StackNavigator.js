@@ -37,6 +37,7 @@ import {TabLocation} from "./tabs/TabLocation/TabLocation";
 import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/CountryApp";
 import ShowAdvertisement from "./screens/Menu/screens/ShowAdvertisement/ShowAdvertisement";
 import TabAdvancedSearch from "./tabs/TabAdvancedSearch/TabAdvancedSearch";
+import SearchAddress from "./screens/SearchAddress/SearchAddress";
 
 
 const Stack = createStackNavigator();
@@ -112,6 +113,7 @@ const SearchStackNavigator = () => {
       <Stack.Screen name="TabLocation" component={TabLocation} options={setOptions("Быстрый поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="TabAdvancedSearch" component={TabAdvancedSearch} options={setOptions("Расширенный поиск", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="ShowAdvertisement" component={ShowAdvertisement} options={setOptions("Осмотреть", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
+      <Stack.Screen name="SearchAddress" component={SearchAddress} options={setOptions("Выберите адрес", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }

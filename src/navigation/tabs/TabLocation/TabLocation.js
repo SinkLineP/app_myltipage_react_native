@@ -19,12 +19,10 @@ import SearchInput from "../../../components/SearchTabs/SearchInput/SearchInput"
 export const TabLocation = ({ navigation }) => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const [activeLocation, setActiveLocation] = useState({});
   const flatListRef = useRef(null);
   const [currentEstate, setCurrentEstate] = useState(null);
   const map = useRef(null);
-  const [currentZoom, setCurrentZoom] = useState(12.66288948059082);
+  // const [currentZoom, setCurrentZoom] = useState(12.66288948059082);
 
   const [region, setRegion] = useState({
     latitude: 46.7114346,
@@ -91,13 +89,9 @@ export const TabLocation = ({ navigation }) => {
   return (
     <ScrollView style={stylesTabWithIcon.content}>
       <SearchInput
-        activeLocation={activeLocation}
         setRegion={setRegion}
-        searchResult={searchResult}
         setSearchInput={setSearchInput}
         searchInput={searchInput}
-        setActiveLocation={setActiveLocation}
-        setSearchResult={setSearchResult}
       />
 
       <Animated
@@ -117,8 +111,13 @@ export const TabLocation = ({ navigation }) => {
             latitudeDelta: region.latitudeDelta,
             longitudeDelta: region.longitudeDelta
           })
-          // map?.current?.getCamera().then((cam) => {
-          //   console.log(cam.zoom);
+
+          map?.current?.getCamera().then((cam) => {
+            console.log(cam);
+          })
+
+          // map?.current?.setCamera({
+          //   zoom: 20
           // })
         }}
       >
