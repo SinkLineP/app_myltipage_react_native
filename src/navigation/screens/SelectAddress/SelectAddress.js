@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TextInput, View, Text} from "react-native";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import SearchInput from "../../../components/SearchTabs/SearchInput/SearchInput";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setSettlements, setStreet} from "../../../store/Slices/searchAddressSlice";
 
 
@@ -13,13 +13,41 @@ export default function SelectAddress({ route, navigation }) {
   const [settlementValue, setSettlementValue] = useState("");
   const [streetValue, setStreetValue] = useState("");
   const dispatch = useDispatch();
+  const settlementStore = useSelector(state => state.searchAddress.settlements);
+  const streetStore = useSelector(state => state.searchAddress.street);
 
-  if (settlementValue !== "") {
+
+  useEffect(() => {
     console.log(settlementValue);
+    console.log(streetValue);
+  })
+
+  const ShowSelectedAddress = ({ type }) => {
+    if (type === "settlement") {
+      if (settlementStore !== "") {
+        return (
+          <ContainerTab>
+            <Text style={{ color: "#323232", fontWeight: "bold" }}>Выбранный адрес: </Text>
+            <Text style={{ color: "#323232", fontWeight: "bold" }}>{settlementStore}</Text>
+          </ContainerTab>
+        )
+      }
+    } else if (type === "street") {
+      if (streetStore !== "") {
+        return (
+          <ContainerTab>
+            <Text style={{ color: "#323232", fontWeight: "bold" }}>Выбранная улица: </Text>
+            <Text style={{ color: "#323232", fontWeight: "bold" }}>{streetStore}</Text>
+          </ContainerTab>
+        )
+      }
+    }
   }
+
 
   return (
     <>
+      <ShowSelectedAddress type={typeLocation} />
       <SearchInput
         setSearchInput={setValueLocation}
         searchInput={valueLocation}
@@ -35,6 +63,9 @@ export default function SelectAddress({ route, navigation }) {
         fontWeight: "bold",
         color: "#fff"
       }} onPress={() => {
+        console.log(settlementValue);
+        console.log(streetValue);
+
         if (typeLocation === "settlement") {
           dispatch(setSettlements(settlementValue));
         } else if (typeLocation === "street") {

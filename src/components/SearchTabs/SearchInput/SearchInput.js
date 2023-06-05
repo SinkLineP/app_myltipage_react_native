@@ -4,17 +4,21 @@ import ContainerTab from "../ContainerTab/ContainerTab";
 import RenderItemAutoSuggestions from "../RenderItemAutoSuggestions/RenderItemAutoSuggestions";
 import ShowAndHide from "../ShowAndHide/ShowAndHide";
 import {setSettlements} from "../../../store/Slices/searchAddressSlice";
+import {useSelector} from "react-redux";
 
 
 export default function SearchInput({
   searchInput,
   setSearchInput,
   setRegion,
-  type
+  type,
+  setStreet,
+  setSettlement
 }) {
   const limitResulItems = 5;
   const [activeLocation, setActiveLocation] = useState({});
   const [searchResult, setSearchResult] = useState([]);
+
 
   const autoSuggestions = (query) => {
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
@@ -37,6 +41,7 @@ export default function SearchInput({
       .catch(error => console.log("error", error));
   }
 
+
   return (
     <>
       <ContainerTab>
@@ -52,12 +57,15 @@ export default function SearchInput({
               autoSuggestions(val)
               setSearchInput(val)
             }}
-            placeholder={"Введите адрес.."}
+            placeholder={"Введите адрес..."}
           />
           <Text style={stylesSearchInput.clearSearchInput} onPress={() => {
             setSearchInput("")
             setSearchResult([])
             setActiveLocation({})
+
+            setSettlement("");
+            setStreet("");
           }}>{searchInput !== "" ? "x" : ""}</Text>
         </View>
       </ContainerTab>
@@ -65,7 +73,15 @@ export default function SearchInput({
       <ShowAndHide activeLocation={activeLocation} searchInput={searchInput} searchResult={searchResult}>
         <ContainerTab>
           <View>
-            <RenderItemAutoSuggestions searchResult={searchResult} setActiveLocation={setActiveLocation} setRegion={setRegion} setSearchInput={setSearchInput} type={type} />
+            <RenderItemAutoSuggestions
+              searchResult={searchResult}
+              setActiveLocation={setActiveLocation}
+              setRegion={setRegion}
+              setSearchInput={setSearchInput}
+              type={type}
+              setSettlement={setSettlement}
+              setStreet={setStreet}
+            />
           </View>
         </ContainerTab>
       </ShowAndHide>

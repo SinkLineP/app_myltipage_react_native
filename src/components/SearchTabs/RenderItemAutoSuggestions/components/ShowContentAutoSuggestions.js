@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {setSettlements, setStreet} from "../../../../store/Slices/searchAddressSlice";
 
 
-export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type }) => {
+export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type, setSettlement, setStreet }) => {
   return (
     <Pressable key={index} onPress={() => {
       const latitude = item.data.geo_lat;
@@ -12,14 +12,13 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
 
       if (latitude !== null && longitude !== null) {
         if (typeof setRegion !== undefined) {
-          // if (type !== undefined) {
-          //   if (type === "settlement") {
-          //     console.log("item.unrestricted_value");
-          //     dispatch(setSettlements(item.data.settlement))
-          //   } else if (type === "street") {
-          //     dispatch(setStreet(item.data.settlement))
-          //   }
-          // }
+
+          if (setSettlement !== undefined) {
+            setSettlement(item.unrestricted_value);
+          } else if (setStreet !== undefined) {
+            setStreet(item.unrestricted_value);
+          }
+
           setRegion({
             latitude: Number(latitude),
             longitude: Number(longitude),
