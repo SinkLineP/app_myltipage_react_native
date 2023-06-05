@@ -10,7 +10,7 @@ export const ShowBtnLocation = ({ text, typeLocationProps, defaultText }) => {
     <Pressable onPress={() => {
       navigation.navigate("SelectAddress", {
         typeLocation: typeLocationProps,
-        textLocation: defaultText
+        textLocation: defaultText,
       });
     }} style={stylesShowBtnLocation.containerText}>
       <Text style={stylesShowBtnLocation.text}>{ text }</Text>

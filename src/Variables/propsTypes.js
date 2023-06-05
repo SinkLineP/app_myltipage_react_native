@@ -55,3 +55,11 @@
 /**
  * @param {{settlement: string || null}} item.data;
  */
+
+/**
+ * @param {{unrestricted_value: string || null}} item.data;
+ */
+
+/**
+ * @param {{region_fias_id: string || null}} item.data;
+ */

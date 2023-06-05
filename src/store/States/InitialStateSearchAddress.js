@@ -1,3 +1,4 @@
 export const initialState = {
-  settlements: ""
+  settlements: "",
+  street: ""
 }

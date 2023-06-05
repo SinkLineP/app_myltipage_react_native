@@ -3,6 +3,7 @@ import {StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../ContainerTab/ContainerTab";
 import RenderItemAutoSuggestions from "../RenderItemAutoSuggestions/RenderItemAutoSuggestions";
 import ShowAndHide from "../ShowAndHide/ShowAndHide";
+import {setSettlements} from "../../../store/Slices/searchAddressSlice";
 
 
 export default function SearchInput({

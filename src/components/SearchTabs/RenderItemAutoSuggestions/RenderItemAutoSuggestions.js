@@ -5,18 +5,20 @@ import {ShowContentAutoSuggestions} from "./components/ShowContentAutoSuggestion
 
 export default function RenderItemAutoSuggestions({ searchResult, setRegion, setActiveLocation, setSearchInput, type }) {
   return searchResult.map((item, index) => {
-    if (type !== undefined && type === "settlements") {
+    if (type !== undefined && type === "settlement") {
       if (item.data.city_type_full === "город" && item.data.street_type_full === null || item.data.settlement_type_full === "поселок" && item.data.street_type_full === null) {
-        return <ShowContentAutoSuggestions item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} index={index} />
+        return (
+          <ShowContentAutoSuggestions type={type} item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} index={index} />
+        )
       }
-    } else if (type !== undefined && type == "street") {
+    } else if (type !== undefined && type === "street") {
       return (
-        <View>
-          <Text>street</Text>
-        </View>
+        <ShowContentAutoSuggestions type={type} item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} index={index} />
       )
     } else {
-      return <ShowContentAutoSuggestions item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} index={index} />
+      return (
+        <ShowContentAutoSuggestions index={index} item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} />
+      )
     }
   })
 }
