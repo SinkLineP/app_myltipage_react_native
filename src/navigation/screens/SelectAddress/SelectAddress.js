@@ -33,18 +33,24 @@ export default function SelectAddress({ route, navigation }) {
             setStreet={setStreetValue}
           />
           <Text style={{
-            backgroundColor: "#82c874",
+            backgroundColor: valueLocation !== "" ? "#82c874" : "#bee6b3",
             paddingVertical: 10,
             textAlign: "center",
             fontWeight: "bold",
             color: "#fff"
           }} onPress={() => {
             if (typeLocation === "settlement") {
-              dispatch(setShowSettlements(false));
-              dispatch(setSettlements(settlementValue));
+              if (valueLocation !== "") {
+                dispatch(setShowSettlements(false));
+                dispatch(setSettlements(settlementValue));
+                navigation.goBack();
+              }
             } else if (typeLocation === "street") {
-              dispatch(setShowStreet(false));
-              dispatch(setStreet(streetValue));
+              if (valueLocation !== "") {
+                dispatch(setShowStreet(false));
+                dispatch(setStreet(streetValue));
+                navigation.goBack();
+              }
             }
           }}>
             Сохранить адрес

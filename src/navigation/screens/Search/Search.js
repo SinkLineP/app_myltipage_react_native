@@ -7,7 +7,7 @@ export default function Search({ navigation }) {
   return (
     <View style={stylesSearch.container}>
       <ScrollView style={stylesSearch.scrollViewContainer}>
-        <TabLink navigation={navigation} title={"Быстрый поиск по карте.."} iconName={"location-pin"} typeIcon={"entypo"} route={"TabLocation"} />
+        {/*<TabLink navigation={navigation} title={"Быстрый поиск по карте.."} iconName={"location-pin"} typeIcon={"entypo"} route={"TabLocation"} />*/}
         <TabLink navigation={navigation} title={"Расширенный поиск"} iconName={"home-search-outline"} typeIcon={"material"} route={"TabAdvancedSearch"} />
       </ScrollView>
     </View>
