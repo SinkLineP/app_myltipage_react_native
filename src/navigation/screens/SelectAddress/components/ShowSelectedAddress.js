@@ -10,7 +10,7 @@ import {
 } from "../../../../store/Slices/searchAddressSlice";
 
 
-export const ShowSelectedAddress = ({ typeLocation, setValueLocation }) => {
+export const ShowSelectedAddress = ({ typeLocation, setValueLocation, valueLocation }) => {
   const settlementStore = useSelector(state => state.searchAddress.settlements);
   const streetStore = useSelector(state => state.searchAddress.street);
   const isShowSettlements = useSelector(state => state.searchAddress.isShowSettlementsForm);

@@ -10,11 +10,10 @@ export default function TabAddress() {
   const navigation = useNavigation();
   const settlementStore = useSelector(state => state.searchAddress.settlements);
   const streetStore = useSelector(state => state.searchAddress.street);
-  const locationName = "";
 
   const locationNotSelected = (t) => {
     if (settlementStore !== "") {
-      return `Адрес: ${settlementStore}${streetStore !== "" ? `, ${streetStore}` : ""}`;
+      return `Адрес: ${streetStore !== "" ? streetStore : settlementStore}`;
     } else {
       return  "Выберите адрес.."
     }

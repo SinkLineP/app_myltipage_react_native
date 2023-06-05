@@ -12,8 +12,6 @@ const usersSlice = createSlice({
       state.isAuth = !state.isAuth
     },
     setCurrentUser(state, action) {
-      console.log(action.payload);
-
       state.currentUser = {
         id: action.payload.id,
         username: action.payload.username,

@@ -1,6 +1,7 @@
 import React from "react"
 import {Pressable, Text, View} from "react-native";
 import {ShowContentAutoSuggestions} from "./components/ShowContentAutoSuggestions";
+import {useSelector} from "react-redux";
 
 
 export default function RenderItemAutoSuggestions({
@@ -10,7 +11,7 @@ export default function RenderItemAutoSuggestions({
   setSearchInput,
   type,
   setSettlement,
-  setStreet
+  setStreet,
 }) {
   return searchResult.map((item, index) => {
     if (type !== undefined && type === "settlement" && setSettlement !== undefined) {

@@ -18,6 +18,7 @@ export default function SearchInput({
   const limitResulItems = 5;
   const [activeLocation, setActiveLocation] = useState({});
   const [searchResult, setSearchResult] = useState([]);
+  const settlementStore = useSelector(state => state.searchAddress.settlements);
 
 
   const autoSuggestions = (query) => {
@@ -54,7 +55,13 @@ export default function SearchInput({
                 setActiveLocation({})
               }
 
-              autoSuggestions(val)
+              if (type === "street") {
+                autoSuggestions(`${settlementStore} ${val}`)
+              } else {
+                autoSuggestions(val)
+              }
+
+
               setSearchInput(val)
             }}
             placeholder={"Введите адрес..."}
