@@ -1,37 +1,22 @@
 import React from "react"
-import {Pressable, Text} from "react-native";
+import {Pressable, Text, View} from "react-native";
+import {ShowContentAutoSuggestions} from "./components/ShowContentAutoSuggestions";
 
 
-export default function RenderItemAutoSuggestions({ searchResult, setRegion, setActiveLocation, setSearchInput }) {
+export default function RenderItemAutoSuggestions({ searchResult, setRegion, setActiveLocation, setSearchInput, type }) {
   return searchResult.map((item, index) => {
-    return (
-      <Pressable onPress={() => {
-        const latitude = item.data.geo_lat;
-        const longitude = item.data.geo_lon;
-
-        if (latitude !== null && longitude !== null) {
-          setRegion({
-            latitude: Number(latitude),
-            longitude: Number(longitude),
-            latitudeDelta: 0.09,
-            longitudeDelta: 0.09,
-          })
-
-          setActiveLocation(item);
-          setSearchInput(item.value);
-        }
-
-        setSearchInput(item.value);
-      }} style={{
-        paddingVertical: 5,
-        borderBottomWidth: 1,
-        borderTopWidth: index === 0 ? 1 : 0,
-        borderColor: "#d2d2d2",
-      }} key={index}>
-        <Text style={{
-          color: "#323232",
-        }}>{item.value}</Text>
-      </Pressable>
-    )
+    if (type !== undefined && type === "settlements") {
+      if (item.data.city_type_full === "город" && item.data.street_type_full === null || item.data.settlement_type_full === "поселок" && item.data.street_type_full === null) {
+        return <ShowContentAutoSuggestions item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} index={index} />
+      }
+    } else if (type !== undefined && type == "street") {
+      return (
+        <View>
+          <Text>street</Text>
+        </View>
+      )
+    } else {
+      return <ShowContentAutoSuggestions item={item} setRegion={setRegion} setSearchInput={setSearchInput} setActiveLocation={setActiveLocation} index={index} />
+    }
   })
 }

@@ -5,15 +5,13 @@ import ShowActiveText from "./components/ShowActiveText";
 
 export default function SearchAddress() {
   const settlement = "";
-  const district = "";
   const street = "";
 
 
   return (
     <ContainerTab>
-      <ShowActiveText locationTitle={"Населённый пункт"} defaultLocationTitle={"Выберите населённый пункт"} location={settlement} />
-      <ShowActiveText locationTitle={"Район"} defaultLocationTitle={"Выберите район"} location={district} />
-      <ShowActiveText locationTitle={"Улица"} defaultLocationTitle={"Выберите улицу"} location={street} />
+      <ShowActiveText locationTitle={"Населённый пункт"} defaultLocationTitle={"Выберите населённый пункт"} location={settlement} typeLocation={"settlement"} />
+      <ShowActiveText locationTitle={"Улица"} defaultLocationTitle={"Выберите улицу"} location={street} typeLocation={"street"} />
     </ContainerTab>
   )
 }

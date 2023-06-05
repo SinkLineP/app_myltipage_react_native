@@ -8,13 +8,12 @@ import ShowAndHide from "../ShowAndHide/ShowAndHide";
 export default function SearchInput({
   searchInput,
   setSearchInput,
-  setRegion
+  setRegion,
+  type
 }) {
   const limitResulItems = 5;
   const [activeLocation, setActiveLocation] = useState({});
   const [searchResult, setSearchResult] = useState([]);
-
-
 
   const autoSuggestions = (query) => {
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
@@ -65,7 +64,7 @@ export default function SearchInput({
       <ShowAndHide activeLocation={activeLocation} searchInput={searchInput} searchResult={searchResult}>
         <ContainerTab>
           <View>
-            <RenderItemAutoSuggestions searchResult={searchResult} setActiveLocation={setActiveLocation} setRegion={setRegion} setSearchInput={setSearchInput} />
+            <RenderItemAutoSuggestions searchResult={searchResult} setActiveLocation={setActiveLocation} setRegion={setRegion} setSearchInput={setSearchInput} type={type} />
           </View>
         </ContainerTab>
       </ShowAndHide>

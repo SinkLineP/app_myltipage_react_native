@@ -2,10 +2,10 @@ import React from "react";
 import {ShowBtnLocation} from "./ShowBtnLocation";
 
 
-export default function ShowActiveText({ locationTitle, location, defaultLocationTitle }) {
+export default function ShowActiveText({ locationTitle, location, defaultLocationTitle, typeLocation }) {
   if (location !== "") {
-    return <ShowBtnLocation text={`${locationTitle}: ${location}`} />
+    return <ShowBtnLocation defaultText={defaultLocationTitle} typeLocationProps={typeLocation} text={`${locationTitle}: ${location}`} />
   } else {
-    return <ShowBtnLocation text={defaultLocationTitle} />
+    return <ShowBtnLocation defaultText={defaultLocationTitle} typeLocationProps={typeLocation} text={defaultLocationTitle} />
   }
 }

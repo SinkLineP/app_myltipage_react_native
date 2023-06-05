@@ -4,6 +4,7 @@ import usersReducer from "./Slices/usersSlice";
 import settingsAppReducer from "./Slices/settingsAppSlice";
 import categoryEstatesReducer from "./Slices/categoryEstatesSlice";
 import searchMapReducer from "./Slices/searchMapSlice";
+import searchAddressReducer from "./Slices/searchAddressSlice";
 
 export default configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
     users: usersReducer,
     settingsApp: settingsAppReducer,
     categoryEstates: categoryEstatesReducer,
-    searchMap: searchMapReducer
+    searchMap: searchMapReducer,
+    searchAddress: searchAddressReducer
   }
 })

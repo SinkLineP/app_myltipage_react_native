@@ -37,3 +37,21 @@
 /**
  * @param {{geo_lon: number}} r;
  */
+
+//auto_suggestions search
+
+/**
+ * @param {{city_type_full: string || null}} item.data;
+ */
+
+/**
+ * @param {{street_type_full: string || null}} item.data;
+ */
+
+/**
+ * @param {{settlement_type_full: string || null}} item.data;
+ */
+
+/**
+ * @param {{settlement: string || null}} item.data;
+ */
