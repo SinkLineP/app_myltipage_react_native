@@ -3,17 +3,20 @@ import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerT
 import {MaterialIcons} from "@expo/vector-icons";
 import {View, Text, Pressable, StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
+import {useSelector} from "react-redux";
 
 
 export default function TabAddress() {
   const navigation = useNavigation();
+  const settlementStore = useSelector(state => state.searchAddress.settlements);
+  const streetStore = useSelector(state => state.searchAddress.street);
   const locationName = "";
 
-  const locationNotSelected = (locationTitle) => {
-    if (locationTitle !== "") {
-      return `Адрес: ${locationTitle}`;
+  const locationNotSelected = (t) => {
+    if (settlementStore !== "") {
+      return `Адрес: ${settlementStore}${streetStore !== "" ? `, ${streetStore}` : ""}`;
     } else {
-      return  "Выберите адрес"
+      return  "Выберите адрес.."
     }
   }
 
@@ -23,9 +26,8 @@ export default function TabAddress() {
         <Pressable onPress={() => {
           navigation.navigate("SearchAddress")
         }}>
-          <Text style={stylesTabAddress.label}>Адрес</Text>
           <View style={stylesTabAddress.containerTitle}>
-            <Text style={stylesTabAddress.titleBtn}>{locationNotSelected(locationName)}</Text>
+            <Text style={stylesTabAddress.titleBtn}>{locationNotSelected()}</Text>
             <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
           </View>
         </Pressable>

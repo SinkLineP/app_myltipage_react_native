@@ -1,4 +1,6 @@
 export const initialState = {
   settlements: "",
-  street: ""
+  street: "",
+  isShowSettlementsForm: true,
+  isShowStreetForm: true
 }
