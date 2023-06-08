@@ -10,29 +10,28 @@ import {
 } from "../../../../store/Slices/searchAddressSlice";
 
 
-export const ShowSelectedAddress = ({ typeLocation, setValueLocation, valueLocation }) => {
+export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSettlements, valueLocation }) => {
   const settlementStore = useSelector(state => state.searchAddress.settlements);
   const streetStore = useSelector(state => state.searchAddress.street);
-  const isShowSettlements = useSelector(state => state.searchAddress.isShowSettlementsForm);
   const isShowStreet = useSelector(state => state.searchAddress.isShowStreetForm);
   const dispatch = useDispatch();
 
 
   const editAddress = () => {
     if (typeLocation === "settlement") {
-      dispatch(setShowSettlements(true));
+      dispatch(setShowSettlements(false));
     } else if (typeLocation === "street") {
-      dispatch(setShowStreet(true));
+      dispatch(setShowStreet(false));
     }
   }
 
   const deleteAddress = () => {
     if (typeLocation === "settlement") {
-      dispatch(setShowSettlements(true));
+      dispatch(setShowSettlements(false));
       dispatch(setSettlements(""));
       setValueLocation("");
     } else if (typeLocation === "street") {
-      dispatch(setShowSettlements(true));
+      dispatch(setShowSettlements(false));
       dispatch(setStreet(""));
       setValueLocation("");
     }
@@ -42,7 +41,7 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, valueLocat
 
 
   if (typeLocation === "settlement") {
-    if (isShowSettlements !== true) {
+    if (isShowSettlements === true) {
       return (
         <ContainerTab>
           <Text style={{ color: "#323232", fontWeight: "bold" }}>Выбранный адрес: </Text>
@@ -73,7 +72,7 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, valueLocat
       )
     }
   } else if (typeLocation === "street") {
-    if (isShowStreet !== true) {
+    if (isShowStreet === true) {
       return (
         <ContainerTab>
           <Text style={{ color: "#323232", fontWeight: "bold" }}>Выбранная улица: </Text>

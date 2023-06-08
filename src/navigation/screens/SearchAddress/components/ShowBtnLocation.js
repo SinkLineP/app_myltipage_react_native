@@ -3,14 +3,14 @@ import {Pressable, StyleSheet, Text, View} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
 
-export const ShowBtnLocation = ({ text, typeLocationProps, defaultText }) => {
+export const ShowBtnLocation = ({ text, typeLocationProps }) => {
   const navigation = useNavigation();
+
 
   return (
     <Pressable onPress={() => {
       navigation.navigate("SelectAddress", {
         typeLocation: typeLocationProps,
-        textLocation: defaultText,
       });
     }} style={stylesShowBtnLocation.containerText}>
       <Text style={stylesShowBtnLocation.text}>{ text }</Text>

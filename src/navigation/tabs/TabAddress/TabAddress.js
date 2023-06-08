@@ -11,22 +11,15 @@ export default function TabAddress() {
   const settlementStore = useSelector(state => state.searchAddress.settlements);
   const streetStore = useSelector(state => state.searchAddress.street);
 
-  const locationNotSelected = (t) => {
-    if (settlementStore !== "") {
-      return `Адрес: ${streetStore !== "" ? streetStore : settlementStore}`;
-    } else {
-      return  "Выберите адрес.."
-    }
-  }
 
   return (
-    <View style={{marginTop: 6}}>
+    <View style={stylesTabAddress.containerAddress}>
       <ContainerTab>
         <Pressable onPress={() => {
           navigation.navigate("SearchAddress")
         }}>
           <View style={stylesTabAddress.containerTitle}>
-            <Text style={stylesTabAddress.titleBtn}>{locationNotSelected()}</Text>
+            <Text style={stylesTabAddress.titleBtn}>{settlementStore !== "" ? `Адрес: ${streetStore !== "" ? streetStore : settlementStore}` : "Выберите адрес.."}</Text>
             <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
           </View>
         </Pressable>
@@ -36,14 +29,12 @@ export default function TabAddress() {
 }
 
 const stylesTabAddress = StyleSheet.create({
-  containerAddress: {},
+  containerAddress: {
+    marginTop: 6
+  },
   containerTitle: {
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  label: {
-    color: "#9a9a9a",
-    marginBottom: 10,
   },
   titleBtn: {
     fontWeight: "bold",

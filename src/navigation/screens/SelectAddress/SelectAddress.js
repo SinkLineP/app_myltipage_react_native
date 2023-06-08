@@ -8,23 +8,30 @@ import {ShowSelectedAddress} from "./components/ShowSelectedAddress";
 
 
 export default function SelectAddress({ route, navigation }) {
-  const { typeLocation, textLocation } = route.params;
+  const { typeLocation } = route.params;
   const [valueLocation, setValueLocation] = useState("");
   const [region, setRegion] = useState({});
   const [settlementValue, setSettlementValue] = useState("");
   const [streetValue, setStreetValue] = useState("");
   const dispatch = useDispatch();
+  // redux store
   const isShowSettlements = useSelector(state => state.searchAddress.isShowSettlementsForm);
   const isShowStreet = useSelector(state => state.searchAddress.isShowStreetForm);
   const streetStore = useSelector(state => state.searchAddress.street);
+  const settlementStore = useSelector(state => state.searchAddress.settlements);
 
 
 
   return (
     <>
-      <ShowSelectedAddress typeLocation={typeLocation} setValueLocation={setValueLocation} valueLocation={valueLocation} />
+      <ShowSelectedAddress
+        typeLocation={typeLocation}
+        setValueLocation={setValueLocation}
+        valueLocation={valueLocation}
+        isShowSettlements={isShowSettlements}
+      />
 
-      {isShowSettlements === true && typeLocation === "settlement" || isShowStreet === true && typeLocation === "street" ? (
+      {isShowSettlements === false && typeLocation === "settlement" || isShowStreet === false && typeLocation === "street" ? (
         <View>
           <SearchInput
             setSearchInput={setValueLocation}
@@ -42,26 +49,39 @@ export default function SelectAddress({ route, navigation }) {
             color: "#fff"
           }} onPress={() => {
             if (typeLocation === "settlement") {
+              console.log("[LOG][Settlement group][MESSAGE: type_location 'settlement' ]");
+
               if (valueLocation !== "") {
+                console.log("[LOG][Settlement group][MESSAGE: value location is not equals, empty. ]");
+
                 try {
-                  dispatch(setShowSettlements(false));
+                  console.log("[LOG][Settlement group][MESSAGE: start 'try'. ]")
+                  console.log(`[LOG][Settlement group][MESSAGE: dispatch(setShowSettlements(true)). ` + "Current store value: " + isShowSettlements + " ]");
+                  console.log("[LOG][Settlement group][MESSAGE: dispatch(setSettlements(settlementValue)): " + `${settlementStore === "" ? '"Empty"' : settlementStore}` + "; SettlementValue: " + settlementValue + ". ]");
+                  dispatch(setShowSettlements(true));
                   dispatch(setSettlements(settlementValue));
 
-                  if (streetStore !== "") {
-                    dispatch(setStreet(""));
-                    dispatch(setShowStreet(true));
-                  }
+                  //     if (streetStore !== "") {
+                  //       dispatch(setStreet(""));
+                  //       dispatch(setShowStreet(true));
+                  //     }
                 } finally {
-                  navigation.goBack()
+                  console.log("[LOG][Settlement group][MESSAGE: 'finally' ]")
+                  //     navigation.goBack()
                 }
               }
             } else if (typeLocation === "street") {
+              console.log("type_location 'street'");
+
               if (valueLocation !== "") {
+                console.log("[Street group] - value location is not equals, empty.");
                 try {
-                  dispatch(setShowStreet(false));
-                  dispatch(setStreet(streetValue));
+                  console.log("[Street group] - start 'try'.")
+                  //     dispatch(setShowStreet(false));
+                  //     dispatch(setStreet(streetValue));
                 } finally {
-                  navigation.goBack()
+                  console.log("[Street group] - 'finally'")
+                  //     navigation.goBack()
                 }
               }
             }
