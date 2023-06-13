@@ -29,3 +29,37 @@
 /**
  * @param {{components: string}} r;
  */
+
+/**
+ * @param {{geo_lat: number}} r;
+ */
+
+/**
+ * @param {{geo_lon: number}} r;
+ */
+
+//auto_suggestions search
+
+/**
+ * @param {{city_type_full: string || null}} item.data;
+ */
+
+/**
+ * @param {{street_type_full: string || null}} item.data;
+ */
+
+/**
+ * @param {{settlement_type_full: string || null}} item.data;
+ */
+
+/**
+ * @param {{settlement: string || null}} item.data;
+ */
+
+/**
+ * @param {{unrestricted_value: string || null}} item.data;
+ */
+
+/**
+ * @param {{region_fias_id: string || null}} item.data;
+ */

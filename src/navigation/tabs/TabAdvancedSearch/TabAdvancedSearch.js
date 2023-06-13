@@ -2,22 +2,21 @@ import React, {useRef, useState} from "react";
 import TabInputCodeEstate from "../TabInputCodeEstate/TabInputCodeEstate";
 import {TabSwitch} from "../TabSwitch/TabSwitch";
 import {TabCategoryEstate} from "../TabCategoryEstate/TabCategoryEstate";
-import {BottomModalWindow} from "../../../BottomModalWindow/BottomModalWindow";
-import CategoriesContent from "../../../../navigation/screens/Search/components/CategoriesContent/CategoriesContent";
 import {PortalProvider} from "@gorhom/portal";
 import TabPrice from "../TabPrice/TabPrice";
 import {Dimensions, ScrollView, StyleSheet, Text, View} from "react-native";
 import {Switch} from "react-native-switch";
 import Slider from "@react-native-community/slider";
+import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
+import CategoriesContent from "../../screens/Search/components/CategoriesContent/CategoriesContent";
+import TabAddress from "../TabAddress/TabAddress";
 
 
 export default function TabAdvancedSearch() {
   const [selectedSwitch, setSelectedSwitch] = useState("");
   const [currentItem, setCurrentItem] = useState({});
   const modalRefCategories = useRef(null);
-
   const [range, setRange] = useState(1);
-  const [sliding, setSliding] = useState("Inactive");
   const [isStudio, setIsStudio] = useState(false);
   const modalCountRoomsRef = useRef(null);
 
@@ -29,6 +28,7 @@ export default function TabAdvancedSearch() {
         <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} isCottage={false} />
         <TabPrice modalRef={modalCountRoomsRef} />
         <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRefCategories} />
+        <TabAddress />
       </ScrollView>
       <PortalProvider>
         <BottomModalWindow modalRef={modalRefCategories}>

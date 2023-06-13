@@ -1,6 +1,6 @@
 import React from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
-import ContainerTab from "../../ContainerTab/ContainerTab";
+import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import {Entypo, MaterialCommunityIcons} from "@expo/vector-icons";
 
 

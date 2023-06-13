@@ -2,7 +2,7 @@ import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {UpdatedShowSelectedCategories} from "./components/UpdatedShowSelectedCategories";
-import {setActiveTab} from "../../../../store/Slices/categoryEstatesSlice";
+import {setActiveTab} from "../../../store/Slices/categoryEstatesSlice";
 import {Entypo, Ionicons, MaterialIcons} from "@expo/vector-icons";
 
 

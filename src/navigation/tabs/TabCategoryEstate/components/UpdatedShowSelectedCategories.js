@@ -1,6 +1,6 @@
 import React from "react";
 import {Text, View, StyleSheet} from "react-native";
-import {editCategory} from "../../../../../store/Slices/categoryEstatesSlice";
+import {editCategory} from "../../../../store/Slices/categoryEstatesSlice";
 import {ShowSelectedCategories} from "./ShowSelectedCategories";
 
 

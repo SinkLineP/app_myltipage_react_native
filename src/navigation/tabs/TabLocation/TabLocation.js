@@ -1,24 +1,40 @@
-import React, {useRef, useState} from "react";
-import {Button, Dimensions, ScrollView, StyleSheet, View} from "react-native";
-import {Animated, Marker} from 'react-native-maps';
-import {useDispatch, useSelector} from "react-redux";
-import {saveAddress, setActiveTab, setCoordinates} from "../../../../store/Slices/searchMapSlice";
+import React, {useEffect, useRef, useState} from "react";
+import {Button, Dimensions, FlatList, ScrollView, StyleSheet, TextInput, View, Text, Pressable} from "react-native";
+import MapView, {Animated, Marker} from 'react-native-maps';
+
+import {useDispatch} from "react-redux";
+import {saveAddress, setActiveTab, setCoordinates} from "../../../store/Slices/searchMapSlice";
 import * as opencage from "opencage-api-client";
-import {API_KEY_OpenCage} from "../../../../Variables/ServerConfig";
-import {CustomMarkerMap} from "../../../CustomMarkerMap/CustomMarkerMap";
-import CarouselItems from "../../CarouselItems/CarouselItems";
+import {API_KEY_OpenCage} from "../../../Variables/ServerConfig";
+import {CustomMarkerMap} from "../../../components/CustomMarkerMap/CustomMarkerMap";
+import CarouselItems from "../../../components/SearchTabs/CarouselItems/CarouselItems";
+import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
+import {InnerScreen} from "react-native-screens";
+import ShowAndHide from "../../../components/SearchTabs/ShowAndHide/ShowAndHide";
+import RenderItemAutoSuggestions
+  from "../../../components/SearchTabs/RenderItemAutoSuggestions/RenderItemAutoSuggestions";
+import SearchInput from "../../../components/SearchTabs/SearchInput/SearchInput";
 
 
 export const TabLocation = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [searchInput, setSearchInput] = useState("");
+  const flatListRef = useRef(null);
+  const [currentEstate, setCurrentEstate] = useState(null);
+  const map = useRef(null);
+  // const [currentZoom, setCurrentZoom] = useState(12.66288948059082);
+
   const [region, setRegion] = useState({
     latitude: 46.7114346,
     longitude: 38.2738027,
     latitudeDelta: 0.1022,
     longitudeDelta: 0.0621
   });
-  const flatListRef = useRef(null);
-  const [currentEstate, setCurrentEstate] = useState(null);
+
+  const [currentDelta, setCurrentDelta] = useState({
+    latitudeDelta: region.longitudeDelta,
+    longitudeDelta: region.longitudeDelta
+  });
 
   const [estates, setEstates] = useState([{
     id: 0,
@@ -69,9 +85,17 @@ export const TabLocation = ({ navigation }) => {
     })
   }
 
+
   return (
     <ScrollView style={stylesTabWithIcon.content}>
+      <SearchInput
+        setRegion={setRegion}
+        setSearchInput={setSearchInput}
+        searchInput={searchInput}
+      />
+
       <Animated
+        ref={map}
         toolbarEnabled={false}
         zoomControlEnabled={true}
         region={region}
@@ -81,6 +105,20 @@ export const TabLocation = ({ navigation }) => {
           width: Dimensions.get("window").width - 15,
           height: Dimensions.get("window").height / 2,
           marginLeft: 7.5
+        }}
+        onRegionChange={(region) => {
+          setCurrentDelta({
+            latitudeDelta: region.latitudeDelta,
+            longitudeDelta: region.longitudeDelta
+          })
+
+          map?.current?.getCamera().then((cam) => {
+            console.log(cam);
+          })
+
+          // map?.current?.setCamera({
+          //   zoom: 20
+          // })
         }}
       >
         <>
@@ -93,7 +131,7 @@ export const TabLocation = ({ navigation }) => {
                   pinColor="tomato"
                   coordinate={{latitude: estate.coords.latitude, longitude: estate.coords.longitude}}
                 >
-                  <CustomMarkerMap estate={estate} />
+                  <CustomMarkerMap delta={currentDelta} />
                 </Marker>
               )
             })
@@ -142,20 +180,7 @@ const stylesTabWithIcon = StyleSheet.create({
     width: "20%",
     textAlign: "center"
   },
-  searchInput: {
-    borderWidth: 1,
-    borderColor: "#323232",
-    marginTop: 10,
-    height: 30,
-    lineHeight: 10,
-    paddingLeft: 20,
-    marginLeft: "auto",
-    marginRight: "auto",
-    width: "90%"
-  },
   content: {
     width: "100%",
-    // marginVertical: 20
   },
-
 })

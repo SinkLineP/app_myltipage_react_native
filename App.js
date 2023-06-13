@@ -101,7 +101,6 @@ function AppWrapper() {
     });
   }, []);
 
-
   // если шрифты загружены отобразить страницу
   if (fontsLoaded) {
     return (
