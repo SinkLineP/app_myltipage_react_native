@@ -20,6 +20,7 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
 
   const editAddress = () => {
     if (typeLocation === "settlement") {
+      console.log("Show Selected Address - settlement");
       dispatch(setShowSettlements(false));
       dispatch(setAddressStatus("editing"));
     } else if (typeLocation === "street") {
@@ -41,8 +42,6 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
       dispatch(setAddressStatus("deleted"));
     }
   }
-
-  const CardAddress = () => {}
 
 
   if (typeLocation === "settlement") {

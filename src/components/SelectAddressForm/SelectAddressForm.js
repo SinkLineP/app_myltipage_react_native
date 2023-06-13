@@ -42,12 +42,14 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
     })
   })
 
-  return (
+
+
+  const FormSearch = () => (
     <>
-      {
-        isShowSettlements === false && typeLocation === "settlement" && addressStatusStore === "empty" ||
-        isShowSettlements === false && typeLocation === "street" ?
-      (
+      {/*{*/}
+      {/*  isShowSettlements === false && typeLocation === "settlement" && addressStatusStore === "empty"  ||*/}
+      {/*  isShowSettlements === false && typeLocation === "street" ?*/}
+      {/*(*/}
         <View>
           <SearchInput
             setSearchInput={setValueLocation}
@@ -66,6 +68,7 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
             color: "#fff"
           }} onPress={() => {
             if (typeLocation === "settlement") {
+              console.log(valueLocation.trim(""));
               if (valueLocation !== "") {
                 try {
                   dispatch(setShowSettlements(true));
@@ -104,7 +107,17 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
             Сохранить адрес
           </Text>
         </View>
-      ) : ("")}
+      {/*) : ("")}*/}
     </>
   )
+
+  if (isShowSettlements === false) {
+    if (typeLocation === "settlement") {
+      if (addressStatusStore === "empty") {
+        return <FormSearch />
+      }
+    } else if (typeLocation === "street") {
+      return <FormSearch />
+    }
+  }
 }
