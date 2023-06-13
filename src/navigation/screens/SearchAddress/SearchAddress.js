@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import ShowActiveText from "./components/ShowActiveText";
 import {useSelector} from "react-redux";
 
 
-export default function SearchAddress() {
+export default function SearchAddress({ route }) {
   const settlementStore = useSelector(state => state.searchAddress.settlements);
   const streetStore = useSelector(state => state.searchAddress.street);
+
+
+  // console.log(route.name);
 
 
   return (

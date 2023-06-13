@@ -16,9 +16,12 @@ const searchAddressSlice = createSlice({
     },
     setShowStreet(state, action) {
       state.isShowStreetForm = action.payload
+    },
+    setAddressStatus(state, action) {
+      state.addressStatus = action.payload
     }
   }
 })
 
-export const {setSettlements, setStreet, setShowSettlements, setShowStreet} = searchAddressSlice.actions;
+export const {setSettlements, setStreet, setShowSettlements, setShowStreet, setAddressStatus} = searchAddressSlice.actions;
 export default searchAddressSlice.reducer;

@@ -2,5 +2,6 @@ export const initialState = {
   settlements: "",
   street: "",
   isShowSettlementsForm: false,
-  isShowStreetForm: false
+  isShowStreetForm: false,
+  addressStatus: "empty"
 }

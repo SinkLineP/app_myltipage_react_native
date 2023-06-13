@@ -38,6 +38,7 @@ import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/C
 import ShowAdvertisement from "./screens/Menu/screens/ShowAdvertisement/ShowAdvertisement";
 import TabAdvancedSearch from "./tabs/TabAdvancedSearch/TabAdvancedSearch";
 import SearchAddress from "./screens/SearchAddress/SearchAddress";
+import SelectAddressForm from "./screens/SelectAddress/SelectAddress";
 import SelectAddress from "./screens/SelectAddress/SelectAddress";
 
 
