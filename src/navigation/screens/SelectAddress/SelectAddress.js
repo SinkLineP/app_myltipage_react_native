@@ -10,13 +10,15 @@ export default function SelectAddress({ route, navigation }) {
   const [valueLocation, setValueLocation] = useState("");
   const { typeLocation } = route.params;
   const isShowSettlements = useSelector(state => state.searchAddress.isShowSettlementsForm);
-  const currentStatus = useSelector(state => state.searchAddress.addressStatus)
+  const isShowStreet = useSelector(state => state.searchAddress.isShowStreetForm);
+  const settlementStatus = useSelector(state => state.searchAddress.addressStatus)
+  const streetStatus = useSelector(state => state.searchAddress.streetStatus)
 
 
   return (
     <>
       <ContainerTab>
-        <Text>Current status: {currentStatus}</Text>
+        <Text>Current status: {typeLocation === "settlement" ? settlementStatus : streetStatus}</Text>
       </ContainerTab>
 
       <ShowSelectedAddress
@@ -32,6 +34,7 @@ export default function SelectAddress({ route, navigation }) {
         typeLocation={typeLocation}
         valueLocation={valueLocation}
         navigation={navigation}
+        isShowStreet={isShowStreet}
       />
     </>
   )

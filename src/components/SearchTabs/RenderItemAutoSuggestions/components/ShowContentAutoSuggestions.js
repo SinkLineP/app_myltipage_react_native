@@ -5,7 +5,9 @@ import {
   setAddressStatus,
   setSettlements,
   setShowSettlements,
-  setStreet
+  setShowStreet,
+  setStreetStore,
+  setStreetStatus
 } from "../../../../store/Slices/searchAddressSlice";
 import {useNavigation} from "@react-navigation/native";
 
@@ -13,12 +15,21 @@ import {useNavigation} from "@react-navigation/native";
 export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type, setSettlement, setStreet }) => {
   const dispatch = useDispatch();
 
-  const setStoreValue = (value) => {
-    try {
-      dispatch(setShowSettlements(true));
-      dispatch(setSettlements(value));
-    } finally {
-      dispatch(setAddressStatus("saved"));
+  const setStoreValue = (value, type) => {
+    if (type === "settlement") {
+      try {
+        dispatch(setShowSettlements(true));
+        dispatch(setSettlements(value));
+      } finally {
+        dispatch(setAddressStatus("saved"));
+      }
+    } else if (type === "street") {
+      try {
+        dispatch(setShowStreet(true));
+        dispatch(setStreetStore(value));
+      } finally {
+        dispatch(setStreetStatus("saved"));
+      }
     }
   }
 
@@ -45,10 +56,10 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
         }
 
         setActiveLocation(item);
-        setStoreValue(item.value)
+        setStoreValue(item.value, type)
       }
 
-      setStoreValue(item.value)
+      setStoreValue(item.value, type)
     }} style={{
       paddingVertical: 5,
       borderBottomWidth: 1,

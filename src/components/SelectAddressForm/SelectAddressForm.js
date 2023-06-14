@@ -10,13 +10,14 @@ import {
 import SearchInput from "../SearchTabs/SearchInput/SearchInput";
 
 
-export default function SelectAddressForm({ navigation, isShowSettlements, typeLocation, setValueLocation, valueLocation }) {
+export default function SelectAddressForm({ navigation, isShowSettlements, typeLocation, setValueLocation, valueLocation, isShowStreet }) {
   const [region, setRegion] = useState({});
   const [settlementValue, setSettlementValue] = useState("");
   const [streetValue, setStreetValue] = useState("");
   const dispatch = useDispatch();
   // redux store
   const addressStatusStore = useSelector(state => state.searchAddress.addressStatus);
+  const streetStatusStore = useSelector(state => state.searchAddress.streetStatus);
 
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
     })
   })
 
-  if (isShowSettlements === false) {
+  if (isShowSettlements === false || isShowStreet === false) {
     if (typeLocation === "settlement") {
       if (addressStatusStore === "empty" || addressStatusStore === "editing" || addressStatusStore === "deleted") {
         return <SearchInput
@@ -56,7 +57,16 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
         />
       }
     } else if (typeLocation === "street") {
-      return ""
+      if (streetStatusStore === "empty" || streetStatusStore === "editing" || streetStatusStore === "deleted") {
+        return <SearchInput
+          setSearchInput={setValueLocation}
+          searchInput={valueLocation}
+          setRegion={setRegion}
+          type={typeLocation}
+          setSettlement={setSettlementValue}
+          setStreet={setStreetValue}
+        />
+      }
     }
   }
 }

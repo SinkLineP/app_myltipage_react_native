@@ -20,9 +20,11 @@ export default function SearchInput({
   const [activeLocation, setActiveLocation] = useState({});
   const [searchResult, setSearchResult] = useState([]);
   const settlementStore = useSelector(state => state.searchAddress.settlements);
+  const streetStore = useSelector(state => state.searchAddress.street);
   const dispatch = useDispatch();
   const addressStatusStore = useSelector(state => state.searchAddress.addressStatus);
   const navigation = useNavigation();
+  const streetStatusStore = useSelector(state => state.searchAddress.streetStatus);
 
 
   const autoSuggestions = (query) => {
@@ -50,6 +52,10 @@ export default function SearchInput({
   useEffect(() => {
     if (settlementStore !== "" && addressStatusStore === "editing") {
       setSearchInput(settlementStore);
+    }
+
+    if (streetStore !== "" && streetStatusStore === "editing") {
+      setSearchInput(streetStore)
     }
   }, [])
 
@@ -81,8 +87,12 @@ export default function SearchInput({
             setSearchResult([])
             setActiveLocation({})
 
-            setSettlement("");
-            setStreet("");
+            if (setSettlement !== undefined) { // type: settlement
+              setSettlement("");
+              setStreet("");
+            } else { // type: street
+              setStreet("");
+            }
           }}>{searchInput !== "" ? "x" : ""}</Text>
         </View>
       </ContainerTab>
