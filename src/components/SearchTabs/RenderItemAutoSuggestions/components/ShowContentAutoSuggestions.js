@@ -1,10 +1,28 @@
 import React from "react";
 import {Pressable, Text} from "react-native";
 import {useDispatch} from "react-redux";
-import {setSettlements, setStreet} from "../../../../store/Slices/searchAddressSlice";
+import {
+  setAddressStatus,
+  setSettlements,
+  setShowSettlements,
+  setStreet
+} from "../../../../store/Slices/searchAddressSlice";
+import {useNavigation} from "@react-navigation/native";
 
 
 export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type, setSettlement, setStreet }) => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const setStoreValue = (value) => {
+    try {
+      dispatch(setShowSettlements(true));
+      dispatch(setSettlements(value));
+    } finally {
+      dispatch(setAddressStatus("saved"));
+    }
+  }
+
   return (
     <Pressable key={index} onPress={() => {
       const latitude = item.data.geo_lat;
@@ -28,10 +46,10 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
         }
 
         setActiveLocation(item);
-        setSearchInput(item.value);
+        setStoreValue(item.value)
       }
 
-      setSearchInput(item.value);
+      setStoreValue(item.value)
     }} style={{
       paddingVertical: 5,
       borderBottomWidth: 1,

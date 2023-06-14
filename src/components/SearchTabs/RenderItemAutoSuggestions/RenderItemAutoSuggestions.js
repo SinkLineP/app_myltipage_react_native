@@ -40,16 +40,6 @@ export default function RenderItemAutoSuggestions({
           setStreet={setStreet}
         />
       )
-    } else {
-      return (
-        <ShowContentAutoSuggestions
-          index={index}
-          item={item}
-          setRegion={setRegion}
-          setSearchInput={setSearchInput}
-          setActiveLocation={setActiveLocation}
-        />
-      )
     }
   })
 }
