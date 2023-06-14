@@ -12,7 +12,6 @@ import {useNavigation} from "@react-navigation/native";
 
 export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type, setSettlement, setStreet }) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   const setStoreValue = (value) => {
     try {

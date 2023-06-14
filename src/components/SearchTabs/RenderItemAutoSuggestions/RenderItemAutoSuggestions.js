@@ -1,7 +1,5 @@
 import React from "react"
-import {Pressable, Text, View} from "react-native";
 import {ShowContentAutoSuggestions} from "./components/ShowContentAutoSuggestions";
-import {useSelector} from "react-redux";
 
 
 export default function RenderItemAutoSuggestions({
