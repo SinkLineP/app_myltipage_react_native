@@ -43,6 +43,8 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
     }
   }
 
+  console.log(typeLocation);
+  console.log(isShowSettlements);
 
   if (typeLocation === "settlement") {
     if (isShowSettlements === true) {

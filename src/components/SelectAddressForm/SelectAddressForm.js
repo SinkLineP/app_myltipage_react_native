@@ -29,6 +29,7 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
           try {
             if (addressStatusStore === "editing") {
               dispatch(setAddressStatus("saved"));
+              dispatch(setShowSettlements(true));
             } else if (addressStatusStore === "deleted") {
               dispatch(setAddressStatus("empty"));
             }
@@ -44,7 +45,7 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
 
   if (isShowSettlements === false) {
     if (typeLocation === "settlement") {
-      if (addressStatusStore === "empty" || addressStatusStore === "saved" || addressStatusStore === "editing" || addressStatusStore === "deleted") {
+      if (addressStatusStore === "empty" || addressStatusStore === "editing" || addressStatusStore === "deleted") {
         return <SearchInput
           setSearchInput={setValueLocation}
           searchInput={valueLocation}
