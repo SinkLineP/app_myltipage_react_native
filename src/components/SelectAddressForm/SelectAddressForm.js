@@ -50,7 +50,7 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
       {/*  isShowSettlements === false && typeLocation === "settlement" && addressStatusStore === "empty"  ||*/}
       {/*  isShowSettlements === false && typeLocation === "street" ?*/}
       {/*(*/}
-        <View>
+      {/*  <View>*/}
           <SearchInput
             setSearchInput={setValueLocation}
             searchInput={valueLocation}
@@ -58,55 +58,56 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
             type={typeLocation}
             setSettlement={setSettlementValue}
             setStreet={setStreetValue}
+            settlementValue={settlementValue}
           />
 
-          <Text style={{
-            backgroundColor: valueLocation !== "" ? "#82c874" : "#bee6b3",
-            paddingVertical: 10,
-            textAlign: "center",
-            fontWeight: "bold",
-            color: "#fff"
-          }} onPress={() => {
-            if (typeLocation === "settlement") {
-              console.log(valueLocation.trim(""));
-              if (valueLocation !== "") {
-                try {
-                  dispatch(setShowSettlements(true));
-                  dispatch(setSettlements(settlementValue));
+          {/*<Text style={{*/}
+          {/*  backgroundColor: valueLocation !== "" ? "#82c874" : "#bee6b3",*/}
+          {/*  paddingVertical: 10,*/}
+          {/*  textAlign: "center",*/}
+          {/*  fontWeight: "bold",*/}
+          {/*  color: "#fff"*/}
+          {/*}} onPress={() => {*/}
+          {/*  if (typeLocation === "settlement") {*/}
+          {/*    console.log(valueLocation.trim(""));*/}
+          {/*    if (valueLocation !== "") {*/}
+          {/*      try {*/}
+          {/*        dispatch(setShowSettlements(true));*/}
+          {/*        dispatch(setSettlements(settlementValue));*/}
 
-                  //     if (streetStore !== "") {
-                  //       dispatch(setStreet(""));
-                  //       dispatch(setShowStreet(true));
-                  //     }
-                } finally {
-                  dispatch(setAddressStatus("saved"));
-                  // navigation.goBack()
+          {/*        //     if (streetStore !== "") {*/}
+          {/*        //       dispatch(setStreet(""));*/}
+          {/*        //       dispatch(setShowStreet(true));*/}
+          {/*        //     }*/}
+          {/*      } finally {*/}
+          {/*        dispatch(setAddressStatus("saved"));*/}
+          {/*        // navigation.goBack()*/}
 
-                  // if (route.name !== "SelectAddress") {
-                  //   console.log("is not equal")
-                  // }
-                }
-              }
-            } else if (typeLocation === "street") {
-              console.log("type_location 'street'");
+          {/*        // if (route.name !== "SelectAddress") {*/}
+          {/*        //   console.log("is not equal")*/}
+          {/*        // }*/}
+          {/*      }*/}
+          {/*    }*/}
+          {/*  } else if (typeLocation === "street") {*/}
+          {/*    console.log("type_location 'street'");*/}
 
-              if (valueLocation !== "") {
-                console.log("[Street group] - value location is not equals, empty.");
-                try {
-                  console.log("[Street group] - start 'try'.")
-                  //     dispatch(setShowStreet(false));
-                  //     dispatch(setStreet(streetValue));
-                } finally {
-                  console.log("[Street group] - 'finally'")
-                  dispatch(setAddressStatus("saved"));
-                  //     navigation.goBack()
-                }
-              }
-            }
-          }}>
-            Сохранить адрес
-          </Text>
-        </View>
+          {/*    if (valueLocation !== "") {*/}
+          {/*      console.log("[Street group] - value location is not equals, empty.");*/}
+          {/*      try {*/}
+          {/*        console.log("[Street group] - start 'try'.")*/}
+          {/*        //     dispatch(setShowStreet(false));*/}
+          {/*        //     dispatch(setStreet(streetValue));*/}
+          {/*      } finally {*/}
+          {/*        console.log("[Street group] - 'finally'")*/}
+          {/*        dispatch(setAddressStatus("saved"));*/}
+          {/*        //     navigation.goBack()*/}
+          {/*      }*/}
+          {/*    }*/}
+          {/*  }*/}
+          {/*}}>*/}
+          {/*  Сохранить адрес*/}
+          {/*</Text>*/}
+        {/*</View>*/}
       {/*) : ("")}*/}
     </>
   )
@@ -114,7 +115,14 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
   if (isShowSettlements === false) {
     if (typeLocation === "settlement") {
       if (addressStatusStore === "empty") {
-        return <FormSearch />
+        return <SearchInput
+          setSearchInput={setValueLocation}
+          searchInput={valueLocation}
+          setRegion={setRegion}
+          type={typeLocation}
+          setSettlement={setSettlementValue}
+          setStreet={setStreetValue}
+        />
       }
     } else if (typeLocation === "street") {
       return <FormSearch />

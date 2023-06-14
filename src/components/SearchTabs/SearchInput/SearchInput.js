@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import {Button, StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../ContainerTab/ContainerTab";
 import RenderItemAutoSuggestions from "../RenderItemAutoSuggestions/RenderItemAutoSuggestions";
 import ShowAndHide from "../ShowAndHide/ShowAndHide";
-import {setSettlements} from "../../../store/Slices/searchAddressSlice";
-import {useSelector} from "react-redux";
+import {setAddressStatus, setSettlements, setShowSettlements} from "../../../store/Slices/searchAddressSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export default function SearchInput({
@@ -13,12 +13,13 @@ export default function SearchInput({
   setRegion,
   type,
   setStreet,
-  setSettlement
+  setSettlement,
 }) {
   const limitResulItems = 5;
   const [activeLocation, setActiveLocation] = useState({});
   const [searchResult, setSearchResult] = useState([]);
   const settlementStore = useSelector(state => state.searchAddress.settlements);
+  const dispatch = useDispatch();
 
 
   const autoSuggestions = (query) => {
@@ -92,6 +93,52 @@ export default function SearchInput({
           </View>
         </ContainerTab>
       </ShowAndHide>
+
+      <Text style={{
+        backgroundColor: searchInput !== "" ? "#82c874" : "#bee6b3",
+        paddingVertical: 10,
+        textAlign: "center",
+        fontWeight: "bold",
+        color: "#fff"
+      }} onPress={() => {
+        if (type === "settlement") {
+          if (searchInput !== "") {
+            try {
+              dispatch(setShowSettlements(true));
+              dispatch(setSettlements(searchInput));
+
+              //     if (streetStore !== "") {
+              //       dispatch(setStreet(""));
+              //       dispatch(setShowStreet(true));
+              //     }
+            } finally {
+              dispatch(setAddressStatus("saved"));
+              // navigation.goBack()
+
+              // if (route.name !== "SelectAddress") {
+              //   console.log("is not equal")
+              // }
+            }
+          }
+        } else if (type === "street") {
+          console.log("type_location 'street'");
+
+          if (searchInput !== "") {
+            console.log("[Street group] - value location is not equals, empty.");
+            try {
+              console.log("[Street group] - start 'try'.")
+              //     dispatch(setShowStreet(false));
+              //     dispatch(setStreet(streetValue));
+            } finally {
+              console.log("[Street group] - 'finally'")
+              dispatch(setAddressStatus("saved"));
+              //     navigation.goBack()
+            }
+          }
+        }
+      }}>
+        Сохранить адрес
+      </Text>
     </>
   )
 }
