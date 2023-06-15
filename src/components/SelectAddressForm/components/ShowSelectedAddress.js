@@ -25,6 +25,12 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
       dispatch(setAddressStatus("editing"));
       dispatch(setSettlementsStore(""));
       setValueLocation("");
+
+      if (streetStore !== "") {
+        dispatch(setStreetStore(""));
+        dispatch(setStreetStatus("deleted"));
+        dispatch(setShowStreet(false));
+      }
     } else if (typeLocation === "street") {
       dispatch(setShowStreet(false));
       dispatch(setStreetStatus("editing"));
