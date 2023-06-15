@@ -13,9 +13,9 @@ export default function SearchAddress({ route }) {
 
 
   return (
-    <ContainerTab>
+    <>
       <ShowActiveText locationTitle={"Населённый пункт"} defaultLocationTitle={"Выберите населённый пункт"} location={settlementStore} typeLocation={"settlement"} />
-      {settlementStore !== "" ? (<ShowActiveText locationTitle={"Улица"} defaultLocationTitle={"Выберите улицу"} location={streetStore} typeLocation={"street"} />) : ("")}
-    </ContainerTab>
+      {settlementStore !== "" ? (<ShowActiveText locationTitle={"Адрес"} defaultLocationTitle={"Выберите адрес"} location={streetStore} typeLocation={"street"} />) : ("")}
+    </>
   )
 }
