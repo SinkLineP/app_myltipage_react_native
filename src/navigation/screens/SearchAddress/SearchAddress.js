@@ -9,9 +9,6 @@ export default function SearchAddress({ route }) {
   const streetStore = useSelector(state => state.searchAddress.street);
 
 
-  // console.log(route.name);
-
-
   return (
     <>
       <ShowActiveText locationTitle={"Населённый пункт"} defaultLocationTitle={"Выберите населённый пункт"} location={settlementStore} typeLocation={"settlement"} />

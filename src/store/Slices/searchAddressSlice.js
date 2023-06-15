@@ -5,7 +5,7 @@ const searchAddressSlice = createSlice({
   name: "searchAddress",
   initialState,
   reducers: {
-    setSettlements(state, action) {
+    setSettlementsStore(state, action) {
       state.settlements = action.payload
     },
     setStreetStore(state, action) {
@@ -26,5 +26,12 @@ const searchAddressSlice = createSlice({
   }
 })
 
-export const {setSettlements, setStreetStore, setShowSettlements, setShowStreet, setAddressStatus, setStreetStatus} = searchAddressSlice.actions;
+export const {
+  setSettlementsStore,
+  setStreetStore,
+  setShowSettlements,
+  setShowStreet,
+  setAddressStatus,
+  setStreetStatus
+} = searchAddressSlice.actions;
 export default searchAddressSlice.reducer;

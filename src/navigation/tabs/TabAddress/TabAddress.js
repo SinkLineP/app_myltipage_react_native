@@ -14,16 +14,20 @@ export default function TabAddress() {
 
   return (
     <View style={stylesTabAddress.containerAddress}>
-      <ContainerTab>
-        <Pressable onPress={() => {
-          navigation.navigate("SearchAddress")
-        }}>
+      <Pressable onPress={() => {
+        navigation.navigate("SearchAddress")
+      }}>
+        <ContainerTab>
           <View style={stylesTabAddress.containerTitle}>
-            <Text style={stylesTabAddress.titleBtn}>{settlementStore !== "" ? `Адрес: ${streetStore !== "" ? streetStore : settlementStore}` : "Выберите адрес.."}</Text>
-            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+            <View style={{width: "95%"}}>
+              <Text style={stylesTabAddress.titleBtn}>{settlementStore !== "" ? `Адрес:${`\n`}${streetStore !== "" ? streetStore : settlementStore}` : "Выберите адрес.."}</Text>
+            </View>
+            <View style={{width: "5%", justifyContent: "center"}}>
+              <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+            </View>
           </View>
-        </Pressable>
-      </ContainerTab>
+        </ContainerTab>
+      </Pressable>
     </View>
   )
 }

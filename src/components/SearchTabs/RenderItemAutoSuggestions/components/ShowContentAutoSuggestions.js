@@ -3,7 +3,7 @@ import {Pressable, Text} from "react-native";
 import {useDispatch} from "react-redux";
 import {
   setAddressStatus,
-  setSettlements,
+  setSettlementsStore,
   setShowSettlements,
   setShowStreet,
   setStreetStore,
@@ -19,7 +19,7 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
     if (type === "settlement") {
       try {
         dispatch(setShowSettlements(true));
-        dispatch(setSettlements(value));
+        dispatch(setSettlementsStore(value));
       } finally {
         dispatch(setAddressStatus("saved"));
       }

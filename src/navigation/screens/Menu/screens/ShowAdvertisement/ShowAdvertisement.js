@@ -5,9 +5,6 @@ import {useNavigation, useNavigationState} from "@react-navigation/native";
 
 export default function ShowAdvertisement({ route }) {
   const { address, coords, id, images, price, type } = route.params.estate;
-  useEffect(() => {
-    console.log(route.params)
-  })
 
   return (
     <View>

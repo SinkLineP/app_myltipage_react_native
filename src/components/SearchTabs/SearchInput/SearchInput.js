@@ -3,7 +3,7 @@ import {Button, StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../ContainerTab/ContainerTab";
 import RenderItemAutoSuggestions from "../RenderItemAutoSuggestions/RenderItemAutoSuggestions";
 import ShowAndHide from "../ShowAndHide/ShowAndHide";
-import {setAddressStatus, setSettlements, setShowSettlements} from "../../../store/Slices/searchAddressSlice";
+import {setAddressStatus, setSettlementsStore, setShowSettlements} from "../../../store/Slices/searchAddressSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigation} from "@react-navigation/native";
 
@@ -112,6 +112,8 @@ export default function SearchInput({
           </View>
         </ContainerTab>
       </ShowAndHide>
+
+      {addressStatusStore === "editing"}
     </>
   )
 }

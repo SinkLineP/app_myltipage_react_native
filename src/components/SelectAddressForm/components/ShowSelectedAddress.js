@@ -3,10 +3,11 @@ import {Text, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {
   setAddressStatus,
-  setSettlements,
+  setSettlementsStore,
   setShowSettlements,
   setShowStreet,
-  setStreet
+  setStreetStatus,
+  setStreetStore
 } from "../../../store/Slices/searchAddressSlice";
 import ContainerTab from "../../SearchTabs/ContainerTab/ContainerTab";
 
@@ -20,31 +21,31 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
 
   const editAddress = () => {
     if (typeLocation === "settlement") {
-      console.log("Show Selected Address - settlement");
       dispatch(setShowSettlements(false));
       dispatch(setAddressStatus("editing"));
+      dispatch(setSettlementsStore(""));
+      setValueLocation("");
     } else if (typeLocation === "street") {
       dispatch(setShowStreet(false));
-      dispatch(setAddressStatus("editing"));
+      dispatch(setStreetStatus("editing"));
+      dispatch(setStreetStore(""));
+      setValueLocation("");
     }
   }
 
   const deleteAddress = () => {
     if (typeLocation === "settlement") {
       dispatch(setShowSettlements(false));
-      dispatch(setSettlements(""));
+      dispatch(setSettlementsStore(""));
       setValueLocation("");
       dispatch(setAddressStatus("deleted"));
     } else if (typeLocation === "street") {
-      dispatch(setShowSettlements(false));
-      dispatch(setStreet(""));
+      dispatch(setShowStreet(false));
+      dispatch(setStreetStore(""));
       setValueLocation("");
-      dispatch(setAddressStatus("deleted"));
+      dispatch(setStreetStatus("deleted"));
     }
   }
-
-  console.log(typeLocation);
-  console.log(isShowSettlements);
 
   if (typeLocation === "settlement") {
     if (isShowSettlements === true) {
