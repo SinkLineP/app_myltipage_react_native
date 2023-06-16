@@ -19,7 +19,7 @@ export default function RenderItemAutoSuggestions({
     <ContainerTab>
       {searchResult.map((item, index) => {
         if (type !== undefined && type === "settlement" && setSettlement !== undefined) {
-          if (item.data.settlement_type_full !== null && item.data.street_type_full === null) {
+          if (item.data.city_type_full !== null && item.data.street_type_full === null || item.data.settlement_type_full !== null && item.data.street_type_full === null) {
             return (
               <View key={index}>
                 <ShowContentAutoSuggestions
@@ -34,7 +34,7 @@ export default function RenderItemAutoSuggestions({
             )
           }
         } else if (type !== undefined && type === "street" && setStreet !== undefined) {
-          if (item.data.settlement_type_full !== null && item.data.street_type_full !== null) {
+          if (item.data.settlement_type_full !== null && item.data.street_type_full !== null || item.data.city_type_full !== null && item.data.street_type_full !== null) {
             return (
               <View key={index}>
                 <ShowContentAutoSuggestions
