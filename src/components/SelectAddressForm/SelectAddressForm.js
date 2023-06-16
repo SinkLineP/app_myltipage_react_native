@@ -29,7 +29,7 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
           paddingRight: 10
         }} onPress={() => {
           try {
-            console.log(typeLocation);
+            // console.log(typeLocation);
             if (typeLocation === "settlement") {
               if (addressStatusStore === "editing") {
                 dispatch(setAddressStatus("saved"));

@@ -113,7 +113,7 @@ export const TabLocation = ({ navigation }) => {
           })
 
           map?.current?.getCamera().then((cam) => {
-            console.log(cam);
+            // console.log(cam);
           })
 
           // map?.current?.setCamera({

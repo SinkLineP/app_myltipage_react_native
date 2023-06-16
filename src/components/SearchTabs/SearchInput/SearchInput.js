@@ -45,7 +45,7 @@ export default function SearchInput({
     fetch(url, options)
       .then(response => response.json())
       .then(result => setSearchResult(result.suggestions.slice(0, limitResulItems)))
-      .catch(error => console.log("error", error));
+      // .catch(error => console.log("error", error));
   }
 
 
@@ -98,22 +98,16 @@ export default function SearchInput({
       </ContainerTab>
 
       <ShowAndHide activeLocation={activeLocation} searchInput={searchInput} searchResult={searchResult}>
-        <ContainerTab>
-          <View>
-            <RenderItemAutoSuggestions
-              searchResult={searchResult}
-              setActiveLocation={setActiveLocation}
-              setRegion={setRegion}
-              setSearchInput={setSearchInput}
-              type={type}
-              setSettlement={setSettlement}
-              setStreet={setStreet}
-            />
-          </View>
-        </ContainerTab>
+        <RenderItemAutoSuggestions
+          searchResult={searchResult}
+          setActiveLocation={setActiveLocation}
+          setRegion={setRegion}
+          setSearchInput={setSearchInput}
+          type={type}
+          setSettlement={setSettlement}
+          setStreet={setStreet}
+        />
       </ShowAndHide>
-
-      {addressStatusStore === "editing"}
     </>
   )
 }
