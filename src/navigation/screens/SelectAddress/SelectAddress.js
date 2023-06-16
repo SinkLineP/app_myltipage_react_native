@@ -17,10 +17,6 @@ export default function SelectAddress({ route, navigation }) {
 
   return (
     <>
-      <ContainerTab>
-        <Text>Current status: {typeLocation === "settlement" ? settlementStatus : streetStatus}</Text>
-      </ContainerTab>
-
       <ShowSelectedAddress
         valueLocation={valueLocation}
         typeLocation={typeLocation}
