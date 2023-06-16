@@ -1,6 +1,6 @@
 import React from "react";
 import {Pressable, Text} from "react-native";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
   setAddressStatus,
   setSettlementsStore,
@@ -14,6 +14,7 @@ import {useNavigation} from "@react-navigation/native";
 
 export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type, setSettlement, setStreet }) => {
   const dispatch = useDispatch();
+  const currentStatusSettlement = useSelector(state => state.searchAddress.addressStatus);
 
   const setStoreValue = (value, type) => {
     if (type === "settlement") {
@@ -21,6 +22,12 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
         dispatch(setShowSettlements(true));
         dispatch(setSettlementsStore(value));
       } finally {
+        if (currentStatusSettlement === "editing") {
+          dispatch(setStreetStore(""));
+          dispatch(setStreetStatus("empty"));
+          dispatch(setShowStreet(false));
+        }
+
         dispatch(setAddressStatus("saved"));
       }
     } else if (type === "street") {
