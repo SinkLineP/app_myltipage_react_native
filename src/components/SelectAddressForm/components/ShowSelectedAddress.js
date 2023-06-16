@@ -23,19 +23,16 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
     if (typeLocation === "settlement") {
       dispatch(setShowSettlements(false));
       dispatch(setAddressStatus("editing"));
-      dispatch(setSettlementsStore(""));
-      setValueLocation("");
 
       if (streetStore !== "") {
-        dispatch(setStreetStore(""));
         dispatch(setStreetStatus("deleted"));
         dispatch(setShowStreet(false));
       }
     } else if (typeLocation === "street") {
       dispatch(setShowStreet(false));
       dispatch(setStreetStatus("editing"));
-      dispatch(setStreetStore(""));
-      setValueLocation("");
+      // dispatch(setStreetStore(""));
+      // setValueLocation("");
     }
   }
 

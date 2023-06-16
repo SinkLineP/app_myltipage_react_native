@@ -62,9 +62,11 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
       setStoreValue(item.value, type)
     }} style={{
       paddingVertical: 5,
+      paddingHorizontal: 20,
       borderBottomWidth: 1,
       borderTopWidth: index === 0 ? 1 : 0,
       borderColor: "#d2d2d2",
+      backgroundColor: "#fff"
     }}>
       <Text style={{
         color: "#323232",

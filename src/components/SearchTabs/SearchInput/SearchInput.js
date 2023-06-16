@@ -77,6 +77,7 @@ export default function SearchInput({
                 autoSuggestions(val)
               }
 
+              console.log(val);
 
               setSearchInput(val)
             }}
