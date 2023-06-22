@@ -10,6 +10,7 @@ import Slider from "@react-native-community/slider";
 import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
 import CategoriesContent from "../../screens/Search/components/CategoriesContent/CategoriesContent";
 import TabAddress from "../TabAddress/TabAddress";
+import {TabArea} from "../TabArea/TabArea";
 
 
 export default function TabAdvancedSearch() {
@@ -29,6 +30,7 @@ export default function TabAdvancedSearch() {
         <TabPrice modalRef={modalCountRoomsRef} />
         <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRefCategories} />
         <TabAddress />
+        <TabArea />
       </ScrollView>
       <PortalProvider>
         <BottomModalWindow modalRef={modalRefCategories}>

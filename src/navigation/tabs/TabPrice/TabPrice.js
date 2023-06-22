@@ -5,6 +5,7 @@ import {Switch} from "react-native-switch";
 import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
 import {PortalProvider} from "@gorhom/portal";
 import Slider from "@react-native-community/slider";
+import RangeField from "../../../components/RangeField/RangeField";
 
 
 export default function TabPrice({ modalRef }) {
@@ -15,16 +16,12 @@ export default function TabPrice({ modalRef }) {
   const symbolCurrency = "₽";
 
 
-
   return (
     <>
       <ContainerTab isShowRow={false}>
         <View>
           <Text style={stylesTabPrice.title}>Цена, {symbolCurrency}</Text>
-          <View style={stylesTabPrice.containerPrice}>
-            <TextInput keyboardType={"numeric"} style={stylesTabPrice.input} onChangeText={(value) => {setMinPrice(value)}} value={minPrice} placeholder={"От"} />
-            <TextInput keyboardType={"numeric"} style={stylesTabPrice.input} onChangeText={(value) => {setMaxPrice(value)}} value={maxPrice} placeholder={"До"} />
-          </View>
+          <RangeField maxValue={maxPrice} minValue={minPrice} setMaxValue={setMaxPrice} setMinValue={setMinPrice} />
         </View>
         <View style={stylesTabPrice.containerCountRoom}>
           <Text style={stylesTabPrice.title}>Количество комнат</Text>

@@ -18,7 +18,6 @@ import {
   setCategoryEstates,
   setMainCategoryEstates,
 } from "./src/store/Slices/categoryEstatesSlice";
-import {setCoordinates} from "./src/store/Slices/searchMapSlice";
 
 
 export default function App () {
