@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
-import {Text, TextInput, View} from "react-native";
+import {Text, StyleSheet, View} from "react-native";
 import RangeField from "../../../components/RangeField/RangeField";
 
 
@@ -14,8 +14,12 @@ export function TabArea() {
 
   return (
     <ContainerTab>
-      <View style={{marginBottom: 10}}>
-        <Text>Площадь, м<Text>2</Text></Text>
+      <View style={styles.container}>
+        <View style={styles.containerText}>
+          <Text style={styles.labelText}>Площадь, м</Text>
+          <Text style={styles.unitText}>2</Text>
+        </View>
+
 
         <RangeField setMinValue={setMinArea} minValue={minArea} setMaxValue={setMaxArea} maxValue={maxArea} />
       </View>
@@ -28,3 +32,19 @@ export function TabArea() {
     </ContainerTab>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 10
+  },
+  containerText: {
+    flexDirection: 'row',
+  },
+  labelText: {
+    marginRight: 5,
+  },
+  unitText: {
+    fontSize: 10,
+    marginBottom: 10,
+  },
+});

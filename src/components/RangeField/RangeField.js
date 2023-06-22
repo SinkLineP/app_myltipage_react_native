@@ -9,24 +9,25 @@ const RangeField = ({ minValue, maxValue, setMinValue, setMaxValue }) => {
       setErrorMessage('Значение "От" должно быть меньше значения "До"');
     } else {
       setErrorMessage('');
-      // Прошли валидацию, можно выполнить нужные действия
     }
   };
 
   const handleFromValueChange = (text) => {
-    if (text === '0' || text === '-' || text === '.' || text === ',') {
-      return; // Запрет ввода значения "0" и отрицательных чисел
-    }
-    setMinValue(text);
-    handleValidation(text, maxValue);
+    const numericValue = text.replace(/[^0-9]/g, '');
+
+    if (numericValue === "0") return;
+
+    setMinValue(numericValue);
+    handleValidation(numericValue, maxValue);
   };
 
   const handleToValueChange = (text) => {
-    if (text === '0' || text === '-' || text === '.' || text === ',') {
-      return; // Запрет ввода значения "0" и отрицательных чисел
-    }
-    setMaxValue(text);
-    handleValidation(minValue, text);
+    const numericValue = text.replace(/[^0-9]/g, '');
+
+    if (numericValue === "0") return;
+
+    setMaxValue(numericValue);
+    handleValidation(minValue, numericValue);
   };
 
   return (
