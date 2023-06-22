@@ -5,9 +5,7 @@ const RangeField = ({ minValue, maxValue, setMinValue, setMaxValue }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleValidation = (from, to) => {
-    if (from === '' && to === '') {
-      setErrorMessage('Пожалуйста, заполните хотя бы одно поле');
-    } else if (parseInt(from) >= parseInt(to)) {
+    if (parseInt(from) >= parseInt(to)) {
       setErrorMessage('Значение "От" должно быть меньше значения "До"');
     } else {
       setErrorMessage('');
