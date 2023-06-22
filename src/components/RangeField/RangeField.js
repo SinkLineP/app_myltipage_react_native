@@ -16,11 +16,17 @@ const RangeField = ({ minValue, maxValue, setMinValue, setMaxValue }) => {
   };
 
   const handleFromValueChange = (text) => {
+    if (text === '0' || text === '-' || text === '.' || text === ',') {
+      return; // Запрет ввода значения "0" и отрицательных чисел
+    }
     setMinValue(text);
     handleValidation(text, maxValue);
   };
 
   const handleToValueChange = (text) => {
+    if (text === '0' || text === '-' || text === '.' || text === ',') {
+      return; // Запрет ввода значения "0" и отрицательных чисел
+    }
     setMaxValue(text);
     handleValidation(minValue, text);
   };
