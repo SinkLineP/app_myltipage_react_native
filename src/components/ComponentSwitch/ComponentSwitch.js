@@ -3,13 +3,14 @@ import {StyleSheet, Text, View} from "react-native";
 import {Switch} from "react-native-switch";
 
 
-export default function ComponentSwitch({ label, switchValue, setSwitchValue }) {
+export default function ComponentSwitch({ label, switchValue, setSwitchValue, otherFunction }) {
   return (
     <View style={stylesComponentSwitch.containerSwitch}>
       <Text style={stylesComponentSwitch.title}>{ label }</Text>
       <Switch
         value={switchValue}
         onValueChange={() => {
+          if (otherFunction !== undefined) otherFunction(1);
           setSwitchValue(!switchValue)
         }}
         disabled={false}
