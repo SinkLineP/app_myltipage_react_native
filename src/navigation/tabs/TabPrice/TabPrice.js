@@ -6,6 +6,7 @@ import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomMod
 import {PortalProvider} from "@gorhom/portal";
 import Slider from "@react-native-community/slider";
 import RangeField from "../../../components/RangeField/RangeField";
+import ComponentSwitch from "../../../components/ComponentSwitch/ComponentSwitch";
 
 
 export default function TabPrice({ modalRef }) {
@@ -29,30 +30,8 @@ export default function TabPrice({ modalRef }) {
             modalRef.current?.open()
           }}>Выберите..</Text>
         </View>
-        <View style={stylesTabPrice.containerSwitch}>
-          <Text style={stylesTabPrice.title}>Многоуровневая</Text>
-          <Switch
-            value={multiLevel}
-            onValueChange={() => {
-              setMultiLevel(!multiLevel)
-            }}
-            disabled={false}
-            renderActiveText={false}
-            renderInActiveText={false} barHeight={20} circleSize={20}
-          />
-        </View>
-        <View style={stylesTabPrice.containerSwitch}>
-          <Text style={stylesTabPrice.title}>Кухня-гостиная</Text>
-          <Switch
-            value={kitchenLivingRoom}
-            onValueChange={() => {
-              setKitchenLivingRoom(!kitchenLivingRoom)
-            }}
-            disabled={false}
-            renderActiveText={false}
-            renderInActiveText={false} barHeight={20} circleSize={20}
-          />
-        </View>
+        <ComponentSwitch label={"Многоуровневая"} switchValue={multiLevel} setSwitchValue={setMultiLevel} />
+        <ComponentSwitch label={"Кухня-гостиная"} switchValue={kitchenLivingRoom} setSwitchValue={setKitchenLivingRoom} />
       </ContainerTab>
     </>
   )
@@ -76,11 +55,6 @@ const stylesTabPrice = StyleSheet.create({
     width: "50%",
     height: 50,
     paddingLeft: 10
-  },
-  containerSwitch: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5
   },
   btnCountRooms: {
     backgroundColor: "tomato",

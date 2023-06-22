@@ -11,6 +11,7 @@ import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomMod
 import CategoriesContent from "../../screens/Search/components/CategoriesContent/CategoriesContent";
 import TabAddress from "../TabAddress/TabAddress";
 import {TabArea} from "../TabArea/TabArea";
+import TabFloors from "../TabFloors/TabFloors";
 
 
 export default function TabAdvancedSearch() {
@@ -31,6 +32,7 @@ export default function TabAdvancedSearch() {
         <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRefCategories} />
         <TabAddress />
         <TabArea />
+        <TabFloors />
       </ScrollView>
       <PortalProvider>
         <BottomModalWindow modalRef={modalRefCategories}>
