@@ -25,7 +25,10 @@ export function TabArea() {
       </View>
 
       <View>
-        <Text>Площадь кухни, м<Text>2</Text></Text>
+        <View style={styles.containerText}>
+          <Text style={styles.labelText}>Площадь кухни, м</Text>
+          <Text style={styles.unitText}>2</Text>
+        </View>
 
         <RangeField setMinValue={setMinAreaKitchen} minValue={minAreaKitchen} setMaxValue={setMaxAreaKitchen} maxValue={maxAreaKitchen} />
       </View>
@@ -46,5 +49,6 @@ const styles = StyleSheet.create({
   unitText: {
     fontSize: 10,
     marginBottom: 10,
+    left: -5
   },
 });
