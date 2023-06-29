@@ -3,9 +3,10 @@ import {StyleSheet, Text, View} from "react-native";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import RangeField from "../../../components/RangeField/RangeField";
 import ComponentSwitch from "../../../components/ComponentSwitch/ComponentSwitch";
+import {ShowModalGUI} from "../../../components/ShowModalGUI/ShowModalGUI";
 
 
-export default function TabPrice({ modalRef }) {
+export default function TabPrice({ modalRef, setRange, range, isStudio, setIsStudio }) {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [multiLevel, setMultiLevel] = useState(false);
@@ -20,12 +21,14 @@ export default function TabPrice({ modalRef }) {
           <Text style={stylesTabPrice.title}>Цена, {symbolCurrency}</Text>
           <RangeField maxValue={maxPrice} minValue={minPrice} setMaxValue={setMaxPrice} setMinValue={setMinPrice} />
         </View>
-        <View style={stylesTabPrice.containerCountRoom}>
-          <Text style={stylesTabPrice.title}>Количество комнат</Text>
-          <Text style={stylesTabPrice.btnCountRooms} onPress={() => {
-            modalRef.current?.open()
-          }}>Выберите..</Text>
-        </View>
+
+        <ShowModalGUI
+          title={`Колличество комнат - ${isStudio === false ? range : "студия"}`}
+          modalRef={modalRef}
+          setValue={isStudio === false ? setRange : setIsStudio}
+          value={isStudio === false ? range : isStudio}
+        />
+
         <ComponentSwitch label={"Многоуровневая"} switchValue={multiLevel} setSwitchValue={setMultiLevel} />
         <ComponentSwitch label={"Кухня-гостиная"} switchValue={kitchenLivingRoom} setSwitchValue={setKitchenLivingRoom} />
       </ContainerTab>

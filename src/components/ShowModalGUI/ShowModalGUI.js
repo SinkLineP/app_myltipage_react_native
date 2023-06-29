@@ -9,7 +9,7 @@ export const ShowModalGUI = ({ title, modalRef, value, setValue }) => {
       <Text style={stylesShowModalGUI.title}>{title}</Text>
 
       <View style={{flexDirection: "row", gap: 10}}>
-        {value === "" ? (
+        {value === "" || value === 1 ? (
           <Pressable onPress={() => {
             modalRef.current?.open()
           }} style={{
@@ -34,7 +34,13 @@ export const ShowModalGUI = ({ title, modalRef, value, setValue }) => {
             </Pressable>
 
             <Pressable onPress={() => {
-              setValue("")
+              if (typeof value === "number") {
+                setValue(1);
+              } else if (typeof value === "boolean") {
+                setValue(false);
+              } else {
+                setValue("");
+              }
             }} style={{
               backgroundColor: "#ff3939",
               paddingVertical: 5,
