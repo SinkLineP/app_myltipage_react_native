@@ -157,10 +157,13 @@ export default function TabAdvancedSearch() {
     }
   })
 
-  const ButtonDueDate = ({ iconName, iconColor, title, value, setValue, dueDate }) => {
+  const ButtonDueDate = ({ iconName, title, value, setValue, dueDate, modalRef }) => {
     return (
       <Pressable onPress={() => {
-        setValue(value)
+        setValue(value);
+        setTimeout(() => {
+          modalRef.current?.close();
+        }, 1500)
       }} style={{
         borderColor: "tomato",
         borderWidth: 2,
@@ -197,7 +200,7 @@ export default function TabAdvancedSearch() {
         <TabInputCodeEstate setCodeValues={setCodeValues} codeValues={codeValues} />
         <ContainerTab>
           <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} isCottage={false} />
-          {selectedSwitch === 2 ? (<TabRent modalRef={modalDueDateRef} dueDate={dueDate} />) : ""}
+          {selectedSwitch === 2 ? (<TabRent modalRef={modalDueDateRef} dueDate={dueDate} setDueDate={setDueDate} />) : ""}
         </ContainerTab>
         <TabPrice modalRef={modalCountRoomsRef} />
         <TabCategoryEstate setCurrentItem={setCurrentItem} modalRef={modalRefCategories} />
@@ -264,8 +267,8 @@ export default function TabAdvancedSearch() {
             marginTop: 20,
             marginBottom: 30
           }}>
-            <ButtonDueDate iconName={"hours-24"} iconColor={"white"} title={"По Сутачно"} value={"day"} setValue={setDueDate} dueDate={dueDate} />
-            <ButtonDueDate iconName={"calendar-month"} iconColor={"white"} title={"По Месячно"} value={"month"} setValue={setDueDate} dueDate={dueDate} />
+            <ButtonDueDate iconName={"hours-24"} iconColor={"white"} title={"По Сутачно"} value={"day"} setValue={setDueDate} dueDate={dueDate} modalRef={modalDueDateRef} />
+            <ButtonDueDate iconName={"calendar-month"} iconColor={"white"} title={"По Месячно"} value={"month"} setValue={setDueDate} dueDate={dueDate} modalRef={modalDueDateRef} />
           </View>
         </BottomModalWindow>
       </PortalProvider>
