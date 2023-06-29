@@ -5,6 +5,7 @@ import settingsAppReducer from "./Slices/settingsAppSlice";
 import categoryEstatesReducer from "./Slices/categoryEstatesSlice";
 import searchMapReducer from "./Slices/searchMapSlice";
 import searchAddressReducer from "./Slices/searchAddressSlice";
+import estatesReducer from "./Slices/estatesSlice";
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     settingsApp: settingsAppReducer,
     categoryEstates: categoryEstatesReducer,
     searchMap: searchMapReducer,
-    searchAddress: searchAddressReducer
+    searchAddress: searchAddressReducer,
+    estates: estatesReducer
   }
 })

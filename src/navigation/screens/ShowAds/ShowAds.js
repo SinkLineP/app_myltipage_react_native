@@ -1,21 +1,7 @@
 import React from "react";
 import {ScrollView, StyleSheet, Text, View} from "react-native";
-import ImageViewer from "../../../components/ImageViewer/ImageViewer";
+import {useSelector} from "react-redux";
 
-
-// const ShowPreviewObject = ({arrayImage}) => {
-//   if (arrayImage.length !== 0) {
-//     console.log(arrayImage);
-//
-//     return (
-//       <>
-//         {/*<ImageViewer selectedImage={arrayImage[0]} styles={} />*/}
-//       </>
-//     );
-//   } else {
-//     console.log("Images not found!")
-//   }
-// }
 
 const ContentAds = ({ findAds }) => {
   if (findAds.length !== 0) {
@@ -31,12 +17,12 @@ const ContentAds = ({ findAds }) => {
   }
 }
 
-export default function ShowAds({ route }) {
-  const { findAds } = route.params;
+export default function ShowAds() {
+  const estatesStore = useSelector(state => state.estates.allEstates);
 
   return (
     <ScrollView style={stylesShowAds.container}>
-      <ContentAds findAds={findAds} />
+      <ContentAds findAds={estatesStore} />
     </ScrollView>
   )
 }

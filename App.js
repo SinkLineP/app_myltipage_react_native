@@ -7,7 +7,7 @@ import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
 import {
   AutoLogin,
-  getCategoriesSearchEstate,
+  getCategoriesSearchEstate, getEstates,
   getMainCategoriesSearchEstate,
 } from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
@@ -18,6 +18,7 @@ import {
   setCategoryEstates,
   setMainCategoryEstates,
 } from "./src/store/Slices/categoryEstatesSlice";
+import {setAllEstates} from "./src/store/Slices/estatesSlice";
 
 
 export default function App () {
@@ -98,6 +99,10 @@ function AppWrapper() {
     getMainCategoriesSearchEstate().then(r => {
       dispatch(setMainCategoryEstates(r.main_categories));
     });
+
+    getEstates().then(r => {
+      dispatch(setAllEstates(r));
+    })
   }, []);
 
   // если шрифты загружены отобразить страницу
