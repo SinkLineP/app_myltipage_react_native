@@ -1,11 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
 import TextInputMasked from "../../screens/Authorization/components/TextInputMasked/TextInputMasked";
 
-export default function TabInputCodeEstate() {
-  const [codeValues, setCodeValues] = useState();
-
+export default function TabInputCodeEstate({ setCodeValues, codeValues }) {
   return (
     <ContainerTab isShowRow={true}>
       <Text style={stylesTabInputCodeEstate.label}>Введите код объекта: </Text>

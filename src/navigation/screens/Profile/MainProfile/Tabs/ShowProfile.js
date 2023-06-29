@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import ImageViewer from "../../../../../components/ImageViewer/ImageViewer";
 import {StatusBar} from "expo-status-bar";
 import MessageWarning from "../components/MessageWarning";
+import ContainerTab from "../../../../../components/SearchTabs/ContainerTab/ContainerTab";
 
 
 
@@ -23,11 +24,9 @@ export default function ShowProfile({navigation, user}) {
     <>
       <View style={stylesShowProfile.container}>
         {currentUser.is_confirmed_email === "false" || currentUser.is_confirmed_phone === "false" || currentUser.is_default_password === "true" ? (<MessageWarning navigation={navigation} currentUser={user} />) : ("")}
-        <View style={stylesShowProfile.containerHeader}>
+        <ContainerTab>
           <View style={stylesShowProfile.header}>
-            <View>
-              <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={user.avatar} />
-            </View>
+            <ImageViewer styles={stylesShowProfile.cardImage} selectedImage={user.avatar} />
             <View style={stylesShowProfile.containerAboutUser}>
               <Text style={stylesShowProfile.names}>{user.username}</Text>
               <Text style={stylesShowProfile.country}>country</Text>
@@ -48,8 +47,9 @@ export default function ShowProfile({navigation, user}) {
             <WidgetInput counts={0} title={"Подписчиков"} />
             <WidgetInput counts={0} title={"Подписок"} />
           </View>
-        </View>
-        <View style={stylesShowProfile.description}>
+        </ContainerTab>
+        <Text style={stylesShowProfile.addAdBtn} onPress={() => {console.log("add")}}>Добавить объявление</Text>
+        <ContainerTab>
           <ScrollView>
             <Text>Description</Text>
             <Text>Mail: {user.mail === "" ? (<Text>Почта не указана</Text>) : (<Text>{user.mail}</Text>)}</Text>
@@ -57,10 +57,10 @@ export default function ShowProfile({navigation, user}) {
             <Text>Телефон: {user.phone === "" ? (<Text>Телефон не указан</Text>) : (<Text>{user.phone}</Text>)}</Text>
             <Text>Статус подтверждения телефона: {user.is_confirmed_phone === "true" ? (<Text>Подтверждено</Text>) : (<Text>Не подтверждено</Text>)}</Text>
           </ScrollView>
-        </View>
-        <View style={stylesShowProfile.feeds}>
+        </ContainerTab>
+        <ContainerTab>
           <Text>Feeds</Text>
-        </View>
+        </ContainerTab>
         <StatusBar style="auto" />
       </View>
     </>
@@ -78,12 +78,9 @@ const stylesShowProfile = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
   },
-  containerImage: {
-
-  },
+  containerImage: {},
   header: {
     paddingTop: 10,
-    paddingBottom: 10,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -114,7 +111,7 @@ const stylesShowProfile = StyleSheet.create({
   },
   widgetFriendsAndFeeds: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     paddingTop: 10,
     paddingBottom: 10
   },
@@ -128,21 +125,8 @@ const stylesShowProfile = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold"
   },
-  description: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginTop: 10,
-    height: 150,
-    maxHeight: 150,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  containerHeader: {
-    backgroundColor: "#fff",
-    borderRadius: 10
-  },
+  description: {},
+  containerHeader: {},
   followButton: {
     borderWidth: 2,
     borderColor: "#1674bd",
@@ -170,5 +154,15 @@ const stylesShowProfile = StyleSheet.create({
     paddingRight: 20,
     paddingTop: 10,
     paddingBottom: 10,
+  },
+  addAdBtn: {
+    backgroundColor: "#409001",
+    color: "#fff",
+    width: "100%",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    fontWeight: "bold",
+    textAlign: "center"
   }
 })

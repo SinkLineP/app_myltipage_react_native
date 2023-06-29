@@ -1,10 +1,6 @@
-import React, {useRef, useState} from "react";
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, Text, View} from "react-native";
 import ContainerTab from "../../../components/SearchTabs/ContainerTab/ContainerTab";
-import {Switch} from "react-native-switch";
-import {BottomModalWindow} from "../../../components/BottomModalWindow/BottomModalWindow";
-import {PortalProvider} from "@gorhom/portal";
-import Slider from "@react-native-community/slider";
 import RangeField from "../../../components/RangeField/RangeField";
 import ComponentSwitch from "../../../components/ComponentSwitch/ComponentSwitch";
 

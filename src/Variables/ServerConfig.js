@@ -1,6 +1,6 @@
 import {returnMinutesFromNumber} from "./functions";
 
-export const DOMAIN_SERVER = "52fe-91-233-243-24.ngrok-free.app";
+export const DOMAIN_SERVER = "979d-91-233-241-229.ngrok-free.app";
 export const BASE_URL = `https://${DOMAIN_SERVER}`;
 export const API_ID_SMS = "3644ABC4-AAC5-7628-CA3C-F781BD026520";
 // export const API_KEY_GOOGLE_CAPTHA = "6LfTepQlAAAAAIPK0wfwPLXQPLh9dcYNuZGK7TpJ";

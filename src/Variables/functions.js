@@ -1,6 +1,7 @@
 import {errorsMessages} from "../navigation/screens/Authorization/Schematics/Schematics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {checkCreatedUserWithPhone, UserIsAuthed, VerifyUserPhone} from "../db/getData";
+import * as ImagePicker from "expo-image-picker";
 
 export const rand = (min, max) => {
   min = Math.ceil(min);
@@ -141,4 +142,17 @@ export const translateText = async (toLanguage, text) => {
   // console.log(`LOG: to language - ${toLanguage}, text - ${text}`);
   // return text;
   // return await res.json();
+}
+
+export const PickImageAsync = async (setSelectedImage) => { // выбор изображения
+  let result = await ImagePicker.launchImageLibraryAsync({
+    allowsEditing: true,
+    quality: 1,
+  });
+
+  if (!result.canceled) {
+    setSelectedImage(result.assets[0].uri);
+  } else {
+    alert('You did not select any image.');
+  }
 }
