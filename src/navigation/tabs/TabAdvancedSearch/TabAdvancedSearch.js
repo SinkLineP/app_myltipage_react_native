@@ -26,10 +26,10 @@ export default function TabAdvancedSearch() {
   const [range, setRange] = useState(1);
   const [isStudio, setIsStudio] = useState(false);
   const [codeValues, setCodeValues] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [returnType, setReturnType] = useState("");
   const modalRefCategories = useRef(null);
   const modalCountRoomsRef = useRef(null);
-  const modalDueDateRef = useRef(null);
+  const modalReturnTypeRef = useRef(null);
   const navigation = useNavigation();
   const ads = [
     {
@@ -165,7 +165,7 @@ export default function TabAdvancedSearch() {
         <ContainerTab>
           <TabSwitch option1={"Купить"} option2={"Снять"} setSelectedSwitch={setSelectedSwitch} selectedColor={"tomato"} isCottage={false} />
           {selectedSwitch === 2 ? (
-            <TabRent modalRef={modalDueDateRef} dueDate={dueDate} setDueDate={setDueDate} />
+            <TabRent modalRef={modalReturnTypeRef} returnType={returnType} setReturnType={setReturnType} />
           ) : ""}
         </ContainerTab>
         <TabPrice modalRef={modalCountRoomsRef} isStudio={isStudio} range={range} setIsStudio={setIsStudio} setRange={setRange} />
@@ -206,8 +206,8 @@ export default function TabAdvancedSearch() {
         </BottomModalWindow>
       </PortalProvider>
       <PortalProvider>
-        <BottomModalWindow modalRef={modalDueDateRef}>
-          <ModalRent modalRef={modalDueDateRef} dueDate={dueDate} setDueDate={setDueDate} />
+        <BottomModalWindow modalRef={modalReturnTypeRef}>
+          <ModalRent modalRef={modalReturnTypeRef} returnType={returnType} setReturnType={setReturnType} />
         </BottomModalWindow>
       </PortalProvider>
     </>

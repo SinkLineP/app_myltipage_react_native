@@ -1,9 +1,9 @@
 import React from "react";
 import {View} from "react-native";
-import ButtonDueDate from "../../ButtonDueDate/ButtonDueDate";
+import ButtonReturnType from "../../ButtonReturnType/ButtonReturnType";
 
 
-export default function ModalRent({ setDueDate, dueDate, modalRef }) {
+export default function ModalRent({ setReturnType, returnType, modalRef }) {
   return (
     <View style={{
       flexDirection: "row",
@@ -11,8 +11,22 @@ export default function ModalRent({ setDueDate, dueDate, modalRef }) {
       marginTop: 20,
       marginBottom: 30
     }}>
-      <ButtonDueDate iconName={"hours-24"} iconColor={"white"} title={"По Сутачно"} value={"day"} setValue={setDueDate} dueDate={dueDate} modalRef={modalRef} />
-      <ButtonDueDate iconName={"calendar-month"} iconColor={"white"} title={"По Месячно"} value={"month"} setValue={setDueDate} dueDate={dueDate} modalRef={modalRef} />
+      <ButtonReturnType
+        iconName={"hours-24"}
+        iconColor={"white"}
+        title={"По Сутачно"}
+        value={"day"}
+        setValue={setReturnType}
+        returnType={returnType}
+      />
+      <ButtonReturnType
+        iconName={"calendar-month"}
+        iconColor={"white"}
+        title={"По Месячно"}
+        value={"month"}
+        setValue={setReturnType}
+        returnType={returnType}
+      />
     </View>
   )
 }

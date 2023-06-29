@@ -4,7 +4,7 @@ import ComponentSwitch from "../../../components/ComponentSwitch/ComponentSwitch
 import {ShowModalGUI} from "../../../components/ShowModalGUI/ShowModalGUI";
 
 
-export default function TabRent({ modalRef, dueDate, setDueDate }) {
+export default function TabRent({ modalRef, returnType, setReturnType }) {
   const [isSummerEviction, setIsSummerEviction] = useState(false);
 
 
@@ -12,9 +12,9 @@ export default function TabRent({ modalRef, dueDate, setDueDate }) {
     <View style={stylesTabRent.container}>
       <ShowModalGUI
         modalRef={modalRef}
-        title={dueDate !== "" ? `Срок сдачи - ${dueDate === "day" ? "по сутачно" : "по месячно"}` : "Срок сдачи"}
-        value={dueDate}
-        setValue={setDueDate}
+        title={returnType !== "" ? `Тип сдачи - ${returnType === "day" ? "по сутачно" : "по месячно"}` : "Тип сдачи"}
+        value={returnType}
+        setValue={setReturnType}
       />
 
       <ComponentSwitch label={"Без выселения на лето"} switchValue={isSummerEviction} setSwitchValue={setIsSummerEviction} />
