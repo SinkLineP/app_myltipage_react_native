@@ -1,4 +1,4 @@
-import {errorsMessages} from "../navigation/screens/Authorization/Schematics/Schematics";
+import {errorsMessages} from "../navigation/tabs/TabAuth/Authorization/Schematics/Schematics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {checkCreatedUserWithPhone, UserIsAuthed, VerifyUserPhone} from "../db/getData";
 import * as ImagePicker from "expo-image-picker";

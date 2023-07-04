@@ -1,39 +1,39 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import {setOptions} from "../options/routerHeaderOptions";
-import MainProfile from "./screens/Profile/MainProfile/MainProfile";
-import Authorization from "./screens/Authorization/screens/Authorization";
-import SettingsProfile from "./screens/Profile/MainProfile/Tabs/SettingsPages/SettingsProfile";
-import ConfidentialSettings from "./screens/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
-import EditProfile from "./screens/Profile/MainProfile/Tabs/EditPages/EditProfile";
-import EditEmail from "./screens/Profile/MainProfile/Tabs/EditPages/EditEmail";
-import EditPhone from "./screens/Profile/MainProfile/Tabs/EditPages/EditPhone";
-import AllFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
-import RequestFriendsPages from "./screens/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
-import ResponseFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
-import Menu from "./screens/Menu/Menu";
-import Search from "./screens/Search/Search";
-import Chat from "./screens/Chat/Chat";
-import LoginEmail from "./screens/Authorization/screens/LoginEmail";
-import SignUpEmail from "./screens/Authorization/screens/SignUpEmail";
-import ConfirmEmail from "./screens/Profile/MainProfile/screens/ConfirmEmail";
-import ConfirmPhone from "./screens/Profile/MainProfile/screens/ConfirmPhone";
-import ChangePassword from "./screens/Profile/MainProfile/screens/ChangePassword";
-import MenuSettings from "./screens/Menu/screens/MenuSettings/MenuSettings";
-import LanguageApp from "./screens/Menu/screens/MenuSettings/screens/LanguageApp/LanguageApp";
-import ThemeApp from "./screens/Menu/screens/MenuSettings/screens/ThemeApp/ThemeApp";
+import MainProfile from "./tabs/TabAuth/Profile/MainProfile/MainProfile";
+import Authorization from "./tabs/TabAuth/Authorization/screens/Authorization";
+import SettingsProfile from "./tabs/TabAuth/Profile/MainProfile/Tabs/SettingsPages/SettingsProfile";
+import ConfidentialSettings from "./tabs/TabAuth/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
+import EditProfile from "./tabs/TabAuth/Profile/MainProfile/Tabs/EditPages/EditProfile";
+import EditEmail from "./tabs/TabAuth/Profile/MainProfile/Tabs/EditPages/EditEmail";
+import EditPhone from "./tabs/TabAuth/Profile/MainProfile/Tabs/EditPages/EditPhone";
+import AllFriendsPage from "./tabs/TabAuth/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
+import RequestFriendsPages from "./tabs/TabAuth/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
+import ResponseFriendsPage from "./tabs/TabAuth/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
+import Menu from "./tabs/TabMenu/Menu";
+import Search from "./tabs/TabSearch/Search";
+import Chat from "./tabs/TabChat/Chat";
+import LoginEmail from "./tabs/TabAuth/Authorization/screens/LoginEmail";
+import SignUpEmail from "./tabs/TabAuth/Authorization/screens/SignUpEmail";
+import ConfirmEmail from "./tabs/TabAuth/Profile/MainProfile/screens/ConfirmEmail";
+import ConfirmPhone from "./tabs/TabAuth/Profile/MainProfile/screens/ConfirmPhone";
+import ChangePassword from "./tabs/TabAuth/Profile/MainProfile/screens/ChangePassword";
 import {
   controllerTheme_StackNavigator_Background,
   controllerTheme_StackNavigator_Title
 } from "../controllers/Theme/Theme";
 import {useSelector} from "react-redux";
-import {TabLocation} from "./tabs/TabLocation/TabLocation";
-import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/CountryApp";
-import ShowAdvertisement from "./screens/Menu/screens/ShowAdvertisement/ShowAdvertisement";
-import TabAdvancedSearch from "./tabs/TabAdvancedSearch/TabAdvancedSearch";
 import SearchAddress from "./screens/SearchAddress/SearchAddress";
 import SelectAddress from "./screens/SelectAddress/SelectAddress";
 import ShowAds from "./screens/ShowAds/ShowAds";
-import Home from "./screens/Home/Home";
+import Home from "./tabs/TabHome/Home";
+import {TabLocation} from "./tabs/TabSearch/TabLocation/TabLocation";
+import TabAdvancedSearch from "./tabs/TabSearch/TabAdvancedSearch/TabAdvancedSearch";
+import MenuSettings from "./screens/MenuSettings/MenuSettings";
+import LanguageApp from "./screens/LanguageApp/LanguageApp";
+import ThemeApp from "./screens/ThemeApp/ThemeApp";
+import CountryApp from "./screens/CountryApp/CountryApp";
+import ShowAdvertisement from "./screens/ShowAdvertisement/ShowAdvertisement";
 
 
 const Stack = createStackNavigator();
