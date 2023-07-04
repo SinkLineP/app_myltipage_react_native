@@ -15,6 +15,7 @@ const stylesHome = StyleSheet.create({
     width: "98%",
     marginLeft: "auto",
     marginRight: "auto",
-    paddingVertical: 10
+    paddingVertical: 10,
+    paddingHorizontal: 10
   }
 })
