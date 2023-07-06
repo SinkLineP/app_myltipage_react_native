@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
-import {Provider, useDispatch, useSelector} from "react-redux";
+import {Provider, useDispatch} from "react-redux";
 import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
 import {
   AutoLogin,
-  getCategoriesSearchEstate, getEstates,
+  getCategoriesSearchEstate,
+  getEstates,
   getMainCategoriesSearchEstate,
 } from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";

@@ -20,7 +20,7 @@ export const TabCategoryEstate = ({modalRef, setCurrentItem}) => {
   const allCategories = useSelector(state => state.categoryEstates.allCategories);
   const dispatch = useDispatch();
 
-  console.log(mainCategory);
+  // console.log(mainCategory);
 
   if (mainCategory !== []) {
     return (

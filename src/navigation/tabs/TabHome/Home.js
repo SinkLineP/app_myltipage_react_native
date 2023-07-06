@@ -8,7 +8,7 @@ export default function Home() {
       <Text>Добро пожаловать</Text>
     </View>
   )
-}
+}     
 
 const stylesHome = StyleSheet.create({
   container: {
