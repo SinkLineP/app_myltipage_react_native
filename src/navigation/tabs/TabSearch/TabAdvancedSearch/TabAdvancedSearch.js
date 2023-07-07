@@ -71,11 +71,13 @@ export default function TabAdvancedSearch() {
           <ModalCategories currentItem={currentItem} />
         </BottomModalWindow>
       </PortalProvider>
+
       <PortalProvider>
         <BottomModalWindow modalRef={modalCountRoomsRef}>
           <ModalCountRooms isStudio={isStudio} range={range} setIsStudio={setIsStudio} setRange={setRange} />
         </BottomModalWindow>
       </PortalProvider>
+
       <PortalProvider>
         <BottomModalWindow modalRef={modalReturnTypeRef}>
           <ModalRent modalRef={modalReturnTypeRef} returnType={returnType} setReturnType={setReturnType} />

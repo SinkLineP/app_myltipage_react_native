@@ -34,6 +34,7 @@ import LanguageApp from "./screens/LanguageApp/LanguageApp";
 import ThemeApp from "./screens/ThemeApp/ThemeApp";
 import CountryApp from "./screens/CountryApp/CountryApp";
 import ShowAdvertisement from "./screens/ShowAdvertisement/ShowAdvertisement";
+import LiveComplex from "./screens/LiveComplex/LiveComplex";
 
 
 const Stack = createStackNavigator();
@@ -106,6 +107,7 @@ const SearchStackNavigator = () => {
       <Stack.Screen name="SearchAddress" component={SearchAddress} options={setOptions("Выберите адрес", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="SelectAddress" component={SelectAddress} options={setOptions("Выберите адрес", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="ShowAds" component={ShowAds} options={setOptions("Найденные объявления", "#1e9dff", "white", "", 0, 0, "", "", 0, 0, "", false)} />
+      <Stack.Screen name="LiveComplex" component={LiveComplex} options={setOptions("Выберите жилой коплекс", "#55ac00", "white", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }
