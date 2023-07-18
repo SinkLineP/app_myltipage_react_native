@@ -330,18 +330,3 @@ export const showGeocodingPlaces = (region) => {
     return city;
   }
 }
-
-export const getEstates = async () => {
-  const response = await fetch(`${BASE_URL}/estates/`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Server Error!");
-  }
-
-  return await response.json();
-}

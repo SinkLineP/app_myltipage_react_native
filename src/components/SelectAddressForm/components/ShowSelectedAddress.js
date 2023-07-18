@@ -3,11 +3,10 @@ import {Text, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {
   setAddressStatus,
-  setSettlementsStore,
+  setSettlements,
   setShowSettlements,
   setShowStreet,
-  setStreetStatus,
-  setStreetStore
+  setStreet
 } from "../../../store/Slices/searchAddressSlice";
 import ContainerTab from "../../SearchTabs/ContainerTab/ContainerTab";
 
@@ -23,38 +22,28 @@ export const ShowSelectedAddress = ({ typeLocation, setValueLocation, isShowSett
     if (typeLocation === "settlement") {
       dispatch(setShowSettlements(false));
       dispatch(setAddressStatus("editing"));
-
-      if (streetStore !== "") {
-        dispatch(setStreetStatus("deleted"));
-        dispatch(setShowStreet(false));
-      }
     } else if (typeLocation === "street") {
       dispatch(setShowStreet(false));
-      dispatch(setStreetStatus("editing"));
-      // dispatch(setStreetStore(""));
-      // setValueLocation("");
+      dispatch(setAddressStatus("editing"));
     }
   }
 
   const deleteAddress = () => {
     if (typeLocation === "settlement") {
       dispatch(setShowSettlements(false));
-      dispatch(setSettlementsStore(""));
+      dispatch(setSettlements(""));
       setValueLocation("");
       dispatch(setAddressStatus("deleted"));
-
-      if (streetStore !== "") {
-        dispatch(setStreetStore(""));
-        dispatch(setStreetStatus("deleted"));
-        dispatch(setShowStreet(false));
-      }
     } else if (typeLocation === "street") {
-      dispatch(setShowStreet(false));
-      dispatch(setStreetStore(""));
+      dispatch(setShowSettlements(false));
+      dispatch(setStreet(""));
       setValueLocation("");
-      dispatch(setStreetStatus("deleted"));
+      dispatch(setAddressStatus("deleted"));
     }
   }
+
+  const CardAddress = () => {}
+
 
   if (typeLocation === "settlement") {
     if (isShowSettlements === true) {

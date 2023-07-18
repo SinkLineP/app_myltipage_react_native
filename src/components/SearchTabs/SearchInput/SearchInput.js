@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {Button, StyleSheet, Text, TextInput, View} from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, Text, TextInput, View} from "react-native";
 import ContainerTab from "../ContainerTab/ContainerTab";
 import RenderItemAutoSuggestions from "../RenderItemAutoSuggestions/RenderItemAutoSuggestions";
 import ShowAndHide from "../ShowAndHide/ShowAndHide";
-import {setAddressStatus, setSettlementsStore, setShowSettlements} from "../../../store/Slices/searchAddressSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigation} from "@react-navigation/native";
+import {setSettlements} from "../../../store/Slices/searchAddressSlice";
+import {useSelector} from "react-redux";
 
 
 export default function SearchInput({
@@ -14,17 +13,12 @@ export default function SearchInput({
   setRegion,
   type,
   setStreet,
-  setSettlement,
+  setSettlement
 }) {
   const limitResulItems = 5;
   const [activeLocation, setActiveLocation] = useState({});
   const [searchResult, setSearchResult] = useState([]);
   const settlementStore = useSelector(state => state.searchAddress.settlements);
-  const streetStore = useSelector(state => state.searchAddress.street);
-  const dispatch = useDispatch();
-  const addressStatusStore = useSelector(state => state.searchAddress.addressStatus);
-  const navigation = useNavigation();
-  const streetStatusStore = useSelector(state => state.searchAddress.streetStatus);
 
 
   const autoSuggestions = (query) => {
@@ -45,19 +39,9 @@ export default function SearchInput({
     fetch(url, options)
       .then(response => response.json())
       .then(result => setSearchResult(result.suggestions.slice(0, limitResulItems)))
-      // .catch(error => console.log("error", error));
+      .catch(error => console.log("error", error));
   }
 
-
-  useEffect(() => {
-    if (settlementStore !== "" && addressStatusStore === "editing") {
-      setSearchInput(settlementStore);
-    }
-
-    if (streetStore !== "" && streetStatusStore === "editing") {
-      setSearchInput(streetStore)
-    }
-  }, [])
 
   return (
     <>
@@ -77,7 +61,6 @@ export default function SearchInput({
                 autoSuggestions(val)
               }
 
-              console.log(val);
 
               setSearchInput(val)
             }}
@@ -88,26 +71,26 @@ export default function SearchInput({
             setSearchResult([])
             setActiveLocation({})
 
-            if (setSettlement !== undefined) { // type: settlement
-              setSettlement("");
-              setStreet("");
-            } else { // type: street
-              setStreet("");
-            }
+            setSettlement("");
+            setStreet("");
           }}>{searchInput !== "" ? "x" : ""}</Text>
         </View>
       </ContainerTab>
 
       <ShowAndHide activeLocation={activeLocation} searchInput={searchInput} searchResult={searchResult}>
-        <RenderItemAutoSuggestions
-          searchResult={searchResult}
-          setActiveLocation={setActiveLocation}
-          setRegion={setRegion}
-          setSearchInput={setSearchInput}
-          type={type}
-          setSettlement={setSettlement}
-          setStreet={setStreet}
-        />
+        <ContainerTab>
+          <View>
+            <RenderItemAutoSuggestions
+              searchResult={searchResult}
+              setActiveLocation={setActiveLocation}
+              setRegion={setRegion}
+              setSearchInput={setSearchInput}
+              type={type}
+              setSettlement={setSettlement}
+              setStreet={setStreet}
+            />
+          </View>
+        </ContainerTab>
       </ShowAndHide>
     </>
   )

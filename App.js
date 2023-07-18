@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { prepareFonts } from "./LoadingFonts";
 import { NavigationContainer } from '@react-navigation/native';
-import {Provider, useDispatch} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import 'react-native-gesture-handler';
 import AnimatedLoading from "./src/components/AnimatedLoading/AnimatedLoading";
 import store from "./src/store/index";
 import {
   AutoLogin,
   getCategoriesSearchEstate,
-  getEstates,
   getMainCategoriesSearchEstate,
 } from "./src/db/getData";
 import {setCurrentUser, switchAuth} from "./src/store/Slices/usersSlice";
@@ -19,7 +18,7 @@ import {
   setCategoryEstates,
   setMainCategoryEstates,
 } from "./src/store/Slices/categoryEstatesSlice";
-import {setAllEstates} from "./src/store/Slices/estatesSlice";
+import {setCoordinates} from "./src/store/Slices/searchMapSlice";
 
 
 export default function App () {
@@ -100,10 +99,6 @@ function AppWrapper() {
     getMainCategoriesSearchEstate().then(r => {
       dispatch(setMainCategoryEstates(r.main_categories));
     });
-
-    getEstates().then(r => {
-      dispatch(setAllEstates(r));
-    })
   }, []);
 
   // если шрифты загружены отобразить страницу

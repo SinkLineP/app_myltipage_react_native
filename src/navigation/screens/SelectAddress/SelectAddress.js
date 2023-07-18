@@ -8,7 +8,6 @@ export default function SelectAddress({ route, navigation }) {
   const [valueLocation, setValueLocation] = useState("");
   const { typeLocation } = route.params;
   const isShowSettlements = useSelector(state => state.searchAddress.isShowSettlementsForm);
-  const isShowStreet = useSelector(state => state.searchAddress.isShowStreetForm);
 
 
   return (
@@ -26,7 +25,6 @@ export default function SelectAddress({ route, navigation }) {
         typeLocation={typeLocation}
         valueLocation={valueLocation}
         navigation={navigation}
-        isShowStreet={isShowStreet}
       />
     </>
   )

@@ -1,40 +1,45 @@
 import {createStackNavigator} from "@react-navigation/stack";
+import ReviewDetails from "./screens/ReviewDetails/reviewDetails";
 import {setOptions} from "../options/routerHeaderOptions";
-import MainProfile from "./tabs/TabAuth/Profile/MainProfile/MainProfile";
-import Authorization from "./tabs/TabAuth/Authorization/screens/Authorization";
-import SettingsProfile from "./tabs/TabAuth/Profile/MainProfile/Tabs/SettingsPages/SettingsProfile";
-import ConfidentialSettings from "./tabs/TabAuth/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
-import EditProfile from "./tabs/TabAuth/Profile/MainProfile/Tabs/EditPages/EditProfile";
-import EditEmail from "./tabs/TabAuth/Profile/MainProfile/Tabs/EditPages/EditEmail";
-import EditPhone from "./tabs/TabAuth/Profile/MainProfile/Tabs/EditPages/EditPhone";
-import AllFriendsPage from "./tabs/TabAuth/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
-import RequestFriendsPages from "./tabs/TabAuth/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
-import ResponseFriendsPage from "./tabs/TabAuth/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
-import Menu from "./tabs/TabMenu/Menu";
-import Search from "./tabs/TabSearch/Search";
-import Chat from "./tabs/TabChat/Chat";
-import LoginEmail from "./tabs/TabAuth/Authorization/screens/LoginEmail";
-import SignUpEmail from "./tabs/TabAuth/Authorization/screens/SignUpEmail";
-import ConfirmEmail from "./tabs/TabAuth/Profile/MainProfile/screens/ConfirmEmail";
-import ConfirmPhone from "./tabs/TabAuth/Profile/MainProfile/screens/ConfirmPhone";
-import ChangePassword from "./tabs/TabAuth/Profile/MainProfile/screens/ChangePassword";
+import MainReviews from "./screens/Reviews/MainReviews/MainReviews";
+import AnimeReviews from "./screens/Reviews/Categories/Anime/AnimeReviews";
+import MoveReviews from "./screens/Reviews/Categories/Move/MoveReviews";
+import CartoonReviews from "./screens/Reviews/Categories/Cartoon/CartoonReviews";
+import SerialsReviews from "./screens/Reviews/Categories/Serials/SerialsReviews";
+import CartoonSerials from "./screens/Reviews/Categories/CartoonSerials/CartoonSerials";
+import MainProfile from "./screens/Profile/MainProfile/MainProfile";
+import Authorization from "./screens/Authorization/screens/Authorization";
+import SettingsProfile from "./screens/Profile/MainProfile/Tabs/SettingsPages/SettingsProfile";
+import ConfidentialSettings from "./screens/Profile/MainProfile/Tabs/SettingsPages/ConfidentialSettings";
+import EditProfile from "./screens/Profile/MainProfile/Tabs/EditPages/EditProfile";
+import EditEmail from "./screens/Profile/MainProfile/Tabs/EditPages/EditEmail";
+import EditPhone from "./screens/Profile/MainProfile/Tabs/EditPages/EditPhone";
+import AllFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/AllFriendsPage";
+import RequestFriendsPages from "./screens/Profile/MainProfile/Tabs/FriendsPages/RequestFriendsPages";
+import ResponseFriendsPage from "./screens/Profile/MainProfile/Tabs/FriendsPages/ResponseFriendsPage";
+import Menu from "./screens/Menu/Menu";
+import Search from "./screens/Search/Search";
+import Chat from "./screens/Chat/Chat";
+import LoginEmail from "./screens/Authorization/screens/LoginEmail";
+import SignUpEmail from "./screens/Authorization/screens/SignUpEmail";
+import ConfirmEmail from "./screens/Profile/MainProfile/screens/ConfirmEmail";
+import ConfirmPhone from "./screens/Profile/MainProfile/screens/ConfirmPhone";
+import ChangePassword from "./screens/Profile/MainProfile/screens/ChangePassword";
+import MenuSettings from "./screens/Menu/screens/MenuSettings/MenuSettings";
+import LanguageApp from "./screens/Menu/screens/MenuSettings/screens/LanguageApp/LanguageApp";
+import ThemeApp from "./screens/Menu/screens/MenuSettings/screens/ThemeApp/ThemeApp";
 import {
   controllerTheme_StackNavigator_Background,
   controllerTheme_StackNavigator_Title
 } from "../controllers/Theme/Theme";
 import {useSelector} from "react-redux";
+import {TabLocation} from "./tabs/TabLocation/TabLocation";
+import CountryApp from "./screens/Menu/screens/MenuSettings/screens/CountryApp/CountryApp";
+import ShowAdvertisement from "./screens/Menu/screens/ShowAdvertisement/ShowAdvertisement";
+import TabAdvancedSearch from "./tabs/TabAdvancedSearch/TabAdvancedSearch";
 import SearchAddress from "./screens/SearchAddress/SearchAddress";
+import SelectAddressForm from "./screens/SelectAddress/SelectAddress";
 import SelectAddress from "./screens/SelectAddress/SelectAddress";
-import ShowAds from "./screens/ShowAds/ShowAds";
-import Home from "./tabs/TabHome/Home";
-import {TabLocation} from "./tabs/TabSearch/TabLocation/TabLocation";
-import TabAdvancedSearch from "./tabs/TabSearch/TabAdvancedSearch/TabAdvancedSearch";
-import MenuSettings from "./screens/MenuSettings/MenuSettings";
-import LanguageApp from "./screens/LanguageApp/LanguageApp";
-import ThemeApp from "./screens/ThemeApp/ThemeApp";
-import CountryApp from "./screens/CountryApp/CountryApp";
-import ShowAdvertisement from "./screens/ShowAdvertisement/ShowAdvertisement";
-import LiveComplex from "./screens/LiveComplex/LiveComplex";
 
 
 const Stack = createStackNavigator();
@@ -42,7 +47,13 @@ const Stack = createStackNavigator();
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} options={setOptions("Главная", "tomato", "#fff", false)} />
+      <Stack.Screen name="MainReviews" component={MainReviews} options={setOptions("Категории", "coral", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Move" component={MoveReviews} options={setOptions("Фильмы", "#9e3e1b", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Cartoon" component={CartoonReviews} options={setOptions("Мультфильмы", "#1e9dff", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Serials" component={SerialsReviews} options={setOptions("Сериалы", "#fec260", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="Anime" component={AnimeReviews} options={setOptions("Аниме", "#ff34c7", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="CartoonSerials" component={CartoonSerials} options={setOptions("Мульт Сериалы", "#1588e2", "#fff", "", 0, 0, "", false)} />
+      <Stack.Screen name="ReviewDetails" component={ReviewDetails} options={setOptions("Обзор", "#2c3a53", "#fff", false)} />
     </Stack.Navigator>
   );
 }
@@ -106,8 +117,6 @@ const SearchStackNavigator = () => {
       <Stack.Screen name="ShowAdvertisement" component={ShowAdvertisement} options={setOptions("Осмотреть", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="SearchAddress" component={SearchAddress} options={setOptions("Выберите адрес", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
       <Stack.Screen name="SelectAddress" component={SelectAddress} options={setOptions("Выберите адрес", "tomato", "white", "", 0, 0, "", "", 0, 0, "", false)} />
-      <Stack.Screen name="ShowAds" component={ShowAds} options={setOptions("Найденные объявления", "#1e9dff", "white", "", 0, 0, "", "", 0, 0, "", false)} />
-      <Stack.Screen name="LiveComplex" component={LiveComplex} options={setOptions("Выберите жилой коплекс", "#55ac00", "white", "", 0, 0, "", "", 0, 0, "", false)} />
     </Stack.Navigator>
   );
 }

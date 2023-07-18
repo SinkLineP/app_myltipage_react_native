@@ -1,45 +1,10 @@
 import React from "react";
 import {Pressable, Text} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
-import {
-  setAddressStatus,
-  setSettlementsStore,
-  setShowSettlements,
-  setShowStreet,
-  setStreetStore,
-  setStreetStatus
-} from "../../../../store/Slices/searchAddressSlice";
-import {useNavigation} from "@react-navigation/native";
+import {useDispatch} from "react-redux";
+import {setSettlements, setStreet} from "../../../../store/Slices/searchAddressSlice";
 
 
 export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation, setSearchInput, index, type, setSettlement, setStreet }) => {
-  const dispatch = useDispatch();
-  const currentStatusSettlement = useSelector(state => state.searchAddress.addressStatus);
-
-  const setStoreValue = (value, type) => {
-    if (type === "settlement") {
-      try {
-        dispatch(setShowSettlements(true));
-        dispatch(setSettlementsStore(value));
-      } finally {
-        if (currentStatusSettlement === "editing") {
-          dispatch(setStreetStore(""));
-          dispatch(setStreetStatus("empty"));
-          dispatch(setShowStreet(false));
-        }
-
-        dispatch(setAddressStatus("saved"));
-      }
-    } else if (type === "street") {
-      try {
-        dispatch(setShowStreet(true));
-        dispatch(setStreetStore(value));
-      } finally {
-        dispatch(setStreetStatus("saved"));
-      }
-    }
-  }
-
   return (
     <Pressable key={index} onPress={() => {
       const latitude = item.data.geo_lat;
@@ -63,17 +28,15 @@ export const ShowContentAutoSuggestions = ({ item, setRegion, setActiveLocation,
         }
 
         setActiveLocation(item);
-        setStoreValue(item.value, type)
+        setSearchInput(item.value);
       }
 
-      setStoreValue(item.value, type)
+      setSearchInput(item.value);
     }} style={{
       paddingVertical: 5,
-      paddingHorizontal: 20,
       borderBottomWidth: 1,
       borderTopWidth: index === 0 ? 1 : 0,
       borderColor: "#d2d2d2",
-      backgroundColor: "#fff"
     }}>
       <Text style={{
         color: "#323232",

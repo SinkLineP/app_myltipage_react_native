@@ -4,15 +4,18 @@ import ShowActiveText from "./components/ShowActiveText";
 import {useSelector} from "react-redux";
 
 
-export default function SearchAddress() {
+export default function SearchAddress({ route }) {
   const settlementStore = useSelector(state => state.searchAddress.settlements);
   const streetStore = useSelector(state => state.searchAddress.street);
 
 
+  // console.log(route.name);
+
+
   return (
-    <>
+    <ContainerTab>
       <ShowActiveText locationTitle={"Населённый пункт"} defaultLocationTitle={"Выберите населённый пункт"} location={settlementStore} typeLocation={"settlement"} />
-      {settlementStore !== "" ? (<ShowActiveText locationTitle={"Адрес"} defaultLocationTitle={"Выберите адрес"} location={streetStore} typeLocation={"street"} />) : ("")}
-    </>
+      {settlementStore !== "" ? (<ShowActiveText locationTitle={"Улица"} defaultLocationTitle={"Выберите улицу"} location={streetStore} typeLocation={"street"} />) : ("")}
+    </ContainerTab>
   )
 }

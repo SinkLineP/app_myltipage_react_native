@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {TouchableOpacity, View, Text, StyleSheet} from "react-native";
+import {TouchableOpacity, View, Text} from "react-native";
 
-const CustomSwitch = ({selectionMode, roundCorner, option1, option2, onSelectSwitch, selectionColor}) => {
+const CustomSwitch = ({navigation, selectionMode, roundCorner, option1, option2, onSelectSwitch, selectionColor}) => {
   const [getSelectionMode, setSelectionMode] = useState(selectionMode);
   const [getRoundCorner, setRoundCorner] = useState(roundCorner);
 
@@ -11,66 +11,59 @@ const CustomSwitch = ({selectionMode, roundCorner, option1, option2, onSelectSwi
   };
 
   return (
-    <View
-      style={{
-        height: 44,
-        backgroundColor: 'white',
-        borderRadius: getRoundCorner ? 25 : 0,
-        borderWidth: 1,
-        borderColor: selectionColor,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        padding: 2,
-      }}
-    >
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => updatedSwitchData(1)}
+    <View>
+      <View
         style={{
-          flex: 1,
-          backgroundColor: getSelectionMode === 1 ? selectionColor : 'white',
+          height: 44,
+          backgroundColor: 'white',
           borderRadius: getRoundCorner ? 25 : 0,
+          borderWidth: 1,
+          borderColor: selectionColor,
+          flexDirection: 'row',
           justifyContent: 'center',
-          alignItems: 'center',
+          padding: 2,
         }}>
-        <Text
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => updatedSwitchData(1)}
           style={{
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            color: getSelectionMode === 1 ? 'white' : selectionColor,
+            flex: 1,
+            backgroundColor: getSelectionMode === 1 ? selectionColor : 'white',
+            borderRadius: getRoundCorner ? 25 : 0,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          {option1}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        TouchableOpacity
-        activeOpacity={1}
-        onPress={() => updatedSwitchData(2)}
-        style={{
-          flex: 1,
-          backgroundColor: getSelectionMode === 2 ? selectionColor : 'white',
-          borderRadius: getRoundCorner ? 25 : 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text
+          <Text
+            style={{
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              color: getSelectionMode === 1 ? 'white' : selectionColor,
+            }}>
+            {option1}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          TouchableOpacity
+          activeOpacity={1}
+          onPress={() => updatedSwitchData(2)}
           style={{
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            color: getSelectionMode === 2 ? 'white' : selectionColor,
+            flex: 1,
+            backgroundColor: getSelectionMode === 2 ? selectionColor : 'white',
+            borderRadius: getRoundCorner ? 25 : 0,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          {option2}
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              color: getSelectionMode === 2 ? 'white' : selectionColor,
+            }}>
+            {option2}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
-
-
-const stylesCustomSwitch = StyleSheet.create({
-  container: {
-
-  }
-})
-
 export default CustomSwitch;

@@ -4,21 +4,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {AntDesign} from "@expo/vector-icons";
 import {
   setAddressStatus,
-  setShowSettlements,
-  setShowStreet,
-  setStreetStatus
+  setSettlements,
+  setShowSettlements
 } from "../../store/Slices/searchAddressSlice";
 import SearchInput from "../SearchTabs/SearchInput/SearchInput";
 
 
-export default function SelectAddressForm({ navigation, isShowSettlements, typeLocation, setValueLocation, valueLocation, isShowStreet }) {
+export default function SelectAddressForm({ navigation, isShowSettlements, typeLocation, setValueLocation, valueLocation }) {
   const [region, setRegion] = useState({});
   const [settlementValue, setSettlementValue] = useState("");
   const [streetValue, setStreetValue] = useState("");
   const dispatch = useDispatch();
   // redux store
   const addressStatusStore = useSelector(state => state.searchAddress.addressStatus);
-  const streetStatusStore = useSelector(state => state.searchAddress.streetStatus);
 
 
   useEffect(() => {
@@ -29,21 +27,10 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
           paddingRight: 10
         }} onPress={() => {
           try {
-            // console.log(typeLocation);
-            if (typeLocation === "settlement") {
-              if (addressStatusStore === "editing") {
-                dispatch(setAddressStatus("saved"));
-                dispatch(setShowSettlements(true));
-              } else if (addressStatusStore === "deleted") {
-                dispatch(setAddressStatus("empty"));
-              }
-            } else if (typeLocation === "street") {
-              if (streetStatusStore === "editing") {
-                dispatch(setStreetStatus("saved"));
-                dispatch(setShowStreet(true));
-              } else if (streetStatusStore === "deleted") {
-                dispatch(setStreetStatus("empty"));
-              }
+            if (addressStatusStore === "editing") {
+              dispatch(setAddressStatus("saved"));
+            } else if (addressStatusStore === "deleted") {
+              dispatch(setAddressStatus("empty"));
             }
           } finally {
             navigation.goBack();
@@ -55,29 +42,69 @@ export default function SelectAddressForm({ navigation, isShowSettlements, typeL
     })
   })
 
-  if (isShowSettlements === false || isShowStreet === false) {
-    if (typeLocation === "settlement") {
-      if (addressStatusStore === "empty" || addressStatusStore === "editing" || addressStatusStore === "deleted") {
-        return <SearchInput
-          setSearchInput={setValueLocation}
-          searchInput={valueLocation}
-          setRegion={setRegion}
-          type={typeLocation}
-          setSettlement={setSettlementValue}
-          setStreet={setStreetValue}
-        />
-      }
-    } else if (typeLocation === "street") {
-      if (streetStatusStore === "empty" || streetStatusStore === "editing" || streetStatusStore === "deleted") {
-        return <SearchInput
-          setSearchInput={setValueLocation}
-          searchInput={valueLocation}
-          setRegion={setRegion}
-          type={typeLocation}
-          setSettlement={setSettlementValue}
-          setStreet={setStreetValue}
-        />
-      }
-    }
-  }
+  return (
+    <>
+      {
+        isShowSettlements === false && typeLocation === "settlement" && addressStatusStore === "empty" ||
+        isShowSettlements === false && typeLocation === "street" ?
+      (
+        <View>
+          <SearchInput
+            setSearchInput={setValueLocation}
+            searchInput={valueLocation}
+            setRegion={setRegion}
+            type={typeLocation}
+            setSettlement={setSettlementValue}
+            setStreet={setStreetValue}
+          />
+
+          <Text style={{
+            backgroundColor: valueLocation !== "" ? "#82c874" : "#bee6b3",
+            paddingVertical: 10,
+            textAlign: "center",
+            fontWeight: "bold",
+            color: "#fff"
+          }} onPress={() => {
+            if (typeLocation === "settlement") {
+              if (valueLocation !== "") {
+                try {
+                  dispatch(setShowSettlements(true));
+                  dispatch(setSettlements(settlementValue));
+
+                  //     if (streetStore !== "") {
+                  //       dispatch(setStreet(""));
+                  //       dispatch(setShowStreet(true));
+                  //     }
+                } finally {
+                  dispatch(setAddressStatus("saved"));
+                  // navigation.goBack()
+
+                  // if (route.name !== "SelectAddress") {
+                  //   console.log("is not equal")
+                  // }
+                }
+              }
+            } else if (typeLocation === "street") {
+              console.log("type_location 'street'");
+
+              if (valueLocation !== "") {
+                console.log("[Street group] - value location is not equals, empty.");
+                try {
+                  console.log("[Street group] - start 'try'.")
+                  //     dispatch(setShowStreet(false));
+                  //     dispatch(setStreet(streetValue));
+                } finally {
+                  console.log("[Street group] - 'finally'")
+                  dispatch(setAddressStatus("saved"));
+                  //     navigation.goBack()
+                }
+              }
+            }
+          }}>
+            Сохранить адрес
+          </Text>
+        </View>
+      ) : ("")}
+    </>
+  )
 }
